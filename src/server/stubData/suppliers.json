@@ -1,0 +1,66 @@
+{
+  "suppliers": [
+    {
+      "addressAssociations": [
+        {
+          "id": 1,
+          "address": {
+            "id": 5,
+            "addressId": "bio001",
+            "areaCode": null,
+            "changedBy": "jcadmin",
+            "changedOn": "2017-03-29T04:19:43.000+02:00",
+            "city": "Prince Williams Sund",
+            "corporateURL": "http://www.biohazard.com",
+            "country": {
+              "class": "com.jcatalog.core.GormCountry",
+              "id": "AQ"
+            },
+            "createdBy": "jcadmin",
+            "createdOn": "2017-03-29T04:19:43.000+02:00",
+            "email": null,
+            "faxNo": null,
+            "isCompany": null,
+            "name1": "BioHazard Ltd.",
+            "name2": null,
+            "name3": null,
+            "numOfEmployees": null,
+            "phoneNo": null,
+            "pobox": null,
+            "poboxZipCode": null,
+            "salutation": null,
+            "state": null,
+            "street": null,
+            "zipCode": "54579"
+          },
+          "changedBy": "jcadmin",
+          "changedOn": "2016-03-14 06:09:02.613",
+          "createdBy": "jcadmin",
+          "createdOn": "2016-03-14 06:09:02.613",
+          "isDefault": null,
+          "type": "default"
+        }
+      ],
+      "changedBy": "jcadmin",
+      "changedOn": "2016-03-14 06:09:02.587",
+      "createdBy": "jcadmin",
+      "createdOn": "2016-03-14 06:09:02.587",
+      "currencyId": "EUR",
+      "languageId": "de",
+      "logo": "biohazard.jpg",
+      "statusId": "400",
+      "supplierGroup": {
+        "id": 5,
+        "changedBy": "jcadmin",
+        "changedOn": "2016-03-14 06:09:02.403",
+        "createdBy": "jcadmin",
+        "createdOn": "2016-03-14 06:09:02.403",
+        "name": "Hazardous Goods",
+        "supplierGroupId": "30"
+      },
+      "supplierId": "bio001",
+      "supplierName": "BioHazard Inc.",
+      "_objectLabel": "BioHazard Inc. (bio001)"
+    }
+  ]
+}

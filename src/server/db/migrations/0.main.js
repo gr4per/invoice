@@ -2,6 +2,10 @@
 
 const Sequelize = require('sequelize');
 const Promise = require('bluebird');
+const createInvoiceReceipt = require('./invoice-migration/createInvoiceReceipt');
+const createInvoiceReceiptItem = require('./invoice-migration/createInvoiceReceiptItem');
+const createCostDistribution = require('./invoice-migration/createCostDistribution');
+const createCostDistributionPos = require('./invoice-migration/createCostDistributionPos');
 
 /**
  * Applies migrations for databse tables and data.
@@ -13,10 +17,15 @@ const Promise = require('bluebird');
  * @returns {Promise} [Promise]{@link http://bluebirdjs.com/docs/api-reference.html}
  * @see [Applying data migrations]{@link https://github.com/OpusCapitaBusinessNetwork/db-init#applying-data-migrations}
  */
-module.exports.up = function(db, config)
-{
-    return db.sync();
-}
+module.exports.up = function(db, config) {
+  return createCostDistribution(db.getQueryInterface()).then(() => {
+    return createCostDistributionPos(db.getQueryInterface());
+  }).then(() => {
+    return createInvoiceReceipt(db.getQueryInterface());
+  }).then(() => {
+    return createInvoiceReceiptItem(db.getQueryInterface());
+  })
+};
 
 /**
  * Reverts all migrations for databse tables and data.
@@ -27,8 +36,12 @@ module.exports.up = function(db, config)
  * @returns {Promise} [Promise]{@link http://bluebirdjs.com/docs/api-reference.html}
  * @see [Applying data migrations]{@link https://github.com/OpusCapitaBusinessNetwork/db-init#applying-data-migrations}
  */
-module.exports.down = function(db, config)
-{
-    var qi = db.getQueryInterface();
-    return Promise.all(Object.keys(db.models).map(key => qi.dropTable(db.models[key].getTableName())));
-}
+module.exports.down = function(db, config) {
+  return Promise.all([
+    db.getQueryInterface().dropTable('InvoiceReceiptItem'),
+    db.getQueryInterface().dropTable('InvoiceReceipt'),
+    db.getQueryInterface().dropTable('CostDistributionPos'),
+    db.getQueryInterface().dropTable('CostDistribution'),
+    db.getQueryInterface().dropTable('CostObject'),
+  ]);
+};

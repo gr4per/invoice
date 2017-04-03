@@ -1,6 +1,16 @@
-'use strict'
+'use strict';
 
 const Promise = require('bluebird');
+const invoiceRoutes = require('./invoiceReceipt');
+const staticResources = require('./staticResources');
+const suppliers = require('./suppliers');
+const customers = require('./customers');
+const termsOfPayment = require('./termsOfPayment');
+const termsOfDelivery = require('./termsOfDelivery');
+const methodOfPayment = require('./methodOfPayment');
+const currency = require('./currency');
+const userAssignment = require('./userAssignment');
+const epilogue = require('epilogue');
 
 /**
  * Initializes all routes for RESTful access.
@@ -11,13 +21,23 @@ const Promise = require('bluebird');
  * @returns {Promise} [Promise]{@link http://bluebirdjs.com/docs/api-reference.html}
  * @see [Minimum setup]{@link https://github.com/OpusCapitaBusinessNetwork/web-init#minimum-setup}
  */
-module.exports.init = function(app, db, config)
-{
-    // Register routes here.
-    // Use the passed db parameter in order to use Epilogue auto-routes.
-    // Use require in order to separate routes into multiple js files.
-    app.get('/', (req, res) => res.send('Hello world!'));
+module.exports.init = function(app, db, config) {
+  epilogue.initialize({
+    app: app,
+    sequelize: db,
+    base: '/api'
+  });
 
-    // Always return a promise.
-    return Promise.resolve();
-}
+  invoiceRoutes(epilogue, db);
+  staticResources(app, db);
+  suppliers(app, db);
+  customers(app, db);
+  termsOfPayment(app, db);
+  termsOfDelivery(app, db);
+  methodOfPayment(app, db);
+  userAssignment(app, db);
+  currency(app, db);
+
+  // Always return a promise.
+  return Promise.resolve();
+};

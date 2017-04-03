@@ -1,0 +1,124 @@
+{
+  "termsOfDelivery": [
+    {
+      "class": "com.jcatalog.termsofbusiness.GormTermsOfDelivery",
+      "id": "CIP",
+      "changedBy": "jcadmin",
+      "changedOn": "2017-03-30T05:30:50.000+02:00",
+      "createdBy": "jcadmin",
+      "createdOn": "2017-03-30T05:30:50.000+02:00",
+      "description": "Carriage and Insurance Paid to",
+      "translations": [
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfDeliveryTranslation",
+          "id": 1
+        }
+      ]
+    },
+    {
+      "class": "com.jcatalog.termsofbusiness.GormTermsOfDelivery",
+      "id": "CPT",
+      "changedBy": "jcadmin",
+      "changedOn": "2017-03-30T05:30:50.000+02:00",
+      "createdBy": "jcadmin",
+      "createdOn": "2017-03-30T05:30:50.000+02:00",
+      "description": "Carriage Paid To",
+      "translations": [
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfDeliveryTranslation",
+          "id": 2
+        }
+      ]
+    },
+    {
+      "class": "com.jcatalog.termsofbusiness.GormTermsOfDelivery",
+      "id": "DAF",
+      "changedBy": "jcadmin",
+      "changedOn": "2017-03-30T05:30:50.000+02:00",
+      "createdBy": "jcadmin",
+      "createdOn": "2017-03-30T05:30:50.000+02:00",
+      "description": "Delivered At Frontier",
+      "translations": [
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfDeliveryTranslation",
+          "id": 3
+        }
+      ]
+    },
+    {
+      "class": "com.jcatalog.termsofbusiness.GormTermsOfDelivery",
+      "id": "DDP",
+      "changedBy": "jcadmin",
+      "changedOn": "2017-03-30T05:30:50.000+02:00",
+      "createdBy": "jcadmin",
+      "createdOn": "2017-03-30T05:30:50.000+02:00",
+      "description": "Delivered Duty Paid",
+      "translations": [
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfDeliveryTranslation",
+          "id": 4
+        }
+      ]
+    },
+    {
+      "class": "com.jcatalog.termsofbusiness.GormTermsOfDelivery",
+      "id": "DDU",
+      "changedBy": "jcadmin",
+      "changedOn": "2017-03-30T05:30:50.000+02:00",
+      "createdBy": "jcadmin",
+      "createdOn": "2017-03-30T05:30:50.000+02:00",
+      "description": "Delivered Duty Unpaid",
+      "translations": [
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfDeliveryTranslation",
+          "id": 5
+        }
+      ]
+    },
+    {
+      "class": "com.jcatalog.termsofbusiness.GormTermsOfDelivery",
+      "id": "EXW",
+      "changedBy": "jcadmin",
+      "changedOn": "2017-03-30T05:30:50.000+02:00",
+      "createdBy": "jcadmin",
+      "createdOn": "2017-03-30T05:30:50.000+02:00",
+      "description": "Ex Works",
+      "translations": [
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfDeliveryTranslation",
+          "id": 7
+        }
+      ]
+    },
+    {
+      "class": "com.jcatalog.termsofbusiness.GormTermsOfDelivery",
+      "id": "FCA",
+      "changedBy": "jcadmin",
+      "changedOn": "2017-03-30T05:30:50.000+02:00",
+      "createdBy": "jcadmin",
+      "createdOn": "2017-03-30T05:30:50.000+02:00",
+      "description": "Free Carrier",
+      "translations": [
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfDeliveryTranslation",
+          "id": 8
+        }
+      ]
+    },
+    {
+      "class": "com.jcatalog.termsofbusiness.GormTermsOfDelivery",
+      "id": "delivery",
+      "changedBy": "jcadmin",
+      "changedOn": "2017-03-30T05:30:50.000+02:00",
+      "createdBy": "jcadmin",
+      "createdOn": "2017-03-30T05:30:50.000+02:00",
+      "description": "Die Lieferung erfolgt mit der deutschen Post AG. Aufträge, welche an Werktagen bis 12:00 Uhr eingehen, verlassen noch am gleichen Tag unser Haus und sind in der Regel am nächsten Vormittag (sofern dies auch ein Werktag ist) am Bestimmungsort. Geben Sie Ihre Bestellung an einem Sonn- oder Feiertag auf, kann die Lieferung erst am übernächsten Werktag erfolgen. Lieferungen an Sonn- und Feiertagen sind z. Zt. leider noch nicht möglich.",
+      "translations": [
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfDeliveryTranslation",
+          "id": 6
+        }
+      ]
+    }
+  ]
+}

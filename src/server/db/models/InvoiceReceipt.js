@@ -111,7 +111,7 @@ module.exports.init = function(db, config) {
        * Ext. Invoice ReceiptID
        * Initialised with the value from invoiceReceiptId.
        */
-      extInvoiceReceiptID: {
+      extInvoiceReceiptId: {
         type: Sequelize.STRING(255),
         allowNull: true,
         field: 'ExtInvoiceReceiptID'

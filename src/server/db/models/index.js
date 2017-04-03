@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const Promise = require('bluebird');
 const Sequelize = require('sequelize');
@@ -20,4 +20,4 @@ module.exports.init = function(db, config)
 
     // Always return a promise.
     return Promise.resolve();
-}
+};

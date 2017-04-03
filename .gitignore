@@ -1,5 +1,11 @@
-node_modules
 *.log
-.nyc_output
+*.iml
+.idea
+/build
+/dist
+/docs
+node_modules/
+/db.config.json
+.nyc_output/
+coverage/
 test-results.xml
-coverage

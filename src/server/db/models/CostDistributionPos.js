@@ -48,7 +48,6 @@ module.exports.init = function(db, config) {
         field: 'CreatedOn',
         defaultValue: Sequelize.NOW
       },
-
       /**
        * CostDistribution
        */
@@ -104,8 +103,7 @@ module.exports.init = function(db, config) {
         associate: function(models) {
           models.CostDistributionPos.belongsTo(models.CostDistribution, {
             as: 'costDistribution',
-            foreignKey: 'CostDistributionSN',
-            targetKey: 'CostDistributionSN'
+            foreignKey: 'CostDistributionSN'
           });
         }
       },

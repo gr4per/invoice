@@ -1,0 +1,100 @@
+{
+  "termsOfPayment": [
+    {
+      "class": "com.jcatalog.termsofbusiness.GormTermsOfPayment",
+      "id": "T1",
+      "changedBy": "jcadmin",
+      "changedOn": "2017-03-30T05:30:50.000+02:00",
+      "createdBy": "jcadmin",
+      "createdOn": "2017-03-30T05:30:50.000+02:00",
+      "description": "10 days - 3 %, 30 days net",
+      "discountDays1": 10,
+      "discountDays2": 10,
+      "discountPerc1": 3.00,
+      "discountPerc2": 3.00,
+      "netDays": 30,
+      "translations": [
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfPaymentTranslation",
+          "id": 5
+        },
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfPaymentTranslation",
+          "id": 6
+        }
+      ]
+    },
+    {
+      "class": "com.jcatalog.termsofbusiness.GormTermsOfPayment",
+      "id": "T2",
+      "changedBy": "jcadmin",
+      "changedOn": "2017-03-30T05:30:50.000+02:00",
+      "createdBy": "jcadmin",
+      "createdOn": "2017-03-30T05:30:50.000+02:00",
+      "description": "7 days - 2 %, 20 days net",
+      "discountDays1": 7,
+      "discountDays2": 7,
+      "discountPerc1": 2.00,
+      "discountPerc2": 2.00,
+      "netDays": 20,
+      "translations": [
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfPaymentTranslation",
+          "id": 7
+        },
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfPaymentTranslation",
+          "id": 8
+        }
+      ]
+    },
+    {
+      "class": "com.jcatalog.termsofbusiness.GormTermsOfPayment",
+      "id": "delivery",
+      "changedBy": "jcadmin",
+      "changedOn": "2017-03-30T05:30:50.000+02:00",
+      "createdBy": "jcadmin",
+      "createdOn": "2017-03-30T05:30:50.000+02:00",
+      "description": null,
+      "discountDays1": null,
+      "discountDays2": null,
+      "discountPerc1": null,
+      "discountPerc2": null,
+      "netDays": null,
+      "translations": [
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfPaymentTranslation",
+          "id": 1
+        },
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfPaymentTranslation",
+          "id": 2
+        }
+      ]
+    },
+    {
+      "class": "com.jcatalog.termsofbusiness.GormTermsOfPayment",
+      "id": "t0",
+      "changedBy": "jcadmin",
+      "changedOn": "2017-03-30T05:30:50.000+02:00",
+      "createdBy": "jcadmin",
+      "createdOn": "2017-03-30T05:30:50.000+02:00",
+      "description": "30 days - 1 %, 60 days net",
+      "discountDays1": 30,
+      "discountDays2": 30,
+      "discountPerc1": 1.00,
+      "discountPerc2": 1.00,
+      "netDays": 60,
+      "translations": [
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfPaymentTranslation",
+          "id": 4
+        },
+        {
+          "class": "com.jcatalog.termsofbusiness.GormTermsOfPaymentTranslation",
+          "id": 3
+        }
+      ]
+    }
+  ]
+}

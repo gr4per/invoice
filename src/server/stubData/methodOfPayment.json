@@ -1,0 +1,42 @@
+{
+  "methodOfPayment": [
+    {
+      "class": "com.jcatalog.termsofbusiness.GormMethodOfPayment",
+      "id": "S",
+      "changedBy": "jcadmin",
+      "changedOn": "2017-03-30T05:30:50.000+02:00",
+      "createdBy": "jcadmin",
+      "createdOn": "2017-03-30T05:30:50.000+02:00",
+      "description": "Scheck",
+      "translations": [
+        {
+          "class": "com.jcatalog.termsofbusiness.GormMethodOfPaymentTranslation",
+          "id": 3
+        },
+        {
+          "class": "com.jcatalog.termsofbusiness.GormMethodOfPaymentTranslation",
+          "id": 4
+        }
+      ]
+    },
+    {
+      "class": "com.jcatalog.termsofbusiness.GormMethodOfPayment",
+      "id": "invoice",
+      "changedBy": "jcadmin",
+      "changedOn": "2017-03-30T05:30:50.000+02:00",
+      "createdBy": "jcadmin",
+      "createdOn": "2017-03-30T05:30:50.000+02:00",
+      "description": "invoice",
+      "translations": [
+        {
+          "class": "com.jcatalog.termsofbusiness.GormMethodOfPaymentTranslation",
+          "id": 2
+        },
+        {
+          "class": "com.jcatalog.termsofbusiness.GormMethodOfPaymentTranslation",
+          "id": 1
+        }
+      ]
+    }
+  ]
+}
