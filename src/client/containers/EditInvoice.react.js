@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import messages from './i18n/EditInvoice';
+import messages from './i18n/InvoiceDetails';
 import EditInvoiceMarkup from '../components/EditInvoice';
 import { loadInvoice } from '../actions/invoice/load';
 import { updateInvoice } from '../actions/invoice/update';
 import { submit } from 'redux-form';
-import {EDIT_INVOICE_FORM} from '../constants/forms';
+import { EDIT_INVOICE_FORM } from '../constants/forms';
 
 @connect(
   state => ({
@@ -25,8 +25,8 @@ import {EDIT_INVOICE_FORM} from '../constants/forms';
       handleInvoiceHeaderFormSubmit: () => {
         dispatch(submit(EDIT_INVOICE_FORM))
       },
-      handleUpdateInvoice: (id) => {
-        dispatch(updateInvoice(id))
+      handleUpdateInvoice: (invoice) => {
+        dispatch(updateInvoice(invoice))
       }
     }
   }

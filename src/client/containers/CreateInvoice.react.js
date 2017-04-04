@@ -1,21 +1,21 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import messages from './i18n/CreateInvoice';
+import messages from './i18n/InvoiceDetails';
 import SelectCustomerWizard from '../components/CreateInvoice/SelectCustomerWizard';
-import { getFormValues } from 'redux-form';
-import { NEW_INVOICE_CUSTOMER_ID } from '../constants/invoice';
+import { submit } from 'redux-form';
+import { CREATE_INVOICE_FORM } from '../constants/forms';
 import { loadCurrentUserAssignment } from '../actions/external/userAssignment';
 import { loadCurrencies } from '../actions/external/currency';
 import { loadTermsOfDelivery } from '../actions/external/termsOfDelivery';
 import { loadTermsOfPayment } from '../actions/external/termsOfPayment';
 import { loadMethodsOfPayment } from '../actions/external/methodOfPayment';
 import { loadCustomer } from '../actions/external/customers';
+import { createInvoice, initInvoice } from '../actions/invoice/create';
 import CreateInvoiceMarkup from '../components/CreateInvoice';
 
 @connect(
   state => ({
     invoice: state.createInvoice.invoice,
-
     customer: state.createInvoice.customer,
     supplier: state.createInvoice.supplier,
     termsOfDelivery: state.createInvoice.termsOfDelivery,
@@ -25,22 +25,38 @@ import CreateInvoiceMarkup from '../components/CreateInvoice';
   }),
   (dispatch) => {
     return {
-      selectCustomer: (customerId) => (
-        dispatch({
-          type: NEW_INVOICE_CUSTOMER_ID,
-          customerId: customerId
-        })
-      ),
+      selectCustomer: (customerId) => (dispatch(initInvoice(customerId))),
       loadUserAssignment: () => (dispatch(loadCurrentUserAssignment())),
       loadCurrencies: () => (dispatch(loadCurrencies())),
       loadTermsOfDelivery: () => (dispatch(loadTermsOfDelivery())),
       loadTermsOfPayment: () => (dispatch(loadTermsOfPayment())),
       loadMethodsOfPayment: () => (dispatch(loadMethodsOfPayment())),
-      loadCustomer: (customerId) => (dispatch(loadCustomer(customerId)))
+      loadCustomer: (customerId) => (dispatch(loadCustomer(customerId))),
+      handleInvoiceHeaderFormSubmit: () => (dispatch(submit(CREATE_INVOICE_FORM))),
+      handleSaveInvoice: (invoice) => (dispatch(createInvoice(invoice)))
     }
   }
 )
 export default class CreateInvoice extends Component {
+  static propTypes = {
+    invoice: PropTypes.object,
+    customer: PropTypes.object,
+    supplier: PropTypes.object,
+    termsOfDelivery: PropTypes.array,
+    termsOfPayment: PropTypes.array,
+    methodsOfPayment: PropTypes.array,
+    currencies: PropTypes.array,
+
+    selectCustomer: PropTypes.func.isRequired,
+    loadUserAssignment: PropTypes.func.isRequired,
+    loadCurrencies: PropTypes.func.isRequired,
+    loadTermsOfDelivery: PropTypes.func.isRequired,
+    loadTermsOfPayment: PropTypes.func.isRequired,
+    loadMethodsOfPayment: PropTypes.func.isRequired,
+    loadCustomer: PropTypes.func.isRequired,
+    handleInvoiceHeaderFormSubmit: PropTypes.func.isRequired,
+    handleSaveInvoice: PropTypes.func.isRequired
+  };
 
   static contextTypes = {
     i18n: PropTypes.object.isRequired,
@@ -58,7 +74,7 @@ export default class CreateInvoice extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.invoice.customerId !== this.props.invoice.customerId) {
+    if (nextProps.invoice.customerId !== this.props.invoice.customerId) {
       this.props.loadCustomer(nextProps.invoice.customerId)
     }
   }
@@ -69,24 +85,17 @@ export default class CreateInvoice extends Component {
   }
 
   render() {
-    const { invoice } = this.props;
-
     return this._detailsPageIsReadyForRendering() ? <CreateInvoiceMarkup
       invoice={this.props.invoice}
       customer={this.props.customer}
       supplier={this.props.supplier}
-
       termsOfDelivery={this.props.termsOfDelivery}
       termsOfPayment={this.props.termsOfPayment}
       methodsOfPayment={this.props.methodsOfPayment}
       currencies={this.props.currencies}
-
-
+      onInvoiceHeaderFormSubmit={this.props.handleInvoiceHeaderFormSubmit}
+      onSaveInvoice={this.props.handleSaveInvoice}
       onCancel={() => (this.context.router.push('/'))}
     /> : <SelectCustomerWizard onSelectCustomer={this.props.selectCustomer}/>
   }
 }
-
-
-// {/*onInvoiceHeaderFormSubmit={this.props.handleInvoiceHeaderFormSubmit}*/}
-// {/*onUpdateInvoice={this.props.handleUpdateInvoice}*/}

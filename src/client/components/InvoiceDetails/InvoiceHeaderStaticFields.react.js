@@ -22,7 +22,7 @@ const extractInvoiceAddress = (addressAssociations) => {
     return association.address.type === 'invoice' && association.isDefault
   });
 
-  if(!addressAssociation) {
+  if (!addressAssociation) {
     addressAssociation = _.find(addressAssociations, (association) => {
       return association.type === "default"
     })
@@ -55,7 +55,7 @@ const addressToString = (address) => {
 };
 
 const contactToString = (contact) => {
-  if(_.isEmpty(contact) || _.isNil(contact)) {
+  if (_.isEmpty(contact) || _.isNil(contact)) {
     return ''
   }
 
@@ -76,8 +76,8 @@ const contactToString = (contact) => {
   return result
 };
 
-const InvoiceHeaderStaticFields = ({invoice, customer, supplier}) => {
-  return(
+const InvoiceHeaderStaticFields = ({ invoice, customer, supplier }) => {
+  return (
   <Fields
     names={[
       'supplierInfo',

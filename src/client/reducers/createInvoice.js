@@ -1,8 +1,5 @@
 import {
-  INVOICE_CREATE_START,
-  INVOICE_CREATE_SUCCESS,
-  INVOICE_CREATE_ERROR,
-  NEW_INVOICE_CUSTOMER_ID
+  INIT_NEW_INVOICE
 } from '../constants/invoice';
 import { ASSIGNMENT_LOAD_SUCCESS } from '../constants/userAssignment';
 import { MOP_LOAD_SUCCESS } from '../constants/methodOfPayment';
@@ -24,18 +21,22 @@ import { CURRENCIES_LOAD_SUCCESS } from '../constants/currency';
 // }
 export default function createInvoice(state = { invoice: { type: 'invoice' } }, action) {
   switch (action.type) {
-    case NEW_INVOICE_CUSTOMER_ID:
+    case INIT_NEW_INVOICE:
       return {
         ...state,
         invoice: {
           ...state.invoice,
-          customerId: action.customerId
+          ...action.invoice
         }
       };
     case ASSIGNMENT_LOAD_SUCCESS:
       return {
         ...state,
-        supplier: action.userAssignment.supplier
+        supplier: action.userAssignment.supplier,
+        invoice: {
+          ...state.invoice,
+          supplierId: action.userAssignment.supplier.supplierId
+        }
       };
     case MOP_LOAD_SUCCESS:
       return {

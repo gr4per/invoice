@@ -15,6 +15,6 @@ module.exports = function(app, db) {
   });
 
   app.get('/api/methodOfPayment/:id', (req, res) => {
-    res.json(_.find(methodOfPayment, {id: req.params.id}));
+    res.json(_.find(methodOfPayment, { id: req.params.id }));
   });
 };

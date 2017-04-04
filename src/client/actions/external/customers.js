@@ -1,6 +1,6 @@
 import request from 'superagent-bluebird-promise';
 import Promise from 'bluebird';
-import { CUSTOMER_LOAD_START, CUSTOMER_LOAD_ERROR, CUSTOMER_LOAD_SUCCESS} from '../../constants/customer';
+import { CUSTOMER_LOAD_START, CUSTOMER_LOAD_ERROR, CUSTOMER_LOAD_SUCCESS } from '../../constants/customer';
 
 /**
  * Load customer information by customer id from '/api/customers' endpoint and

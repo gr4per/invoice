@@ -1,9 +1,9 @@
-import React, { PropTypes, createElement } from 'react';
+import { PropTypes, createElement } from 'react';
 import { reduxForm } from 'redux-form';
-import { EDIT_INVOICE_FORM } from '../../constants/forms';
+import { CREATE_INVOICE_FORM } from '../../constants/forms';
 import InvoiceHeaderForm from '../InvoiceDetails/InvoiceHeaderForm.react'
 
-const EditInvoiceHeaderFormWrapper = ({
+const CreateInvoiceHeaderFormWrapper = ({
   invoice,
   customer,
   supplier,
@@ -11,12 +11,12 @@ const EditInvoiceHeaderFormWrapper = ({
   termsOfPayment,
   methodsOfPayment,
   currencies,
-  onUpdateInvoice
+  onSaveInvoice
 }) => {
   return createElement(reduxForm({
-    form: EDIT_INVOICE_FORM,
+    form: CREATE_INVOICE_FORM,
     onSubmit: (values) => {
-      console.log(values.invoice)
+      onSaveInvoice(values.invoice)
     },
     initialValues: {
       invoice: invoice,
@@ -30,15 +30,15 @@ const EditInvoiceHeaderFormWrapper = ({
   })(InvoiceHeaderForm));
 };
 
-// EditInvoiceHeaderFormWrapper.propTypes = {
-//   invoice: PropTypes.object.isRequired,
-//   supplier: PropTypes.object.isRequired,
-//   customer: PropTypes.object.isRequired,
-//   termsOfDelivery: PropTypes.array,
-//   termsOfPayment: PropTypes.array,
-//   methodsOfPayment: PropTypes.array,
-//   currencies: PropTypes.array,
-//   onUpdateInvoice: PropTypes.func.isRequired
-// };
+CreateInvoiceHeaderFormWrapper.propTypes = {
+  invoice: PropTypes.object.isRequired,
+  supplier: PropTypes.object.isRequired,
+  customer: PropTypes.object.isRequired,
+  termsOfDelivery: PropTypes.array,
+  termsOfPayment: PropTypes.array,
+  methodsOfPayment: PropTypes.array,
+  currencies: PropTypes.array,
+  onSaveInvoice: PropTypes.func.isRequired
+};
 
-export default EditInvoiceHeaderFormWrapper;
+export default CreateInvoiceHeaderFormWrapper;

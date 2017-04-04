@@ -17,7 +17,7 @@ Labels.dueDate = 'Due Date';
 Labels.totalGrossPrice = 'Total Gross Price';
 Labels.selectCustomer = 'Select Customer';
 Labels.ok = 'OK';
-Labels.cancel= 'Cancel';
+Labels.cancel = 'Cancel';
 
 let Commands = {};
 Commands.reset = 'Reset';

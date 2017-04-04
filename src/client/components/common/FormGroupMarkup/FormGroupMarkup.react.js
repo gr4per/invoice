@@ -19,7 +19,6 @@ const getLabelContainer = (labelClass, labelType, labelText, isLabelMarkedAsRequ
 );
 
 const FormGroupMarkup = (props, context) => {
-
   let fieldId = props.children.props.id;
   let errors = props.errors || [];
   let labelClass = props.labelClass || 'col-sm-5';
@@ -39,7 +38,8 @@ FormGroupMarkup.propTypes = {
   required: PropTypes.bool,
   label: PropTypes.string.isRequired,
   tip: PropTypes.string,
-  tipClass: PropTypes.string
+  tipClass: PropTypes.string,
+  labelClass: PropTypes.string
 };
 
 FormGroupMarkup.contextTypes = {

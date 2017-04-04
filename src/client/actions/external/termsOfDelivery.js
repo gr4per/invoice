@@ -1,6 +1,6 @@
 import request from 'superagent-bluebird-promise';
 import Promise from 'bluebird';
-import { TOD_LOAD_ERROR, TOD_LOAD_START, TOD_LOAD_SUCCESS} from '../../constants/termsOfDelivery';
+import { TOD_LOAD_ERROR, TOD_LOAD_START, TOD_LOAD_SUCCESS } from '../../constants/termsOfDelivery';
 
 /**
  * Load available terms of delivery

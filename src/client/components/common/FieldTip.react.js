@@ -1,6 +1,6 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
-const FieldTip = ({messageKey, className}, context) => (
+const FieldTip = ({ messageKey, className }, context) => (
   <div className={`${className || 'col-sm-offset-5 col-sm-7'}`}>
     <p className="help-block">
       <small className="text-muted">

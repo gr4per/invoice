@@ -12,9 +12,9 @@ import { FormControl } from 'react-bootstrap';
  */
 const renderSelect = (values, toOptionConverter, defaultOption = null) => {
   return (field) => (
-    <FormGroupMarkup label={field.label}>
+    <FormGroupMarkup label={field.label} required={field.required}>
       <FormControl componentClass="select" {...field.input}>
-        {defaultOption? defaultOption : null}
+        {defaultOption ? defaultOption : null}
         {values.map(toOptionConverter)}
       </FormControl>
     </FormGroupMarkup>

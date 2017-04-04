@@ -1,3 +1,4 @@
+/* eslint-disable */
 let Labels = {};
 Labels.saved = 'Rechnungsnr.';
 Labels.notSaved = 'Achtung: Rechnung konnte nicht gespeichert werden!';
@@ -104,16 +105,26 @@ States.registered = 'registriert';
 States.transferred = 'übertragen';
 
 let Types = {
-	'invoice': 'Rechnung',
-	'credit note': 'Gutschrift',
-	'invoice confidential': 'Vertrauliche Rechnung',
-	'credit note confidential': 'Vertrauliche Gutschrift'
+  'invoice': 'Rechnung',
+  'credit note': 'Gutschrift',
+  'invoice confidential': 'Vertrauliche Rechnung',
+  'credit note confidential': 'Vertrauliche Gutschrift'
 };
 
+let CreateInvoice = {};
+CreateInvoice.header = 'Rechnung erfassen';
+CreateInvoice.supplier = 'Lieferant';
+CreateInvoice.customer = 'Kunde';
+CreateInvoice.type = 'Typ';
+CreateInvoice.uploadInvoice = 'Rechnung hochladen';
+CreateInvoice.next = 'Weiter';
+CreateInvoice.browseFile = 'Dateiverzeichnis durchsuchen';
+
 export default {
-	Labels: Labels,
-	Commands: Commands,
-	Events: Events,
-	States: States,
-	Types: Types
+  Labels: Labels,
+  Commands: Commands,
+  Events: Events,
+  States: States,
+  Types: Types,
+  CreateInvoice: CreateInvoice
 };

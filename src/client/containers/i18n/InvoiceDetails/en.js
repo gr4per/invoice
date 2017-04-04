@@ -1,3 +1,4 @@
+/* eslint-disable */
 let Labels = {};
 Labels.saved = 'Invoice Receipt was saved successfully.';
 Labels.notSaved = 'Invoice Receipt was not saved.';
@@ -103,16 +104,26 @@ States.registered = 'Registered';
 States.transferred = 'Transferred';
 
 let Types = {
-	'invoice': 'Invoice',
-	'credit note': 'Credit',
-	'invoice confidential': 'Invoice confidential',
-	'credit note confidential': 'Credit confidential'
+  'invoice': 'Invoice',
+  'credit note': 'Credit',
+  'invoice confidential': 'Invoice confidential',
+  'credit note confidential': 'Credit confidential'
 };
 
+let CreateInvoice = {};
+CreateInvoice.header = 'Create Invoice';
+CreateInvoice.supplier = 'Supplier';
+CreateInvoice.customer = 'Customer';
+CreateInvoice.type = 'Type';
+CreateInvoice.uploadInvoice = 'Upload Invoice';
+CreateInvoice.next = 'Next';
+CreateInvoice.browseFile = 'Browse file';
+
 export default {
-	Labels: Labels,
-	Commands: Commands,
-	Events: Events,
-	States: States,
-	Types: Types
+  Labels: Labels,
+  Commands: Commands,
+  Events: Events,
+  States: States,
+  Types: Types,
+  CreateInvoice: CreateInvoice
 };

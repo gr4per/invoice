@@ -36,7 +36,8 @@ module.exports.init = function(db, config) {
       changedBy: {
         type: Sequelize.STRING(60),
         allowNull: false,
-        field: 'ChangedBy'
+        field: 'ChangedBy',
+        defaultValue: 'jcadmin'
       },
       changedOn: {
         type: Sequelize.DATE(),
@@ -69,7 +70,8 @@ module.exports.init = function(db, config) {
       createdBy: {
         type: Sequelize.STRING(60),
         allowNull: false,
-        field: 'CreatedBy'
+        field: 'CreatedBy',
+        defaultValue: 'jcadmin'
       },
       createdOn: {
         type: Sequelize.DATE(),
@@ -472,7 +474,7 @@ module.exports.init = function(db, config) {
       },
       /**
        * Due date for the payment.
-       *  dueDate = invoiceDate + TermsOfPayment.netDays
+       * dueDate = invoiceDate + TermsOfPayment.netDays
        */
       dueDate: {
         type: Sequelize.DATE(),

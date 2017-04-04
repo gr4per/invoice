@@ -1,4 +1,4 @@
-import React, {PropTypes, Component, Children} from 'react';
+import React, { Component, Children } from 'react';
 import { I18nManager } from 'opuscapita-i18n';
 
 export default class I18nContext extends Component {

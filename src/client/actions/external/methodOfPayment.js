@@ -1,6 +1,6 @@
 import request from 'superagent-bluebird-promise';
 import Promise from 'bluebird';
-import { MOP_LOAD_ERROR, MOP_LOAD_START, MOP_LOAD_SUCCESS} from '../../constants/methodOfPayment';
+import { MOP_LOAD_ERROR, MOP_LOAD_START, MOP_LOAD_SUCCESS } from '../../constants/methodOfPayment';
 
 /**
  * Load available methods of payment

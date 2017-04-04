@@ -1,6 +1,6 @@
 import request from 'superagent-bluebird-promise';
 import Promise from 'bluebird';
-import { TOP_LOAD_ERROR, TOP_LOAD_START, TOP_LOAD_SUCCESS} from '../../constants/termsOfPayment';
+import { TOP_LOAD_ERROR, TOP_LOAD_START, TOP_LOAD_SUCCESS } from '../../constants/termsOfPayment';
 
 /**
  * Load available terms of payment

@@ -1,6 +1,6 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
-const MessageInfo = ({message, type}) => (
+const MessageInfo = ({ message, type }) => (
   <div className={`bs-callout bs-callout-${type}`}>
     <div>
       {message}

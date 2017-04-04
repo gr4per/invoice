@@ -14,13 +14,13 @@ const CreateInvoiceMarkup = (props, context) => (
       termsOfPayment={props.termsOfPayment}
       methodsOfPayment={props.methodsOfPayment}
       currencies={props.currencies}
-      onUpdateInvoice={props.onUpdateInvoice}
+      onSaveInvoice={props.onSaveInvoice}
     />
     <div className="form-submit text-right">
-      <button className="btn btn-link" type="button">
+      <button className="btn btn-link" type="button" onClick={props.onCancel}>
         {context.i18n.getMessage('Commands.cancel')}
       </button>
-      <button className="btn btn-primary" type="button">
+      <button className="btn btn-primary" type="button" onClick={props.onInvoiceHeaderFormSubmit}>
         {context.i18n.getMessage('Commands.save')}
       </button>
     </div>
@@ -32,17 +32,16 @@ CreateInvoiceMarkup.contextTypes = {
 };
 
 CreateInvoiceMarkup.propTypes = {
-  // invoice: PropTypes.object.isRequired,
-  // supplier: PropTypes.object.isRequired,
-  // customer: PropTypes.object.isRequired,
-  // termsOfDelivery: PropTypes.array,
-  // termsOfPayment: PropTypes.array,
-  // methodsOfPayment: PropTypes.array,
-  // currencies: PropTypes.array,
-  //
-  // onInvoiceHeaderFormSubmit: PropTypes.func.isRequired,
-  // onUpdateInvoice: PropTypes.func.isRequired,
-  // onCancel: PropTypes.func.isRequired,
+  invoice: PropTypes.object.isRequired,
+  supplier: PropTypes.object.isRequired,
+  customer: PropTypes.object.isRequired,
+  termsOfDelivery: PropTypes.array,
+  termsOfPayment: PropTypes.array,
+  methodsOfPayment: PropTypes.array,
+  currencies: PropTypes.array,
+  onInvoiceHeaderFormSubmit: PropTypes.func.isRequired,
+  onSaveInvoice: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 
 export default CreateInvoiceMarkup;

@@ -15,6 +15,7 @@ const InvoiceHeaderForm = (props, context) => (
             label="Labels.extInvoiceReceiptId"
             name='invoice.extInvoiceReceiptId'
             component={renderTextInput}
+            required={true}
           />
         </div>
         <div className="col-md-6">
@@ -38,6 +39,7 @@ const InvoiceHeaderForm = (props, context) => (
           <Field
             label="Labels.termsOfPayment"
             name='invoice.termsOfPaymentId'
+            required={true}
             component={renderSelect(
               props.initialValues.termsOfPayment,
               (top) => (
@@ -45,18 +47,19 @@ const InvoiceHeaderForm = (props, context) => (
                   {top.description ? top.description : top.id}
                 </option>
               ),
-              <option value="" defaultValue></option>
+              <option value="" defaultValue={true} />
             )}
           />
           <Field
             label="Labels.methodOfPayment"
             name='invoice.methodOfPaymentId'
+            required={true}
             component={renderSelect(
               props.initialValues.methodsOfPayment,
               (mop) => (
                 <option key={`term-of-payment-${mop.id}`} value={mop.id}>{mop.description}</option>
               ),
-              <option value="" defaultValue></option>
+              <option value="" defaultValue={true} />
             )}
           />
           <Field
@@ -67,7 +70,7 @@ const InvoiceHeaderForm = (props, context) => (
               (tod) => (
                 <option key={`term-of-payment-${tod.id}`} value={tod.id}>{tod.description}</option>
               ),
-              <option value="" defaultValue></option>
+              <option value="" defaultValue={true} />
             )}
           />
           <Field
@@ -84,12 +87,16 @@ const InvoiceHeaderForm = (props, context) => (
           <Field
             label="Labels.currency"
             name='invoice.currencyId'
-            component={renderSelect(props.initialValues.currencies, (currency) => {
-              return (
-                <option key={`term-of-payment-${currency.id}`}
-                        value={currency.id}>{currency.description}</option>
-              )
-            })}
+            required={true}
+            component={renderSelect(
+              props.initialValues.currencies,
+              (currency) => (
+                <option key={`currrency-${currency.id}`}
+                  value={currency.id}
+                >{currency.description}</option>
+              ),
+              <option value="" defaultValue={true} />
+            )}
           />
         </div>
         <div className="col-md-6">
@@ -105,7 +112,8 @@ const InvoiceHeaderForm = (props, context) => (
 );
 
 InvoiceHeaderForm.propTypes = {
-  // invoice: PropTypes.object.isRequired
+  initialValues: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired
 };
 
 InvoiceHeaderForm.contextTypes = {

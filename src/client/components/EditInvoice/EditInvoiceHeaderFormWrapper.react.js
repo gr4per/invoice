@@ -1,4 +1,4 @@
-import React, { PropTypes, createElement } from 'react';
+import { PropTypes, createElement } from 'react';
 import { reduxForm } from 'redux-form';
 import { EDIT_INVOICE_FORM } from '../../constants/forms';
 import InvoiceHeaderForm from '../InvoiceDetails/InvoiceHeaderForm.react'

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import MessageInfo from '../common/MessageInfo.react';
-import { Button, FormControl, Table, MenuItem, Glyphicon, Dropdown } from 'react-bootstrap';
+import { Button, Table, MenuItem, Glyphicon, Dropdown } from 'react-bootstrap';
 
 const SearchResult = ({ invoices, statuses, onEdit }, context) => {
   if (_.size(invoices) === 0) {
@@ -10,12 +10,12 @@ const SearchResult = ({ invoices, statuses, onEdit }, context) => {
     );
   } else {
     const statusLabel = (statusId) => {
-      let status = _.find(statuses, {statusId: statusId});
-      return status? status.description : statusId;
+      let status = _.find(statuses, { statusId: statusId });
+      return status ? status.description : statusId;
     };
 
     return (
-      <Table responsive>
+      <Table responsive={true}>
         <thead>
         <tr>
           <th className="text-nowrap">{context.i18n.getMessage('Labels.intInvoiceNo')}</th>
@@ -59,16 +59,17 @@ const SearchResult = ({ invoices, statuses, onEdit }, context) => {
                   <span className="label label-default">{statusLabel(inv.statusId)}</span>
                 </td>
                 <td>
-                  <Dropdown id={`actions-${inv.key}`} pullRight bsSize="small">
+                  <Dropdown id={`actions-${inv.key}`} pullRight={true} bsSize="small">
                     <Button onClick={() => {
                       onEdit(inv.key);
-                    }}>
+                    }}
+                    >
                       <Glyphicon glyph="edit"/> {context.i18n.getMessage("Commands.edit")}
                     </Button>
                     <Dropdown.Toggle/>
                     <Dropdown.Menu>
                       <MenuItem href={`convert/${inv.key}`}>
-                        <i className="fa fa-print"></i> {context.i18n.getMessage('Commands.print')}
+                        <i className="fa fa-print" /> {context.i18n.getMessage('Commands.print')}
                       </MenuItem>
                     </Dropdown.Menu>
                   </Dropdown>

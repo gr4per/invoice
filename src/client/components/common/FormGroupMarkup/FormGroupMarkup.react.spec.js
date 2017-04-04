@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import FormGroupMarkup from './FormGroupMarkup';
 
 let context;
@@ -8,7 +8,16 @@ let childrenElement;
 
 function shallowComponent() {
   return shallow(
-    <FormGroupMarkup errors={[{fieldId:'shown error message'}, {fieldId:'hidden error message'}, {fieldWithId: 'hidden error message'}]} required label="Labels.netPrice" labelClass={`labelClass`} wrapperClass={`wrapperClass`}>
+    <FormGroupMarkup
+      errors={[
+        { fieldId: 'shown error message' },
+        { fieldId: 'hidden error message' },
+        { fieldWithId: 'hidden error message' }]}
+      required={true}
+      label="Labels.netPrice"
+      labelClass={`labelClass`}
+      wrapperClass={`wrapperClass`}
+    >
       {childrenElement}
     </FormGroupMarkup>, {
       context: context
@@ -16,9 +25,8 @@ function shallowComponent() {
   );
 }
 
-describe("<FormGroupMarkup/>", function () {
-
-  beforeEach(function () {
+describe("<FormGroupMarkup/>", function() {
+  beforeEach(function() {
     childrenElement = <input name="field" id="fieldId" value="value"/>;
     context = {
       i18n: {
@@ -29,13 +37,13 @@ describe("<FormGroupMarkup/>", function () {
     };
   });
 
-  it("Render div.form-group", function () {
+  it("Render div.form-group", function() {
     const wrapper = shallowComponent();
 
     expect(wrapper.is('div.form-group')).to.equal(true);
   });
 
-  it("Render label with label class", function () {
+  it("Render label with label class", function() {
     const wrapper = shallowComponent();
     const label = wrapper.find('div.labelClass');
 
@@ -43,7 +51,7 @@ describe("<FormGroupMarkup/>", function () {
     expect(label.text()).to.contain('Labels.netPrice');
   });
 
-  it("Render children element in div with wrapperClass", function () {
+  it("Render children element in div with wrapperClass", function() {
     const wrapper = shallowComponent();
     const divContainer = wrapper.find('div.wrapperClass');
 
@@ -51,7 +59,7 @@ describe("<FormGroupMarkup/>", function () {
     expect(divContainer.contains(childrenElement)).to.equal(true);
   });
 
-  it("Render errors", function () {
+  it("Render errors", function() {
     const wrapper = shallowComponent();
 
     expect(wrapper.is('.has-error')).to.equal(true);
@@ -59,7 +67,7 @@ describe("<FormGroupMarkup/>", function () {
     expect(wrapper.find('.label-danger.error-container').text()).to.contain('shown error message');
   });
 
-  it("Render required *", function () {
+  it("Render required *", function() {
     const wrapper = shallowComponent();
 
     expect(wrapper.find('label').text()).to.contain('*');

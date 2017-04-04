@@ -15,6 +15,6 @@ module.exports = function(app, db) {
   });
 
   app.get('/api/currency/:id', (req, res) => {
-    res.json(_.find(currency, {id: req.params.id}));
+    res.json(_.find(currency, { id: req.params.id }));
   });
 };

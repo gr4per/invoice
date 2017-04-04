@@ -17,7 +17,7 @@ Labels.dueDate = 'Fälligkeitsdatum';
 Labels.totalGrossPrice = 'Brutto-Summe';
 Labels.selectCustomer = 'Kunde auswählen';
 Labels.ok = 'OK';
-Labels.cancel= 'Abbrechen';
+Labels.cancel = 'Abbrechen';
 
 let Commands = {};
 Commands.reset = 'Zurücksetzen';

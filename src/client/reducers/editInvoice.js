@@ -5,7 +5,6 @@ import { TOP_LOAD_SUCCESS } from '../constants/termsOfPayment';
 import { TOD_LOAD_SUCCESS } from '../constants/termsOfDelivery';
 import { CURRENCIES_LOAD_SUCCESS } from '../constants/currency';
 import { INVOICE_LOAD_ERROR, INVOICE_LOAD_SUCCESS, INVOICE_LOAD_START } from '../constants/invoice';
-import _ from 'lodash';
 
 // State of editInvoice reducer:
 // {

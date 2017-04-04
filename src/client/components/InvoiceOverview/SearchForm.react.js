@@ -9,7 +9,7 @@ const SearchFrom = ({ onSearch, reset, statuses }, context) => {
     return (
         <div className="form-submit text-right">
           <button className="btn btn-link" type="button"
-                  onClick={() => reset(SEARCH_INVOICE_FORM)}
+            onClick={() => reset(SEARCH_INVOICE_FORM)}
           >
             {context.i18n.getMessage('Commands.reset')}
           </button>
@@ -39,7 +39,7 @@ const SearchFrom = ({ onSearch, reset, statuses }, context) => {
                 (status) => (
                   <option key={status.statusId} value={status.statusId}>{status.description}</option>
                 ),
-                <option value="all" defaultValue>{context.i18n.getMessage('Labels.all')}</option>
+                <option value="all" defaultValue={true}>{context.i18n.getMessage('Labels.all')}</option>
               )}
             />
           </div>

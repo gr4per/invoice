@@ -1,6 +1,6 @@
 import request from 'superagent-bluebird-promise';
 import Promise from 'bluebird';
-import { CURRENCIES_LOAD_ERROR, CURRENCIES_LOAD_START, CURRENCIES_LOAD_SUCCESS} from '../../constants/currency';
+import { CURRENCIES_LOAD_ERROR, CURRENCIES_LOAD_START, CURRENCIES_LOAD_SUCCESS } from '../../constants/currency';
 
 /**
  * Load available currencies

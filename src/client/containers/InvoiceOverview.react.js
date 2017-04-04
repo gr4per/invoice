@@ -41,7 +41,7 @@ export default class InvoiceOverview extends Component {
   }
 
   render() {
-    return(
+    return (
       <InvoiceOverviewMarkup
         onSearch={this.props.handleSearchInvoices}
         invoices={this.props.invoices}

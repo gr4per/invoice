@@ -1,7 +1,6 @@
 'use strict';
 
 const suppliers = require('../stubData/suppliers.json').suppliers;
-const _ = require('lodash');
 
 /**
  * Stub rest endpoint for getting user assignment in format

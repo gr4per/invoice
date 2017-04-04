@@ -11,9 +11,9 @@ const LabelMarkup = (props) => {
 
   if (error) {
     fieldError =
-      <div className="label label-danger error-container">
+      (<div className="label label-danger error-container">
         {error[fieldId]}
-      </div>
+      </div>)
   }
 
   return (
@@ -25,7 +25,8 @@ const LabelMarkup = (props) => {
 };
 
 LabelMarkup.propTypes = {
-  errors: React.PropTypes.array
+  errors: React.PropTypes.array,
+  wrapperClass: React.PropTypes.string,
 };
 
 export default LabelMarkup;
