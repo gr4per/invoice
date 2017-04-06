@@ -8,7 +8,6 @@ import {
 import { showNotification, removeNotification } from '../notifications';
 
 export function updateInvoice(invoice) {
-  console.log(invoice);
   return function(dispatch, getState) {
     return Promise.resolve(
       dispatch({

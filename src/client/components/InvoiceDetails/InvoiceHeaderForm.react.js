@@ -4,6 +4,8 @@ import InvoiceHeaderStaticFields from './InvoiceHeaderStaticFields.react'
 import FormGroupMarkup from '../common/FormGroupMarkup';
 import { renderTextInput } from '../common/redux-form';
 import { renderSelect } from '../common/redux-form';
+import ReduxFormDateInput from '../common/redux-form/ReduxFormDateInput.react';
+import ReduxFormDateRange from '../common/redux-form/ReduxFormDateRange.react';
 
 const InvoiceHeaderForm = (props, context) => (
   <div className="form-horizontal">
@@ -16,6 +18,17 @@ const InvoiceHeaderForm = (props, context) => (
             name='invoice.extInvoiceReceiptId'
             component={renderTextInput}
             required={true}
+          />
+          <ReduxFormDateInput
+            label="Labels.invoiceDate"
+            name='invoice.invoiceDate'
+            required={true}
+            id="invoiceDate"
+          />
+          <ReduxFormDateRange
+            label="Labels.periodOfService"
+            fromFieldName="invoice.periodOfServiceFrom"
+            toFieldName="invoice.periodOfServiceTo"
           />
         </div>
         <div className="col-md-6">
@@ -35,6 +48,11 @@ const InvoiceHeaderForm = (props, context) => (
             label="Labels.referenceInformation"
             name='invoice.referenceInformation'
             component={renderTextInput}
+          />
+          <ReduxFormDateInput
+            label="Labels.dueDate"
+            name='invoice.dueDate'
+            id="dueDate"
           />
           <Field
             label="Labels.termsOfPayment"

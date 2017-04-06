@@ -10,7 +10,6 @@ import { showNotification, removeNotification } from '../notifications';
 import _ from 'lodash';
 
 export function createInvoice(invoice) {
-  console.log(invoice);
   return function(dispatch, getState) {
     return Promise.resolve(
       dispatch({
@@ -51,8 +50,7 @@ export function initInvoice(customerId) {
         customerId: customerId,
         statusId: _.find(getState().statuses.invoiceStatuses, { statusId: '100' }).statusId,
         intrastatId: '000',
-        bookingDate: new Date(),
-        invoiceDate: new Date()
+        bookingDate: new Date()
       }
     })
   }

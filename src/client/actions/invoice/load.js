@@ -40,6 +40,7 @@ export function loadInvoice(id) {
           loadCurrencies()(dispatch, getState)
         ])
       }).catch((response) => {
+        console.error(response);
         return Promise.resolve(
           dispatch(showNotification('Messages.loadingDataError', 'error', 10, false))
         ).then((err) => {
