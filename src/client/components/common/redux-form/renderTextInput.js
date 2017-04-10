@@ -12,7 +12,11 @@ const renderTextInput = (field) => {
   let hasError = !_.isEmpty(error) && touched;
   return (
     <FormGroupMarkup errors={hasError ? error : undefined} label={field.label} required={field.required}>
-      <FormControl {...field.input} componentClass={field.componentClass ? field.componentClass : 'input'}/>
+      <FormControl
+        {...field.input}
+        disabled={field.disabled}
+        componentClass={field.componentClass ? field.componentClass : 'input'}
+      />
     </FormGroupMarkup>
   );
 };

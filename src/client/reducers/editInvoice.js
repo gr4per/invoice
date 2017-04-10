@@ -5,9 +5,11 @@ import { TOP_LOAD_SUCCESS } from '../constants/termsOfPayment';
 import { TOD_LOAD_SUCCESS } from '../constants/termsOfDelivery';
 import { CURRENCIES_LOAD_SUCCESS } from '../constants/currency';
 import { INVOICE_LOAD_ERROR, INVOICE_LOAD_SUCCESS, INVOICE_LOAD_START } from '../constants/invoice';
+import { INVOICE_ITEMS_LOAD_SUCCESS } from '../constants/invoiceItem';
 
 // State of editInvoice reducer:
 // {
+//     items: [<list of invoice receipt items>]
 //     supplier: {<supplier object representation>},
 //     customer: {<customer object representation>},
 //     methodOfPayment: [list of available methodOfPayment],
@@ -24,6 +26,11 @@ export default function editInvoice(state = {}, action) {
       return {
         ...state,
         supplier: action.supplier
+      };
+    case INVOICE_ITEMS_LOAD_SUCCESS:
+      return {
+        ...state,
+        items: action.invoiceItems
       };
     case CUSTOMER_LOAD_SUCCESS:
       return {

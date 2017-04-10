@@ -10,6 +10,7 @@ import { EDIT_INVOICE_FORM } from '../constants/forms';
 @connect(
   state => ({
     invoice: state.editInvoice.invoice,
+    items: state.editInvoice.items,
     customer: state.editInvoice.customer,
     supplier: state.editInvoice.supplier,
     termsOfDelivery: state.editInvoice.termsOfDelivery,
@@ -34,6 +35,7 @@ import { EDIT_INVOICE_FORM } from '../constants/forms';
 export default class InvoiceDetails extends Component {
   static propTypes = {
     invoice: PropTypes.object,
+    items: PropTypes.array,
     customer: PropTypes.object,
     supplier: PropTypes.object,
     termsOfDelivery: PropTypes.array,
@@ -63,9 +65,12 @@ export default class InvoiceDetails extends Component {
   }
 
   render() {
+    const {router} = this.context;
+
     return this._isReadyForRendering() ?
       <EditInvoiceMarkup
         invoice={this.props.invoice}
+        items={this.props.items}
         customer={this.props.customer}
         supplier={this.props.supplier}
 
@@ -76,7 +81,8 @@ export default class InvoiceDetails extends Component {
 
         onInvoiceHeaderFormSubmit={this.props.handleInvoiceHeaderFormSubmit}
         onUpdateInvoice={this.props.handleUpdateInvoice}
-        onCancel={() => (this.context.router.push('/'))}
+        onCancel={() => (router.push('/'))}
+        onAddPositions={() => (router.push(`/edit/${router.params.id}/items`))}
       /> : null;
   }
 }

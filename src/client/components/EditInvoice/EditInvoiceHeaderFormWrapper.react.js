@@ -16,6 +16,7 @@ const EditInvoiceHeaderFormWrapper = ({
   return createElement(reduxForm({
     form: EDIT_INVOICE_FORM,
     onSubmit: (values) => {
+      console.log(values);
       onUpdateInvoice(values.invoice)
     },
     initialValues: {

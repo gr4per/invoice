@@ -4,6 +4,7 @@ import editInvoice from './editInvoice';
 import createInvoice from './createInvoice';
 import statuses from './statuses';
 import user from './user';
+import invoicePositions from './invoicePositions';
 import { reducer as formReducer } from 'redux-form';
 
 const invoiceReducer = {
@@ -13,6 +14,7 @@ const invoiceReducer = {
   createInvoice,
   statuses,
   user,
+  invoicePositions,
   form: formReducer
 };
 

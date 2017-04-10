@@ -8,6 +8,7 @@ import { loadMethodsOfPayment } from '../external/methodOfPayment';
 import { loadTermsOfPayment } from '../external/termsOfPayment';
 import { loadTermsOfDelivery } from '../external/termsOfDelivery';
 import { loadCurrencies } from '../external/currency';
+import { loadInvoiceItems } from '../invoiceItems/load';
 
 export function loadInvoice(id) {
   return function(dispatch, getState) {
@@ -37,7 +38,8 @@ export function loadInvoice(id) {
           loadTermsOfDelivery()(dispatch, getState),
           loadTermsOfPayment()(dispatch, getState),
           loadMethodsOfPayment()(dispatch, getState),
-          loadCurrencies()(dispatch, getState)
+          loadCurrencies()(dispatch, getState),
+          loadInvoiceItems(invoice.key)(dispatch, getState)
         ])
       }).catch((response) => {
         console.error(response);

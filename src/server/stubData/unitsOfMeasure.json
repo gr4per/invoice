@@ -1,0 +1,200 @@
+{
+  "unitsOfMeasure": [
+    {
+      "id": "2P",
+      "description": "kilobyte"
+    },
+    {
+      "id": "4L",
+      "description": "megabyte"
+    },
+    {
+      "id": "A86",
+      "description": "gigahertz"
+    },
+    {
+      "id": "A99",
+      "description": null
+    },
+    {
+      "id": "AD",
+      "description": "byte"
+    },
+    {
+      "id": "AMH",
+      "description": "ampere hour"
+    },
+    {
+      "id": "AMP",
+      "description": "ampere"
+    },
+    {
+      "id": "ANN",
+      "description": "year"
+    },
+    {
+      "id": "B10",
+      "description": null
+    },
+    {
+      "id": "BAR",
+      "description": "bar"
+    },
+    {
+      "id": "C26",
+      "description": "millisecond"
+    },
+    {
+      "id": "C31",
+      "description": "milliwatt"
+    },
+    {
+      "id": "C62",
+      "description": "C62"
+    },
+    {
+      "id": "CEL",
+      "description": "degrees Celsius"
+    },
+    {
+      "id": "CMK",
+      "description": "square centimeter"
+    },
+    {
+      "id": "CMQ",
+      "description": "cubic centimeter"
+    },
+    {
+      "id": "CMT",
+      "description": "centimeter"
+    },
+    {
+      "id": "DAY",
+      "description": "day"
+    },
+    {
+      "id": "DD",
+      "description": "degrees"
+    },
+    {
+      "id": "EA",
+      "description": "each"
+    },
+    {
+      "id": "GB",
+      "description": "gigabyte"
+    },
+    {
+      "id": "GM",
+      "description": null
+    },
+    {
+      "id": "GRM",
+      "description": "gramms"
+    },
+    {
+      "id": "HTZ",
+      "description": "hertz"
+    },
+    {
+      "id": "HUR",
+      "description": "hour"
+    },
+    {
+      "id": "KEL",
+      "description": "kelvin"
+    },
+    {
+      "id": "KGM",
+      "description": "kilogramm"
+    },
+    {
+      "id": "KTM",
+      "description": "kilometer"
+    },
+    {
+      "id": "KVT",
+      "description": "kilovolt"
+    },
+    {
+      "id": "KWH",
+      "description": "kilowatt hours"
+    },
+    {
+      "id": "KWT",
+      "description": "kilowatt"
+    },
+    {
+      "id": "LTR",
+      "description": "Litre"
+    },
+    {
+      "id": "MAW",
+      "description": "megawatt"
+    },
+    {
+      "id": "MGM",
+      "description": "milligramms"
+    },
+    {
+      "id": "MIN",
+      "description": "minutes"
+    },
+    {
+      "id": "MLT",
+      "description": "milliliter"
+    },
+    {
+      "id": "MMT",
+      "description": "millimeters"
+    },
+    {
+      "id": "MON",
+      "description": "month"
+    },
+    {
+      "id": "MTR",
+      "description": "meter"
+    },
+    {
+      "id": "MTS",
+      "description": null
+    },
+    {
+      "id": "P1",
+      "description": "percent"
+    },
+    {
+      "id": "PCE",
+      "description": "piece"
+    },
+    {
+      "id": "PK",
+      "description": null
+    },
+    {
+      "id": "PR",
+      "description": "pair"
+    },
+    {
+      "id": "SEC",
+      "description": "second"
+    },
+    {
+      "id": "ST",
+      "description": "ST"
+    },
+    {
+      "id": "WEE",
+      "description": "week"
+    },
+    {
+      "id": "WTT",
+      "description": "watt"
+    },
+    {
+      "id": "ZOL",
+      "description": "Zoll"
+    }
+  ]
+}
