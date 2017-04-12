@@ -1,9 +1,8 @@
 var path = require('path');
 var webpack = require('webpack');
-var PolyfillsPlugin = require('webpack-polyfills-plugin');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  // devtool: 'cheap-module-eval-source-map',
   entry: [
     './src/client/index'
   ],
@@ -16,31 +15,27 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.ProvidePlugin({
       'Promise': 'polyfill-promise'
-    }),
-    new PolyfillsPlugin([
-      'Object/assign',
-      'requestAnimationFrame'
-    ])
+    })
   ],
   resolve: {
-    modulesDirectories: ['/var/tmp/base/node_modules'],
-    extensions: ['', '.json', '.jsx', '.js']
+    modules: [
+      "/var/tmp/base/node_modules"
+    ],
+    extensions: ['.json', '.jsx', '.js']
   },
 
   resolveLoader: {
-    modulesDirectories: ['/var/tmp/base/node_modules'],
-    // modulesDirectories: ['node_modules'],
-    moduleTemplates: ['*-loader', '*'],
-    extensions: ['', '.js']
+    modules: ['/var/tmp/base/node_modules'],
+    moduleExtensions: ['-loader', '*'],
+    extensions: ['.js']
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /.js$/,
         loader: 'babel-loader',
@@ -62,11 +57,15 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        loader: 'style-loader!css-loader!less-loader'
+        use: [
+          "style-loader",
+          "css-loader",
+          "less-loader"
+        ]
       },
       {
-        include: /\.json$/,
-        loaders: ["json-loader"]
+        test: /\.json$/,
+        loader: "json-loader"
       }
     ]
   }

@@ -1,6 +1,6 @@
 import request from 'superagent-bluebird-promise';
 import Promise from 'bluebird';
-import { UOMS_LOAD_ERROR, UOMS_LOAD_START, UOMS_LOAD_SUCCESS} from '../../constants/unitsOfMEasure';
+import { UOMS_LOAD_ERROR, UOMS_LOAD_START, UOMS_LOAD_SUCCESS} from '../../constants/unitsOfMeasure';
 
 /**
  * Load available units of measure
