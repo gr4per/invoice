@@ -12,6 +12,7 @@ const methodOfPayment = require('./methodOfPayment');
 const currency = require('./currency');
 const userAssignment = require('./userAssignment');
 const unitsOfMeasure = require('./unitsOfMeasure');
+const attachments = require('./attachments');
 const epilogue = require('epilogue');
 
 /**
@@ -24,6 +25,7 @@ const epilogue = require('epilogue');
  * @see [Minimum setup]{@link https://github.com/OpusCapitaBusinessNetwork/web-init#minimum-setup}
  */
 module.exports.init = function(app, db, config) {
+
   epilogue.initialize({
     app: app,
     sequelize: db,
@@ -41,6 +43,7 @@ module.exports.init = function(app, db, config) {
   userAssignment(app, db);
   currency(app, db);
   unitsOfMeasure(app, db);
+  attachments(app, db, config.workareaDir);
 
   // Always return a promise.
   return Promise.resolve();

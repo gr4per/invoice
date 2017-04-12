@@ -5,6 +5,7 @@
 /dist
 /docs
 node_modules/
+workarea/
 /db.config.json
 .nyc_output/
 coverage/
