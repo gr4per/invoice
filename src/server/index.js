@@ -45,6 +45,7 @@ configService.init({
   ).then((db) => {
     return Promise.resolve(server.init({
       server: {
+        port: 3003,
         staticFilePath: express.static(__dirname + '/static'),
         webpack: {
           useWebpack: true,
