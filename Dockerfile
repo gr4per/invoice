@@ -1,4 +1,4 @@
-FROM ocbesbn/invoice-base
+FROM opuscapita/invoice:base-dev
 MAINTAINER OpusCapita
 
 # NOTE: "node" user and corresponding "/home/node" dir are created by "node:6-alpine" image.
@@ -25,5 +25,5 @@ USER node
 # A container must expose a port if it wants to be registered in Consul by Registrator.
 # The port is fed both to node express server and Consul => DRY principle is observed with ENV VAR.
 # NOTE: a port can be any, not necessarily different from exposed ports of other containers.
-EXPOSE 3007
+EXPOSE 3003
 CMD [ "npm", "start" ]
