@@ -42,7 +42,7 @@ export default class InvoicePositions extends Component {
     return (
       <InvoiceItemFormWrapper
         onReset={this.props.handleResetInvoiceItemForm}
-        onBackToInvoice={() => (router.push(`/edit/${router.params.id}`))}
+        onBackToInvoice={() => (router.push(`/invoice/edit/${router.params.id}`))}
         onInvoiceItemFormSubmit={this.props.handleInvoiceItemFormSubmit}
         onSaveInvoiceItem={this.props.handleSaveInvoiceItem.bind(null, router.params.id)}
         unitsOfMeasure={this.props.unitsOfMeasure}

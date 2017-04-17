@@ -16,7 +16,7 @@ export function createInvoice(invoice) {
         type: INVOICE_CREATE_START
       })
     ).then(() => {
-      return request.post(`/api/invoices/`).set(
+      return request.post(`/invoice/api/invoices/`).set(
         'Accept', 'application/json'
       ).send(invoice)
     }).then((response) => {

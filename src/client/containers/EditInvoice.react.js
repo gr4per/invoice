@@ -82,7 +82,7 @@ export default class InvoiceDetails extends Component {
         onInvoiceHeaderFormSubmit={this.props.handleInvoiceHeaderFormSubmit}
         onUpdateInvoice={this.props.handleUpdateInvoice}
         onCancel={() => (router.push('/'))}
-        onAddPositions={() => (router.push(`/edit/${router.params.id}/items`))}
+        onAddPositions={() => (router.push(`/invoice/edit/${router.params.id}/items`))}
       /> : null;
   }
 }

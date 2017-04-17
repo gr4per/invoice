@@ -48,7 +48,7 @@ export default class InvoiceOverview extends Component {
         invoices={this.props.invoices}
         statuses={this.props.statuses}
         pagination={this.props.pagination}
-        onEdit={(id) => (this.context.router.push(`/edit/${id}`))}
+        onEdit={(id) => (this.context.router.push(`/invoice/edit/${id}`))}
       />
     );
   }

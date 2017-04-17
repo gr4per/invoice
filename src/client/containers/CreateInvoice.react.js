@@ -95,7 +95,7 @@ export default class CreateInvoice extends Component {
       currencies={this.props.currencies}
       onInvoiceHeaderFormSubmit={this.props.handleInvoiceHeaderFormSubmit}
       onSaveInvoice={this.props.handleSaveInvoice}
-      onCancel={() => (this.context.router.push('/'))}
+      onCancel={() => (this.context.router.push('/invoice/'))}
     /> : <SelectCustomerWizard onSelectCustomer={this.props.selectCustomer}/>
   }
 }

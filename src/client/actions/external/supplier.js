@@ -15,7 +15,7 @@ export function loadSupplier(supplierId) {
         type: SUPPLIER_LOAD_START
       })
     ).then(() => {
-      return request.get(`/api/suppliers/${supplierId}`).set(
+      return request.get(`/invoice/api/suppliers/${supplierId}`).set(
         'Accept', 'application/json'
       ).then(
         (response) => {

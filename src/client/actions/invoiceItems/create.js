@@ -24,7 +24,7 @@ export function createInvoiceItem(invoiceKey, item) {
         type: INVOICE_ITEM_CREATE_START
       })
     ).then(() => {
-      return request.post(`/api/invoices/${invoiceKey}/items`).set(
+      return request.post(`/invoice/api/invoices/${invoiceKey}/items`).set(
         'Accept', 'application/json'
       ).send(populateItem(item))
     }).then((response) => {

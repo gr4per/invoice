@@ -16,7 +16,7 @@ export function loadCurrentUserAssignment() {
         type: ASSIGNMENT_LOAD_START
       })
     ).then(() => {
-      return request.get(`/api/userAssignment/${getState().user.id}`).set(
+      return request.get(`/invoice/api/userAssignment/${getState().user.id}`).set(
         'Accept', 'application/json'
       ).then(
         (response) => {

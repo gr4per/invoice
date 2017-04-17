@@ -23,7 +23,7 @@ export function loadInvoiceItems(id) {
         dispatch(showNotification('Messages.loadingData'))
       );
     }).then(() => {
-      return request.get(`/api/invoices/${id}/items`).set(
+      return request.get(`/invoice/api/invoices/${id}/items`).set(
         'Accept', 'application/json'
       ).then(
         (response) => {

@@ -9,10 +9,10 @@ import CreateInvoice from '../containers/CreateInvoice.react';
 export default (pathPrefix) => {
   return (
     <Route component={Layout}>
-      <Route path="/" component={InvoiceOverview}/>
-      <Route path="/create" component={CreateInvoice}/>
-      <Route path="/edit/:id" component={EditInvoice}/>
-      <Route path="/edit/:id/items" component={InvoicePositions}/>
+      <Route path="/invoice/" component={InvoiceOverview}/>
+      <Route path="/invoice/create" component={CreateInvoice}/>
+      <Route path="/invoice/edit/:id" component={EditInvoice}/>
+      <Route path="/invoice/edit/:id/items" component={InvoicePositions}/>
     </Route>
   );
 }

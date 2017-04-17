@@ -10,17 +10,17 @@ const SidebarMenu = () => (
       <div className="nav-background"/>
       <div className="navbar-header hidden-md">
         <a className="navbar-brand visible-lg" href="#">
-          <img src="/static/img/oc-logo-white.svg" style={{ height: '1.4em' }}/>
+          <img src="/invoice/static/img/oc-logo-white.svg" style={{ height: '1.4em' }}/>
         </a>
       </div>
       <ul className="nav navbar-nav">
         <li key="InvoiceOverview">
-          <a href="/">
+          <a href="/invoice/">
             Invoice Overview
           </a>
         </li>
         <li key="CreateInvoice">
-          <a href="/create">
+          <a href="/invoice/create">
             Create Invoice Manually
           </a>
         </li>

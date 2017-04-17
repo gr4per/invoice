@@ -18,7 +18,7 @@ export function searchInvoices(offset = 0, count = COUNT) {
         dispatch(showNotification('Messages.loadingData'))
       );
     }).then(() => {
-      return request.get('/api/invoices')
+      return request.get('/invoice/api/invoices')
         .query(getFormValues(SEARCH_INVOICE_FORM)(getState()))
         .query({offset: offset, count: count})
         .set(

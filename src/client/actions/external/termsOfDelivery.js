@@ -12,7 +12,7 @@ export function loadTermsOfDelivery() {
         type: TOD_LOAD_START
       })
     ).then(() => {
-      return request.get(`/api/termsOfDelivery`).set(
+      return request.get(`/invoice/api/termsOfDelivery`).set(
         'Accept', 'application/json'
       ).then(
         (response) => {

@@ -12,7 +12,7 @@ export function loadCurrencies() {
         type: CURRENCIES_LOAD_START
       })
     ).then(() => {
-      return request.get(`/api/currency`).set(
+      return request.get(`/invoice/api/currency`).set(
         'Accept', 'application/json'
       ).then(
         (response) => {

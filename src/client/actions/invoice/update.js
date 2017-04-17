@@ -14,7 +14,7 @@ export function updateInvoice(invoice) {
         type: INVOICE_UPDATE_START
       })
     ).then(() => {
-      return request.put(`/api/invoices/${invoice.key}`).set(
+      return request.put(`/invoice/api/invoices/${invoice.key}`).set(
         'Accept', 'application/json'
       ).send(invoice)
     }).then((response) => {

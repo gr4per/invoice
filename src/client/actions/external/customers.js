@@ -15,7 +15,7 @@ export function loadCustomer(customerId) {
         type: CUSTOMER_LOAD_START
       })
     ).then(() => {
-      return request.get(`/api/customers/${customerId}`).set(
+      return request.get(`/invoice/api/customers/${customerId}`).set(
         'Accept', 'application/json'
       ).then(
         (response) => {

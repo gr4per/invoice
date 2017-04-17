@@ -12,7 +12,7 @@ export function loadMethodsOfPayment() {
         type: MOP_LOAD_START
       })
     ).then(() => {
-      return request.get(`/api/methodOfPayment`).set(
+      return request.get(`/invoice/api/methodOfPayment`).set(
         'Accept', 'application/json'
       ).then(
         (response) => {

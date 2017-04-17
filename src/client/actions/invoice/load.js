@@ -21,7 +21,7 @@ export function loadInvoice(id) {
         dispatch(showNotification('Messages.loadingData'))
       );
     }).then(() => {
-      return request.get(`/api/invoices/${id}`).set(
+      return request.get(`/invoice/api/invoices/${id}`).set(
         'Accept', 'application/json'
       ).then(
         (response) => {

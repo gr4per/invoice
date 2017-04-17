@@ -12,7 +12,7 @@ export function loadUnitsOfMeasure() {
         type: UOMS_LOAD_START
       })
     ).then(() => {
-      return request.get(`/api/unitsOfMeasure`).set(
+      return request.get(`/invoice/api/unitsOfMeasure`).set(
         'Accept', 'application/json'
       ).then(
         (response) => {

@@ -12,7 +12,7 @@ export function loadTermsOfPayment() {
         type: TOP_LOAD_START
       })
     ).then(() => {
-      return request.get(`/api/termsOfPayment`).set(
+      return request.get(`/invoice/api/termsOfPayment`).set(
         'Accept', 'application/json'
       ).then(
         (response) => {
