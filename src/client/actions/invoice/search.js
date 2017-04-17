@@ -1,11 +1,13 @@
 import request from 'superagent-bluebird-promise';
 import Promise from 'bluebird';
+import contentRange from 'content-range';
 import { getFormValues } from 'redux-form';
 import { INVOICES_LOAD_ERROR, INVOICES_LOAD_SUCCESS, INVOICES_LOAD_START } from '../../constants/invoice';
 import { showNotification, removeNotification } from '../notifications';
 import { SEARCH_INVOICE_FORM } from '../../constants/forms';
+import { COUNT } from '../../constants/pagination';
 
-export function searchInvoices() {
+export function searchInvoices(offset = 0, count = COUNT) {
   return function(dispatch, getState) {
     return Promise.resolve(
       dispatch({
@@ -16,13 +18,17 @@ export function searchInvoices() {
         dispatch(showNotification('Messages.loadingData'))
       );
     }).then(() => {
-      return request.get('/api/invoices').query(getFormValues(SEARCH_INVOICE_FORM)(getState())).set(
+      return request.get('/api/invoices')
+        .query(getFormValues(SEARCH_INVOICE_FORM)(getState()))
+        .query({offset: offset, count: count})
+        .set(
         'Accept', 'application/json'
       ).then(
         (response) => {
           dispatch({
             type: INVOICES_LOAD_SUCCESS,
-            invoices: response.body
+            invoices: response.body,
+            pagination: contentRange.parse(response.header['content-range'])
           })
         }
       ).catch((response) => {

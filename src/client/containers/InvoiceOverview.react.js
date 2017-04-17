@@ -7,13 +7,14 @@ import messages from './i18n/InvoiceOverview';
 @connect(
   state => ({
     invoices: state.invoiceOverview.invoices,
-    statuses: state.statuses.invoiceStatuses
+    statuses: state.statuses.invoiceStatuses,
+    pagination: state.invoiceOverview.pagination
   }),
   (dispatch) => {
     return {
-      handleSearchInvoices: () => {
-        dispatch(searchInvoices())
-      },
+      handleSearchInvoices: (offset, count) => {
+        dispatch(searchInvoices(offset, count))
+      }
       // handleDeleteInvoice: (invoiceId) => {
       //   dispatch(deleteCampaign(campaignId))
       // }
@@ -46,6 +47,7 @@ export default class InvoiceOverview extends Component {
         onSearch={this.props.handleSearchInvoices}
         invoices={this.props.invoices}
         statuses={this.props.statuses}
+        pagination={this.props.pagination}
         onEdit={(id) => (this.context.router.push(`/edit/${id}`))}
       />
     );

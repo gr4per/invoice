@@ -13,7 +13,7 @@ const SearchFrom = ({ onSearch, reset, statuses }, context) => {
           >
             {context.i18n.getMessage('Commands.reset')}
           </button>
-          <button className="btn btn-primary" type="button" onClick={onSearch}>
+          <button className="btn btn-primary" type="button" onClick={() => onSearch()}>
             {context.i18n.getMessage('Commands.search')}
           </button>
         </div>
