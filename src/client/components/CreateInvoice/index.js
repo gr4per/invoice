@@ -15,6 +15,7 @@ const CreateInvoiceMarkup = (props, context) => (
       methodsOfPayment={props.methodsOfPayment}
       currencies={props.currencies}
       onSaveInvoice={props.onSaveInvoice}
+      statusLabel={props.statusLabel}
     />
     <div className="form-submit text-right">
       <button className="btn btn-link" type="button" onClick={props.onCancel}>
@@ -39,6 +40,7 @@ CreateInvoiceMarkup.propTypes = {
   termsOfPayment: PropTypes.array,
   methodsOfPayment: PropTypes.array,
   currencies: PropTypes.array,
+  statusLabel: PropTypes.func.isRequired,
   onInvoiceHeaderFormSubmit: PropTypes.func.isRequired,
   onSaveInvoice: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,

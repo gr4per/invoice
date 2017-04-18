@@ -48,7 +48,7 @@ export function initInvoice(customerId) {
       type: INIT_NEW_INVOICE,
       invoice: {
         customerId: customerId,
-        statusId: _.find(getState().statuses.invoiceStatuses, { statusId: '100' }).statusId,
+        statusId: _.find(getState().statuses.invoice, { statusId: '100' }).statusId,
         intrastatId: '000',
         bookingDate: new Date()
       }

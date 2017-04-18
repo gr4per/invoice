@@ -11,7 +11,8 @@ const EditInvoiceHeaderFormWrapper = ({
   termsOfPayment,
   methodsOfPayment,
   currencies,
-  onUpdateInvoice
+  onUpdateInvoice,
+  statusLabel
 }) => {
   return createElement(reduxForm({
     form: EDIT_INVOICE_FORM,
@@ -27,7 +28,8 @@ const EditInvoiceHeaderFormWrapper = ({
       termsOfPayment: termsOfPayment,
       methodsOfPayment: methodsOfPayment,
       currencies: currencies,
-    }
+    },
+    statusLabel: statusLabel
   })(InvoiceHeaderForm));
 };
 
@@ -39,7 +41,8 @@ EditInvoiceHeaderFormWrapper.propTypes = {
   termsOfPayment: PropTypes.array,
   methodsOfPayment: PropTypes.array,
   currencies: PropTypes.array,
-  onUpdateInvoice: PropTypes.func.isRequired
+  onUpdateInvoice: PropTypes.func.isRequired,
+  statusLabel: PropTypes.func.isRequired,
 };
 
 export default EditInvoiceHeaderFormWrapper;

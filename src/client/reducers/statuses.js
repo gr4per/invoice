@@ -7,7 +7,7 @@ const invoiceStatuses = [
   { 'statusId': '820', 'description': 'registered' }
 ];
 
-export default function statuses(state = { invoiceStatuses: invoiceStatuses }, action) {
+export default function statuses(state = { invoice: invoiceStatuses }, action) {
   switch (action.type) {
     default:
       return state;

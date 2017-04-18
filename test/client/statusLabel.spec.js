@@ -1,16 +1,23 @@
-'use strict'
+'use strict';
 
 const assert = require('assert');
+const statusLabel = require('../../src/client/utils/statusLabel');
 
-// Put your Mocha tests here and run "npm test".
-describe("main", () =>
-{
-    describe("initialization", () =>
-    {
-        it("genesis testing", (done) =>
-        {
-            assert(true);
-            done()
-        });
-    });
+/**
+ * Unit tests for status lable calculation
+ */
+describe("statusLabel", () => {
+  const statuses = [
+    {statusId: 'testId0', description: "test_descriptions_0"},
+    {statusId: 'testId1', description: "test_descriptions_1"}
+  ];
+
+  it("testing correct label calculation", (done) => {
+    assert(statusLabel(statuses, 'testId0') === 'test_descriptions_0');
+    assert(statusLabel(statuses, 'testId1') === 'test_descriptions_1');
+  });
+
+  it("testing fallback calculation ", (done) => {
+    assert(statusLabel(statuses, 'testId3') === 'testId3');
+  });
 });

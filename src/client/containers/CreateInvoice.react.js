@@ -12,6 +12,7 @@ import { loadMethodsOfPayment } from '../actions/external/methodOfPayment';
 import { loadCustomer } from '../actions/external/customers';
 import { createInvoice, initInvoice } from '../actions/invoice/create';
 import CreateInvoiceMarkup from '../components/CreateInvoice';
+import statusLabel from '../utils/statusLabel';
 
 @connect(
   state => ({
@@ -21,7 +22,8 @@ import CreateInvoiceMarkup from '../components/CreateInvoice';
     termsOfDelivery: state.createInvoice.termsOfDelivery,
     termsOfPayment: state.createInvoice.termsOfPayment,
     methodsOfPayment: state.createInvoice.methodsOfPayment,
-    currencies: state.createInvoice.currencies
+    currencies: state.createInvoice.currencies,
+    statuses: state.statuses.invoice
   }),
   (dispatch) => {
     return {
@@ -46,6 +48,7 @@ export default class CreateInvoice extends Component {
     termsOfPayment: PropTypes.array,
     methodsOfPayment: PropTypes.array,
     currencies: PropTypes.array,
+    statuses: PropTypes.array,
 
     selectCustomer: PropTypes.func.isRequired,
     loadUserAssignment: PropTypes.func.isRequired,
@@ -81,7 +84,7 @@ export default class CreateInvoice extends Component {
 
   _detailsPageIsReadyForRendering() {
     const { invoice, customer, supplier, termsOfDelivery, termsOfPayment, methodsOfPayment, currencies } = this.props;
-    return invoice && customer && supplier && termsOfDelivery && termsOfPayment && methodsOfPayment && currencies
+    return invoice && customer && supplier && termsOfDelivery && termsOfPayment && methodsOfPayment && currencies;
   }
 
   render() {
@@ -96,6 +99,7 @@ export default class CreateInvoice extends Component {
       onInvoiceHeaderFormSubmit={this.props.handleInvoiceHeaderFormSubmit}
       onSaveInvoice={this.props.handleSaveInvoice}
       onCancel={() => (this.context.router.push('/invoice/'))}
+      statusLabel={statusLabel.bind(null, this.props.statuses)}
     /> : <SelectCustomerWizard onSelectCustomer={this.props.selectCustomer}/>
   }
 }

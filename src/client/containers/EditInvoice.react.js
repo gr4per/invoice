@@ -6,6 +6,7 @@ import { loadInvoice } from '../actions/invoice/load';
 import { updateInvoice } from '../actions/invoice/update';
 import { submit } from 'redux-form';
 import { EDIT_INVOICE_FORM } from '../constants/forms';
+import statusLabel from '../utils/statusLabel';
 
 @connect(
   state => ({
@@ -17,6 +18,7 @@ import { EDIT_INVOICE_FORM } from '../constants/forms';
     termsOfPayment: state.editInvoice.termsOfPayment,
     methodsOfPayment: state.editInvoice.methodsOfPayment,
     currencies: state.editInvoice.currencies,
+    statuses: state.statuses.invoice
   }),
   (dispatch) => {
     return {
@@ -42,6 +44,7 @@ export default class InvoiceDetails extends Component {
     termsOfPayment: PropTypes.array,
     methodsOfPayment: PropTypes.array,
     currencies: PropTypes.array,
+    statuses: PropTypes.array,
     params: PropTypes.object,
 
     loadInvoice: PropTypes.func.isRequired,
@@ -83,6 +86,7 @@ export default class InvoiceDetails extends Component {
         onUpdateInvoice={this.props.handleUpdateInvoice}
         onCancel={() => (router.push('/'))}
         onAddPositions={() => (router.push(`/invoice/edit/${router.params.id}/items`))}
+        statusLabel={statusLabel.bind(null, this.props.statuses)}
       /> : null;
   }
 }

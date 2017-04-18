@@ -17,12 +17,13 @@ export function loadCustomer(customerId) {
     ).then(() => {
       return request.get(`/invoice/api/customers/${customerId}`).set(
         'Accept', 'application/json'
-      ).then(
-        (response) => {
-          dispatch({
-            type: CUSTOMER_LOAD_SUCCESS,
-            customer: response.body
-          })
+      ).then((response) => {
+          return Promise.resolve(
+            dispatch({
+              type: CUSTOMER_LOAD_SUCCESS,
+              customer: response.body
+            })
+          )
         }
       ).catch((response) => {
         console.error(response);

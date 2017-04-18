@@ -3,17 +3,12 @@ import _ from 'lodash';
 import MessageInfo from '../common/MessageInfo.react';
 import { Button, Table, MenuItem, Glyphicon, Dropdown } from 'react-bootstrap';
 
-const SearchResult = ({ invoices, statuses, onEdit }, context) => {
+const SearchResult = ({ invoices, statusLabel, onEdit }, context) => {
   if (_.size(invoices) === 0) {
     return (
       <MessageInfo message="No Items"/>
     );
   } else {
-    const statusLabel = (statusId) => {
-      let status = _.find(statuses, { statusId: statusId });
-      return status ? status.description : statusId;
-    };
-
     return (
       <Table responsive={true}>
         <thead>
@@ -86,7 +81,7 @@ const SearchResult = ({ invoices, statuses, onEdit }, context) => {
 
 SearchResult.propTypes = {
   invoices: PropTypes.array,
-  statuses: PropTypes.array,
+  statusLabel: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired
 };
 

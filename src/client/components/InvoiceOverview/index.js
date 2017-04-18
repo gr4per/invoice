@@ -4,11 +4,11 @@ import SearchForm from './SearchForm.react';
 import {Pagination} from 'react-bootstrap';
 import {COUNT} from '../../constants/pagination';
 
-const InvoiceOverviewMarkup = ({ onSearch, onEdit, invoices, statuses, pagination }) => (
+const InvoiceOverviewMarkup = ({ onSearch, onEdit, invoices, statuses, statusLabel, pagination }) => (
   <div>
     <SearchForm onSearch={onSearch} statuses={statuses}/>
     <br/>
-    <SearchResult invoices={invoices} statuses={statuses} onEdit={onEdit}/>
+    <SearchResult invoices={invoices} statusLabel={statusLabel} onEdit={onEdit}/>
     <br/>
     <Pagination
       className={pagination.last === pagination.length ? 'hidden' : 'shown'}
@@ -28,6 +28,7 @@ InvoiceOverviewMarkup.propTypes = {
   onEdit: PropTypes.func.isRequired,
   invoices: PropTypes.array,
   statuses: PropTypes.array.isRequired,
+  statusLabel: PropTypes.func.isRequired,
   pagination: PropTypes.object.isRequired
 };
 

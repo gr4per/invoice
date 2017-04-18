@@ -35,7 +35,7 @@ const InvoiceHeaderForm = (props, context) => (
           <FormGroupMarkup label="Labels.status">
             <span className="label label-default">
               <nobr>
-                {props.initialValues.invoice.statusId}
+                {props.statusLabel(props.initialValues.invoice.statusId)}
               </nobr>
             </span>
           </FormGroupMarkup>
@@ -131,7 +131,8 @@ const InvoiceHeaderForm = (props, context) => (
 
 InvoiceHeaderForm.propTypes = {
   initialValues: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  statusLabel: PropTypes.func.isRequired
 };
 
 InvoiceHeaderForm.contextTypes = {

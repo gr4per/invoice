@@ -17,6 +17,7 @@ const EditInvoiceMarkup = (props, context) => (
       methodsOfPayment={props.methodsOfPayment}
       currencies={props.currencies}
       onUpdateInvoice={props.onUpdateInvoice}
+      statusLabel={props.statusLabel}
     />
     <div className="form-submit text-right">
       <button className="btn btn-link" type="button" onClick={props.onCancel}>
@@ -50,6 +51,7 @@ EditInvoiceMarkup.propTypes = {
   onUpdateInvoice: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onAddPositions: PropTypes.func.isRequired,
+  statusLabel: PropTypes.func.isRequired,
 };
 
 export default EditInvoiceMarkup;
