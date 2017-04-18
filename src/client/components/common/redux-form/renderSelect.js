@@ -11,14 +11,18 @@ import { FormControl } from 'react-bootstrap';
  * @return {function(*): XML}
  */
 const renderSelect = (values, toOptionConverter, defaultOption = null) => {
-  return (field) => (
-    <FormGroupMarkup label={field.label} required={field.required}>
-      <FormControl componentClass="select" {...field.input}>
-        {defaultOption ? defaultOption : null}
-        {values.map(toOptionConverter)}
-      </FormControl>
-    </FormGroupMarkup>
-  );
+  return (field) => {
+    const { meta: { touched, error } } = field;
+
+    return (
+      <FormGroupMarkup error={error && touched ? error : undefined} label={field.label} required={field.required}>
+        <FormControl componentClass="select" {...field.input}>
+          {defaultOption ? defaultOption : null}
+          {values.map(toOptionConverter)}
+        </FormControl>
+      </FormGroupMarkup>
+    );
+  }
 };
 
 export default renderSelect;

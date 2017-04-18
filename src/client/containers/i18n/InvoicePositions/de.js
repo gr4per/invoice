@@ -53,8 +53,14 @@ States.open = 'offen';
 States.registered = 'registriert';
 States.transferred = 'übertragen';
 
+let Errors = {};
+Errors.notNull = 'Die Eigenschaft darf nicht null sein';
+Errors.invalidNumber = 'Die Wert muss eine gültige Zahl sein';
+Errors.notGreaterThanOrEqualTo = "Der Wert ist kleiner als der Mindestwert von '0'";
+
 export default {
     Labels: Labels,
     States: States,
-    Commands: Commands
+    Commands: Commands,
+    Errors: Errors
 };

@@ -2,6 +2,8 @@ import { PropTypes, createElement } from 'react';
 import { reduxForm } from 'redux-form';
 import { CREATE_INVOICE_FORM } from '../../constants/forms';
 import InvoiceHeaderForm from '../InvoiceDetails/InvoiceHeaderForm.react'
+import {validateForm} from '../common/redux-form/validateForm';
+import constraints from '../InvoiceDetails/InvoiceHeaderFormConstraints';
 
 const CreateInvoiceHeaderFormWrapper = ({
   invoice,
@@ -26,7 +28,8 @@ const CreateInvoiceHeaderFormWrapper = ({
       termsOfPayment: termsOfPayment,
       methodsOfPayment: methodsOfPayment,
       currencies: currencies,
-    }
+    },
+    validate: validateForm(constraints)
   })(InvoiceHeaderForm));
 };
 

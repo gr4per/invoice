@@ -119,11 +119,17 @@ CreateInvoice.uploadInvoice = 'Upload Invoice';
 CreateInvoice.next = 'Next';
 CreateInvoice.browseFile = 'Browse file';
 
+let Errors = {};
+Errors.notNull = 'Property cannot be null';
+Errors.invalidNumber = 'Value must be a valid number';
+Errors.notGreaterThanOrEqualTo = "Value is less than minimum value '0'";
+
 export default {
   Labels: Labels,
   Commands: Commands,
   Events: Events,
   States: States,
   Types: Types,
-  CreateInvoice: CreateInvoice
+  CreateInvoice: CreateInvoice,
+  Errors: Errors
 };

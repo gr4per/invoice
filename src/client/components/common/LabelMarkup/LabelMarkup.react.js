@@ -1,23 +1,20 @@
 import './LabelMarkup.less';
-import React from 'react';
-import _ from 'lodash';
+import React, {PropTypes} from 'react';
 
-const LabelMarkup = (props) => {
-  let fieldId = props.children.props.id;
-  let errors = props.errors || [];
+const LabelMarkup = (props, context) => {
+
   let wrapperClass = props.wrapperClass || 'col-sm-7';
   let fieldError;
-  let error = _.find(errors, (it) => it.hasOwnProperty(fieldId));
 
-  if (error) {
+  if (props.error) {
     fieldError =
       (<div className="label label-danger error-container">
-        {error[fieldId]}
+        {context.i18n.getMessage(props.error)}
       </div>)
   }
 
   return (
-    <div className={`${wrapperClass} ${error ? 'has-error' : ''}`}>
+    <div className={`${wrapperClass} ${props.error ? 'has-error' : ''}`}>
       {props.children}
       {fieldError}
     </div>
@@ -25,8 +22,12 @@ const LabelMarkup = (props) => {
 };
 
 LabelMarkup.propTypes = {
-  errors: React.PropTypes.array,
+  error: React.PropTypes.string,
   wrapperClass: React.PropTypes.string,
+};
+
+LabelMarkup.contextTypes = {
+  i18n: PropTypes.object.isRequired
 };
 
 export default LabelMarkup;
