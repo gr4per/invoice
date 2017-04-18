@@ -53,8 +53,14 @@ States.open = 'Open';
 States.registered = 'Registered';
 States.transferred = 'Transferred';
 
+let Errors = {};
+Errors.notNull = 'Property cannot be null';
+Errors.invalidNumber = 'Value must be a valid number';
+Errors.notGreaterThanOrEqualTo = "Value is less than minimum value '0'";
+
 export default {
     Labels: Labels,
     States: States,
-    Commands: Commands
+    Commands: Commands,
+    Errors: Errors
 };

@@ -3,6 +3,8 @@ import { reduxForm } from 'redux-form';
 import InvoiceItemForm from './InvoiceItemForm.react';
 import InvoiceItemFormActionPanel from './InvoiceItemFormActionPanel.react';
 import { INVOICE_ITEM_FORM } from '../../constants/forms';
+import {validateForm} from '../common/redux-form/validateForm';
+import constraints from './InvoiceItemFormConstraints';
 
 const InvoiceItemFormWrapper = ({
   onBackToInvoice,
@@ -26,7 +28,8 @@ const InvoiceItemFormWrapper = ({
             uomId: unitsOfMeasure? unitsOfMeasure[0].id : 0
           }
         },
-        unitsOfMeasure: unitsOfMeasure
+        unitsOfMeasure: unitsOfMeasure,
+        validate: validateForm(constraints)
       })(InvoiceItemForm))}
       <InvoiceItemFormActionPanel onReset={onReset} onBackToInvoice={onBackToInvoice} onSubmit={onInvoiceItemFormSubmit}/>
     </div>

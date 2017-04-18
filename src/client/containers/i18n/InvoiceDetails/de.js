@@ -120,11 +120,17 @@ CreateInvoice.uploadInvoice = 'Rechnung hochladen';
 CreateInvoice.next = 'Weiter';
 CreateInvoice.browseFile = 'Dateiverzeichnis durchsuchen';
 
+let Errors = {};
+Errors.notNull = 'Die Eigenschaft darf nicht null sein';
+Errors.invalidNumber = 'Die Wert muss eine gültige Zahl sein';
+Errors.notGreaterThanOrEqualTo = "Der Wert ist kleiner als der Mindestwert von '0'";
+
 export default {
   Labels: Labels,
   Commands: Commands,
   Events: Events,
   States: States,
   Types: Types,
-  CreateInvoice: CreateInvoice
+  CreateInvoice: CreateInvoice,
+  Errors: Errors
 };

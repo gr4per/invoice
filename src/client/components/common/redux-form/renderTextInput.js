@@ -9,9 +9,9 @@ import { FormControl } from 'react-bootstrap';
  */
 const renderTextInput = (field) => {
   const { meta: { touched, error } } = field;
-  let hasError = !_.isEmpty(error) && touched;
+
   return (
-    <FormGroupMarkup errors={hasError ? error : undefined} label={field.label} required={field.required}>
+    <FormGroupMarkup error={error && touched ? error : undefined} label={field.label} required={field.required}>
       <FormControl
         {...field.input}
         disabled={field.disabled}
