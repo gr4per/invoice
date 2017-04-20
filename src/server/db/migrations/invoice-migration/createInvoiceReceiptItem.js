@@ -139,7 +139,8 @@ module.exports = function(queryInterface) {
       references: {
         model: 'InvoiceReceipt',
         key: 'InvoiceReceiptSN'
-      }
+      },
+      onDelete: 'CASCADE'
     },
     ManufacturerID: {
       type: Sequelize.STRING(10),

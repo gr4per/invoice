@@ -3,7 +3,7 @@ import _ from 'lodash';
 import MessageInfo from '../common/MessageInfo.react';
 import { Button, Table, MenuItem, Glyphicon, Dropdown } from 'react-bootstrap';
 
-const SearchResult = ({ invoices, statusLabel, onEdit }, context) => {
+const SearchResult = ({ invoices, statusLabel, onEdit, showDeleteModal }, context) => {
   if (_.size(invoices) === 0) {
     return (
       <MessageInfo message="No Items"/>
@@ -66,6 +66,10 @@ const SearchResult = ({ invoices, statusLabel, onEdit }, context) => {
                       <MenuItem href={`convert/${inv.key}`}>
                         <i className="fa fa-print" /> {context.i18n.getMessage('Commands.print')}
                       </MenuItem>
+                      <MenuItem className={_.includes(['390', '400'], inv.statusId) ? 'hidden' : ''}
+                                onClick={() => showDeleteModal({isShown: true, invoiceId: inv.key})}>
+                        <i className="fa fa-trash" /> {context.i18n.getMessage('Commands.delete')}
+                      </MenuItem>
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
@@ -82,6 +86,7 @@ const SearchResult = ({ invoices, statusLabel, onEdit }, context) => {
 SearchResult.propTypes = {
   invoices: PropTypes.array,
   statusLabel: PropTypes.func.isRequired,
+  showDeleteModal: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired
 };
 

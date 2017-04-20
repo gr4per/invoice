@@ -677,8 +677,7 @@ module.exports.init = function(db, config) {
           models.InvoiceReceipt.hasMany(models.InvoiceReceiptItem, {
             as: 'invoiceReceiptItems',
             foreignKey: 'InvoiceReceiptSN',
-            targetKey: 'InvoiceReceiptSN',
-            onDelete: 'cascade'
+            targetKey: 'InvoiceReceiptSN'
           });
         }
       },

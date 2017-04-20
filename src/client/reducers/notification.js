@@ -10,7 +10,8 @@ export default function notification(state = { position: 'tc' }, action) {
         level: action.level,
         autoDismiss: action.autoDismiss,
         dismissible: action.dismissible,
-        uid: _.uniqueId('notification_')
+        uid: _.uniqueId('notification_'),
+        attributes: action.attributes
       };
     case REMOVE_NOTIFICATION:
       return {

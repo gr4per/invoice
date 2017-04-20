@@ -8,8 +8,10 @@ Labels.status = 'Status';
 Labels.supplier = 'Supplier';
 Labels.customer = 'Customer';
 Labels.purchaseOrderId = 'Purchase Order ID';
+Labels.areYouSure = 'Are you sure?';
 Labels.questionInvoiceDelete = 'Do you really want to delete this Invoice?';
-Labels.invoiceDeleted = 'Invoice Receipt by Int. Invoice No "{invoiceReceiptId}" was deleted.';
+Labels.invoiceDeleted = 'Invoice Receipt was deleted.';
+Labels.notDeleted = 'Invoice Receipt was not deleted.';
 
 Labels.intInvoiceNo = 'Int. Invoice No.';
 Labels.extInvoiceNo = 'Ext. Invoice No.';
