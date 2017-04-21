@@ -13,6 +13,7 @@ const currency = require('./currency');
 const userAssignment = require('./userAssignment');
 const unitsOfMeasure = require('./unitsOfMeasure');
 const attachments = require('./attachments');
+const invoicereceiptImport = require('./invoicereceiptImport');
 const epilogue = require('epilogue');
 
 /**
@@ -43,6 +44,7 @@ module.exports.init = function(app, db, config) {
   userAssignment(app, db);
   currency(app, db);
   unitsOfMeasure(app, db);
+  invoicereceiptImport(app, db);
   attachments(app, db, config.workareaDir);
 
   // Always return a promise.
