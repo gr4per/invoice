@@ -5,6 +5,7 @@ import InvoiceOverview from '../containers/InvoiceOverview.react';
 import EditInvoice from '../containers/EditInvoice.react';
 import InvoicePositions from '../containers/InvoicePositions.react';
 import CreateInvoice from '../containers/CreateInvoice.react';
+import InvoiceImport from '../containers/InvoiceImport.react';
 
 export default (pathPrefix) => {
   return (
@@ -13,6 +14,7 @@ export default (pathPrefix) => {
       <Route path="/invoice/create" component={CreateInvoice}/>
       <Route path="/invoice/edit/:id" component={EditInvoice}/>
       <Route path="/invoice/edit/:id/items" component={InvoicePositions}/>
+      <Route path="/invoice/import" component={InvoiceImport}/>
     </Route>
   );
 }

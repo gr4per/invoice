@@ -37,7 +37,9 @@
     "opuscapita-i18n": "1.0.10",
     "react-notification-system": "^0.2.10",
     "lodash": "4.16.6",
-    "content-range": "1.1.0"
+    "content-range": "1.1.0",
+    "react-dropzone": "^3.7.3",
+    "async": "^2.3.0"
   },
   "devDependencies": {
     "command-line-args": "^4.0.1",

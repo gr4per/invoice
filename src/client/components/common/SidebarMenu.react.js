@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 /**
  * OpusCaputa sidebar menu
@@ -15,14 +16,19 @@ const SidebarMenu = () => (
       </div>
       <ul className="nav navbar-nav">
         <li key="InvoiceOverview">
-          <a href="/invoice/">
+          <Link to="/invoice/">
             Invoice Overview
-          </a>
+          </Link>
         </li>
         <li key="CreateInvoice">
-          <a href="/invoice/create">
+          <Link to="/invoice/create">
             Create Invoice Manually
-          </a>
+          </Link>
+        </li>
+        <li key="InvoiceImport">
+          <Link to="/invoice/import">
+            Import Invoices
+          </Link>
         </li>
       </ul>
     </nav>
