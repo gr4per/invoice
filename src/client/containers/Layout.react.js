@@ -27,7 +27,7 @@ export default class Layout extends Component {
       this.refs.notificationSystem.addNotification(
         {
           ...notification,
-          message: this.context.i18n.getMessage(notification.message)
+          message: this.context.i18n.getMessage(notification.message, notification.attributes)
         }
       );
     } else {

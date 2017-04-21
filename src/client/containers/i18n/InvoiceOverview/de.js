@@ -8,8 +8,10 @@ Labels.status = 'Status';
 Labels.supplier = 'Lieferant';
 Labels.customer = 'Kunde';
 Labels.purchaseOrderId = 'Bestell-Nr.';
+Labels.areYouSure = 'Sind Sie sicher?';
 Labels.questionInvoiceDelete = 'Möchten Sie die Rechnung wirklich löschen?';
-Labels.invoiceDeleted = 'Rechnung mit Int. Rechnungsnr. "{invoiceReceiptId}" wurde gelöscht.';
+Labels.invoiceDeleted = 'Rechnung wurde gelöscht.';
+Labels.notDeleted = "Achtung: Rechnung konnte nicht gelöscht werden.";
 
 Labels.intInvoiceNo = 'Int. Re.-Nr.';
 Labels.extInvoiceNo = 'Fremdbelegnummer';

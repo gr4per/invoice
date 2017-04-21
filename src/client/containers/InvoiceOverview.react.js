@@ -1,25 +1,39 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { searchInvoices } from '../actions/invoice/search';
+import { deleteInvoice } from '../actions/invoice/delete';
 import InvoiceOverviewMarkup from '../components/InvoiceOverview';
 import messages from './i18n/InvoiceOverview';
 import statusLabel from '../utils/statusLabel';
+import { SHOW_DELETE_MODAL } from '../constants/modals';
+import _ from 'lodash';
 
 @connect(
   state => ({
     invoices: state.invoiceOverview.invoices,
     pagination: state.invoiceOverview.pagination,
     statuses: state.statuses.invoice,
-    statusLabel: (statusId) => (statusLabel(state.statuses.invoice, statusId))
+    statusLabel: (statusId) => (statusLabel(state.statuses.invoice, statusId)),
+    isEditable: (statusId) => {
+      return !_.includes(['approved', 'transferred'],
+        (state.statuses.invoice.find((status) => status.statusId === statusId) || {}).description)
+    },
+    deleteModal: state.modals.deleteModal
   }),
   (dispatch) => {
     return {
       handleSearchInvoices: (offset, count) => {
         dispatch(searchInvoices(offset, count))
+      },
+      handleDeleteInvoice: (id) => {
+        dispatch(deleteInvoice(id))
+      },
+      showDeleteModal: (deleteModal) => {
+        dispatch({
+          type: SHOW_DELETE_MODAL,
+          deleteModal: deleteModal
+        })
       }
-      // handleDeleteInvoice: (invoiceId) => {
-      //   dispatch(deleteCampaign(campaignId))
-      // }
     }
   }
 )
@@ -53,6 +67,10 @@ export default class InvoiceOverview extends Component {
         statusLabel={this.props.statusLabel}
         pagination={this.props.pagination}
         onEdit={(id) => (this.context.router.push(`/invoice/edit/${id}`))}
+        onDelete={this.props.handleDeleteInvoice}
+        showDeleteModal={this.props.showDeleteModal}
+        deleteModal={this.props.deleteModal}
+        isEditable={this.props.isEditable}
       />
     );
   }

@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { renderTextInput } from '../common/redux-form';
 import { CREATE_INVOICE_FORM } from '../../constants/forms';
+import { validateForm } from '../common/redux-form/validateForm';
+import constraints from './SelectCustomerWizardConstraints';
 
 const SelectCustomerWizard = ({ handleSubmit, onSelectCustomer }, context) => (
   <div>
@@ -42,5 +44,6 @@ export default reduxForm({
   form: CREATE_INVOICE_FORM,
   initialValues: {
     invoice: {}
-  }
+  },
+  validate: validateForm(constraints)
 })(SelectCustomerWizard);

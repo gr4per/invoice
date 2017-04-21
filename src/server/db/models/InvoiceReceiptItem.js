@@ -579,7 +579,8 @@ module.exports.init = function(db, config) {
           });
           models.InvoiceReceiptItem.belongsTo(models.InvoiceReceipt, {
             as: 'invoiceReceipt',
-            foreignKey: 'InvoiceReceiptSN'
+            foreignKey: 'InvoiceReceiptSN',
+            onDelete: 'cascade'
           });
         }
       },
