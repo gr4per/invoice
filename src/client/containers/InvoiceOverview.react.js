@@ -6,6 +6,7 @@ import InvoiceOverviewMarkup from '../components/InvoiceOverview';
 import messages from './i18n/InvoiceOverview';
 import statusLabel from '../utils/statusLabel';
 import { SHOW_DELETE_MODAL } from '../constants/modals';
+import _ from 'lodash';
 
 @connect(
   state => ({
@@ -13,6 +14,10 @@ import { SHOW_DELETE_MODAL } from '../constants/modals';
     pagination: state.invoiceOverview.pagination,
     statuses: state.statuses.invoice,
     statusLabel: (statusId) => (statusLabel(state.statuses.invoice, statusId)),
+    isEditable: (statusId) => {
+      return !_.includes(['approved', 'transferred'],
+        (state.statuses.invoice.find((status) => status.statusId === statusId) || {}).description)
+    },
     deleteModal: state.modals.deleteModal
   }),
   (dispatch) => {
@@ -65,6 +70,7 @@ export default class InvoiceOverview extends Component {
         onDelete={this.props.handleDeleteInvoice}
         showDeleteModal={this.props.showDeleteModal}
         deleteModal={this.props.deleteModal}
+        isEditable={this.props.isEditable}
       />
     );
   }

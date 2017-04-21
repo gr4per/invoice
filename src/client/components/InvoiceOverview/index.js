@@ -5,11 +5,11 @@ import { Pagination } from 'react-bootstrap';
 import { COUNT } from '../../constants/pagination';
 import InvoiceDeleteModal from "./InvoiceDeleteModal.react";
 
-const InvoiceOverviewMarkup = ({ onSearch, onEdit, onDelete, invoices, statuses, statusLabel, pagination, deleteModal, showDeleteModal }) => (
+const InvoiceOverviewMarkup = ({ onSearch, onEdit, onDelete, invoices, statuses, statusLabel, pagination, deleteModal, showDeleteModal, isEditable }) => (
   <div>
     <SearchForm onSearch={onSearch} statuses={statuses}/>
     <br/>
-    <SearchResult invoices={invoices} statusLabel={statusLabel} onEdit={onEdit} showDeleteModal={showDeleteModal}/>
+    <SearchResult invoices={invoices} statusLabel={statusLabel} onEdit={onEdit} showDeleteModal={showDeleteModal} isEditable={isEditable}/>
     <br/>
     <Pagination
       className={pagination.last === pagination.length ? 'hidden' : 'shown'}
@@ -34,7 +34,8 @@ InvoiceOverviewMarkup.propTypes = {
   statuses: PropTypes.array.isRequired,
   statusLabel: PropTypes.func.isRequired,
   pagination: PropTypes.object.isRequired,
-  deleteModal: PropTypes.object.isRequired
+  deleteModal: PropTypes.object.isRequired,
+  isEditable: PropTypes.func.isRequired
 };
 
 export default InvoiceOverviewMarkup;
