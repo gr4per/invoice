@@ -7,7 +7,8 @@ module.exports = function(app, db) {
     '/',
     '/edit/:id',
     '/edit/:id/items',
-    '/create'
+    '/create',
+    '/import'
   ], (req, res) => {
     res.sendFile(path.normalize(__dirname + '/../static/index.html'));
   });
