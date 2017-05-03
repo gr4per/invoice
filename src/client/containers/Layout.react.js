@@ -46,7 +46,7 @@ export default class Layout extends Component {
       <span>
         <SidebarMenu/>
         <section className="content">
-          <div className="container">
+          <div className="container-fluid">
             <NotificationSystem ref="notificationSystem"/>
             <div>
               {this.props.children}

@@ -35,10 +35,6 @@ export function loadInvoice(id) {
         return Promise.all([
           loadSupplier(invoice.supplierId)(dispatch, getState),
           loadCustomer(invoice.customerId)(dispatch, getState),
-          loadTermsOfDelivery()(dispatch, getState),
-          loadTermsOfPayment()(dispatch, getState),
-          loadMethodsOfPayment()(dispatch, getState),
-          loadCurrencies()(dispatch, getState),
           loadInvoiceItems(invoice.key)(dispatch, getState)
         ])
       }).catch((response) => {

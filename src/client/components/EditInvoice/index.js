@@ -5,9 +5,6 @@ import InvoiceItemsPricePanel from '../InvoicePositions/InvoiceItemsPricePanel.r
 
 const EditInvoiceMarkup = (props, context) => (
   <div>
-    <h1>
-      {context.i18n.getMessage('Labels.editIR')}
-    </h1>
     <EditInvoiceHeaderFormWrapper
       invoice={props.invoice}
       customer={props.customer}

@@ -6,10 +6,12 @@ import InvoiceOverviewMarkup from '../components/InvoiceOverview';
 import messages from './i18n/InvoiceOverview';
 import statusLabel from '../utils/statusLabel';
 import { SHOW_DELETE_MODAL } from '../constants/modals';
+import { EDIT_INVOICE } from '../constants/invoice';
 import _ from 'lodash';
 
 @connect(
   state => ({
+    editInvoiceId: state.invoiceOverview.editInvoiceId,
     invoices: state.invoiceOverview.invoices,
     pagination: state.invoiceOverview.pagination,
     statuses: state.statuses.invoice,
@@ -27,6 +29,12 @@ import _ from 'lodash';
       },
       handleDeleteInvoice: (id) => {
         dispatch(deleteInvoice(id))
+      },
+      handleEditInvoice: (id) => {
+        dispatch({
+          type: EDIT_INVOICE,
+          editInvoiceId: id
+        })
       },
       showDeleteModal: (deleteModal) => {
         dispatch({
@@ -66,7 +74,8 @@ export default class InvoiceOverview extends Component {
         statuses={this.props.statuses}
         statusLabel={this.props.statusLabel}
         pagination={this.props.pagination}
-        onEdit={(id) => (this.context.router.push(`/invoice/edit/${id}`))}
+        editInvoiceId={this.props.editInvoiceId}
+        onEdit={this.props.handleEditInvoice}
         onDelete={this.props.handleDeleteInvoice}
         showDeleteModal={this.props.showDeleteModal}
         deleteModal={this.props.deleteModal}

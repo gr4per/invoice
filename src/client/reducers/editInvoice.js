@@ -4,8 +4,9 @@ import { MOP_LOAD_SUCCESS } from '../constants/methodOfPayment';
 import { TOP_LOAD_SUCCESS } from '../constants/termsOfPayment';
 import { TOD_LOAD_SUCCESS } from '../constants/termsOfDelivery';
 import { CURRENCIES_LOAD_SUCCESS } from '../constants/currency';
-import { INVOICE_LOAD_ERROR, INVOICE_LOAD_SUCCESS, INVOICE_LOAD_START } from '../constants/invoice';
+import { INVOICE_LOAD_ERROR, INVOICE_LOAD_SUCCESS, INVOICE_LOAD_START, INVOICE_UNLOAD } from '../constants/invoice';
 import { INVOICE_ITEMS_LOAD_SUCCESS } from '../constants/invoiceItem';
+import _ from 'lodash';
 
 // State of editInvoice reducer:
 // {
@@ -74,6 +75,8 @@ export default function editInvoice(state = {}, action) {
         loading: false,
         error: action.error
       };
+    case INVOICE_UNLOAD:
+      return _.omit(state, ['invoice', 'customer', 'supplier', 'items']);
     default:
       return state;
   }

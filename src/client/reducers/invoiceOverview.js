@@ -1,4 +1,4 @@
-import { INVOICES_LOAD_ERROR, INVOICES_LOAD_SUCCESS, INVOICES_LOAD_START } from '../constants/invoice';
+import { INVOICES_LOAD_ERROR, INVOICES_LOAD_SUCCESS, INVOICES_LOAD_START, EDIT_INVOICE } from '../constants/invoice';
 
 // State of invoiceOverview reducer:
 // {
@@ -27,6 +27,11 @@ export default function invoiceOverview(state = {pagination: {first: 0, last: 0,
         loading: false,
         error: action.error
       };
+    case EDIT_INVOICE:
+      return {
+        ...state,
+        editInvoiceId: action.editInvoiceId
+      }
     default:
       return state;
   }

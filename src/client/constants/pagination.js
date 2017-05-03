@@ -1,1 +1,1 @@
-export const COUNT = 10;
+export const COUNT = 5;

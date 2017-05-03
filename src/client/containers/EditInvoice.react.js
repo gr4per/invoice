@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import messages from './i18n/InvoiceDetails';
 import EditInvoiceMarkup from '../components/EditInvoice';
 import { loadInvoice } from '../actions/invoice/load';
+import { loadInvoiceMasterData } from '../actions/invoice/loadMasterData';
 import { updateInvoice } from '../actions/invoice/update';
 import { submit } from 'redux-form';
 import { EDIT_INVOICE_FORM } from '../constants/forms';
+import { EDIT_INVOICE, INVOICE_UNLOAD } from '../constants/invoice';
 import statusLabel from '../utils/statusLabel';
 
 @connect(
@@ -25,11 +27,20 @@ import statusLabel from '../utils/statusLabel';
       loadInvoice: (id) => {
         dispatch(loadInvoice(id))
       },
+      loadInvoiceMasterData: () => {
+        dispatch(loadInvoiceMasterData())
+      },
+      unloadInvoice: () => {
+        dispatch({type: INVOICE_UNLOAD})
+      },
       handleInvoiceHeaderFormSubmit: () => {
         dispatch(submit(EDIT_INVOICE_FORM))
       },
       handleUpdateInvoice: (invoice) => {
         dispatch(updateInvoice(invoice))
+      },
+      handleCancel: () => {
+        dispatch({type: EDIT_INVOICE})
       }
     }
   }
@@ -48,8 +59,11 @@ export default class InvoiceDetails extends Component {
     params: PropTypes.object,
 
     loadInvoice: PropTypes.func.isRequired,
+    loadInvoiceMasterData: PropTypes.func.isRequired,
+    unloadInvoice: PropTypes.func.isRequired,
     handleInvoiceHeaderFormSubmit: PropTypes.func.isRequired,
     handleUpdateInvoice: PropTypes.func.isRequired,
+    handleCancel: PropTypes.func.isRequired
   };
 
   static contextTypes = {
@@ -59,7 +73,13 @@ export default class InvoiceDetails extends Component {
 
   componentWillMount() {
     this.context.i18n.register('InvoiceDetails', messages);
-    this.props.loadInvoice(this.props.params.id);
+    this.props.loadInvoiceMasterData();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.invoiceId !== this.props.invoiceId) {
+      nextProps.invoiceId ? this.props.loadInvoice(nextProps.invoiceId) : this.props.unloadInvoice();
+    }
   }
 
   _isReadyForRendering() {
@@ -84,8 +104,8 @@ export default class InvoiceDetails extends Component {
 
         onInvoiceHeaderFormSubmit={this.props.handleInvoiceHeaderFormSubmit}
         onUpdateInvoice={this.props.handleUpdateInvoice}
-        onCancel={() => (router.push('/'))}
-        onAddPositions={() => (router.push(`/invoice/edit/${router.params.id}/items`))}
+        onCancel={this.props.handleCancel}
+        onAddPositions={() => (router.push(`/invoice/edit/${this.props.invoiceId}/items`))}
         statusLabel={statusLabel.bind(null, this.props.statuses)}
       /> : null;
   }

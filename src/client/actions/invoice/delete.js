@@ -1,6 +1,6 @@
 import request from 'superagent-bluebird-promise';
 import Promise from 'bluebird';
-import { INVOICE_DELETE_ERROR, INVOICE_DELETE_SUCCESS, INVOICE_DELETE_START } from '../../constants/invoice';
+import { INVOICE_DELETE_ERROR, INVOICE_DELETE_SUCCESS, INVOICE_DELETE_START, EDIT_INVOICE } from '../../constants/invoice';
 import { SHOW_DELETE_MODAL } from '../../constants/modals';
 import { COUNT } from '../../constants/pagination';
 import { searchInvoices } from './search';
@@ -14,9 +14,9 @@ export const deleteInvoice = (id) => {
         deleteModal: {isShown: false}
       })
     ).then(() => {
-      dispatch({
-        type: INVOICE_DELETE_START
-      });
+      return Promise.resolve(
+        dispatch({type: INVOICE_DELETE_START})
+      );
     }).then(() => {
       return request.delete(`/invoice/api/invoices/${id}`).set(
         'Accept', 'application/json'
@@ -25,13 +25,19 @@ export const deleteInvoice = (id) => {
       return Promise.resolve(
         dispatch(showNotification('Labels.invoiceDeleted', 'success'))
       ).then(() => {
-        dispatch({
-          type: INVOICE_DELETE_SUCCESS
-        });
+        return Promise.resolve(
+          dispatch({type: INVOICE_DELETE_SUCCESS})
+        );
       }).then(() => {
         const pagination = getState().invoiceOverview.pagination;
         const shift = (pagination.last / pagination.first) === 1 ? 1 : 0;
-        dispatch(searchInvoices(COUNT * (Math.floor(pagination.first / COUNT) - shift)));
+        return Promise.resolve(
+          dispatch(searchInvoices(COUNT * (Math.floor(pagination.first / COUNT) - shift)))
+        );
+      }).then(() => {
+        if (getState().invoiceOverview.editInvoiceId === id) {
+          dispatch({type: EDIT_INVOICE});
+        };
       });
     }).catch((response) => {
       return Promise.resolve(

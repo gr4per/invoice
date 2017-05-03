@@ -12,7 +12,6 @@ export default (pathPrefix) => {
     <Route component={Layout}>
       <Route path="/invoice/" component={InvoiceOverview}/>
       <Route path="/invoice/create" component={CreateInvoice}/>
-      <Route path="/invoice/edit/:id" component={EditInvoice}/>
       <Route path="/invoice/edit/:id/items" component={InvoicePositions}/>
       <Route path="/invoice/import" component={InvoiceImport}/>
     </Route>
