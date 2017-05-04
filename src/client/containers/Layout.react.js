@@ -45,7 +45,7 @@ export default class Layout extends Component {
     return (
       <span>
         <SidebarMenu/>
-        <section className="content">
+        <section className="content" style={{'backgroundColor': 'white'}}>
           <div className="container-fluid">
             <NotificationSystem ref="notificationSystem"/>
             <div>

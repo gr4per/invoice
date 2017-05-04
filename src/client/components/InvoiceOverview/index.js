@@ -47,7 +47,7 @@ const InvoiceOverviewMarkup = (
     <div className="row equal">
       <div className="col-md-6">
         {/* Rendering static pdf for test purposes */}
-        <object width="100%" height="100%" data={editInvoiceId ? "/invoice/static/test/invoiceReceipt_TEST.pdf" : ''}></object>
+        <object width="100%" height="100%" data={editInvoiceId ? "/invoice/static/test_workarea/invoiceReceipt_TEST.pdf" : ''}></object>
       </div>
       <div className="col-md-6"><EditInvoice invoiceId={editInvoiceId}/></div>
     </div>
