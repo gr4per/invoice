@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { searchInvoices } from '../actions/invoice/search';
 import { deleteInvoice } from '../actions/invoice/delete';
+import { markForExport } from '../actions/invoice/export';
+import { unMarkForExport } from '../actions/invoice/export';
+import { exportInvoices } from '../actions/invoice/export';
 import InvoiceOverviewMarkup from '../components/InvoiceOverview';
 import messages from './i18n/InvoiceOverview';
 import statusLabel from '../utils/statusLabel';
@@ -20,7 +23,9 @@ import _ from 'lodash';
       return !_.includes(['approved', 'transferred'],
         (state.statuses.invoice.find((status) => status.statusId === statusId) || {}).description)
     },
-    deleteModal: state.modals.deleteModal
+    deleteModal: state.modals.deleteModal,
+    checkedInvoices: state.invoiceOverview.checked,
+    exportLink: state.invoiceOverview.exportLink
   }),
   (dispatch) => {
     return {
@@ -41,16 +46,22 @@ import _ from 'lodash';
           type: SHOW_DELETE_MODAL,
           deleteModal: deleteModal
         })
-      }
+      },
+      markForExport: (idList) => (dispatch(markForExport(idList))),
+      unMarkForExport: (idList) => (dispatch(unMarkForExport(idList)))
     }
   }
 )
 export default class InvoiceOverview extends Component {
   static propTypes = {
     invoices: PropTypes.array,
+    checkedInvoices: PropTypes.array,
     statuses: PropTypes.array,
     statusLabel: PropTypes.func.isRequired,
-    handleSearchInvoices: PropTypes.func.isRequired
+    handleSearchInvoices: PropTypes.func.isRequired,
+    markForExport: PropTypes.func.isRequired,
+    unMarkForExport: PropTypes.func.isRequired,
+    exportLink: PropTypes.string.isRequired
   };
 
   static contextTypes = {
@@ -71,6 +82,7 @@ export default class InvoiceOverview extends Component {
       <InvoiceOverviewMarkup
         onSearch={this.props.handleSearchInvoices}
         invoices={this.props.invoices}
+        checkedInvoices={this.props.checkedInvoices}
         statuses={this.props.statuses}
         statusLabel={this.props.statusLabel}
         pagination={this.props.pagination}
@@ -80,6 +92,9 @@ export default class InvoiceOverview extends Component {
         showDeleteModal={this.props.showDeleteModal}
         deleteModal={this.props.deleteModal}
         isEditable={this.props.isEditable}
+        markForExport={this.props.markForExport}
+        unMarkForExport={this.props.unMarkForExport}
+        exportLink={this.props.exportLink}
       />
     );
   }

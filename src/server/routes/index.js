@@ -13,6 +13,7 @@ const currency = require('./currency');
 const userAssignment = require('./userAssignment');
 const unitsOfMeasure = require('./unitsOfMeasure');
 const invoicereceiptImport = require('./invoicereceiptImport');
+const invoiceReceiptExport = require('./invoiceReceiptExport');
 const epilogue = require('epilogue');
 
 /**
@@ -32,6 +33,7 @@ module.exports.init = function(app, db, config) {
     base: '/api'
   });
 
+  invoiceReceiptExport(app, db);
   invoiceRoutes(epilogue, db);
   invoiceItemsRoutes(epilogue, db);
   staticResources(app, db);
