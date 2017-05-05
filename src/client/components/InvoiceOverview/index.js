@@ -6,20 +6,25 @@ import { Pagination } from 'react-bootstrap';
 import { COUNT } from '../../constants/pagination';
 import InvoiceDeleteModal from "./InvoiceDeleteModal.react";
 import EditInvoice from '../../containers/EditInvoice.react';
+import ActionBar from './ActionBar.react';
 
-const InvoiceOverviewMarkup = (
-  { onSearch,
-    onEdit,
-    onDelete,
-    invoices,
-    statuses,
-    statusLabel,
-    pagination,
-    deleteModal,
-    showDeleteModal,
-    isEditable,
-    editInvoiceId
-    }) => (
+const InvoiceOverviewMarkup = ({
+  onSearch,
+  onEdit,
+  onDelete,
+  invoices,
+  statuses,
+  statusLabel,
+  pagination,
+  deleteModal,
+  showDeleteModal,
+  isEditable,
+  editInvoiceId,
+  checkedInvoices,
+  markForExport,
+  unMarkForExport,
+  exportLink
+}) => (
   <div>
     <div className="row">
       <div className="col-md-12">
@@ -30,7 +35,13 @@ const InvoiceOverviewMarkup = (
           statusLabel={statusLabel}
           onEdit={onEdit}
           showDeleteModal={showDeleteModal}
-          isEditable={isEditable}/>
+          isEditable={isEditable}
+          checkedInvoices={checkedInvoices}
+          markForExport={markForExport}
+          unMarkForExport={unMarkForExport}
+        />
+        <br/>
+        <ActionBar exportLink={exportLink}/>
         <br/>
         <Pagination
           className={pagination.last === pagination.length ? 'hidden' : 'shown'}
@@ -47,11 +58,12 @@ const InvoiceOverviewMarkup = (
     <div className="row equal">
       <div className="col-md-6">
         {/* Rendering static pdf for test purposes */}
-        <object width="100%" height="100%" data={editInvoiceId ? "/invoice/static/test_workarea/invoiceReceipt_TEST.pdf" : ''}></object>
+        <object width="100%" height="100%"
+                data={editInvoiceId ? "/invoice/static/test_workarea/invoiceReceipt_TEST.pdf" : ''}></object>
       </div>
       <div className="col-md-6"><EditInvoice invoiceId={editInvoiceId}/></div>
     </div>
-    <InvoiceDeleteModal {...deleteModal} onDelete={onDelete} onCancel={() => showDeleteModal({isShown: false})}/>
+    <InvoiceDeleteModal {...deleteModal} onDelete={onDelete} onCancel={() => showDeleteModal({ isShown: false })}/>
   </div>
 );
 
@@ -65,7 +77,11 @@ InvoiceOverviewMarkup.propTypes = {
   statusLabel: PropTypes.func.isRequired,
   pagination: PropTypes.object.isRequired,
   deleteModal: PropTypes.object.isRequired,
-  isEditable: PropTypes.func.isRequired
+  isEditable: PropTypes.func.isRequired,
+  markForExport: PropTypes.func.isRequired,
+  unMarkForExport: PropTypes.func.isRequired,
+  exportLink: PropTypes.string.isRequired,
+  checkedInvoices: PropTypes.array
 };
 
 export default InvoiceOverviewMarkup;
