@@ -9,7 +9,7 @@ const renderStaticFields = (fields) => (
       return (
         <FormGroupMarkup key={fieldName} label={fields.labels[fieldName]}>
         <span>
-          {fields.staticText[fieldName]}
+          {fields.staticText[fieldName] || '-'}
         </span>
         </FormGroupMarkup>
       )

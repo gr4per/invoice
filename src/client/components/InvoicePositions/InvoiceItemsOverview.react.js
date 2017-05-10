@@ -58,7 +58,7 @@ const InvoiceItemsOverview = ({ items }, context) => (
           <td>
             {(item.purchaseOrderId || item.purchaseOrderItemNo) ? `${item.purchaseOrderId || ''}/${item.purchaseOrderItemNo || ''}` : 'n/a'}
           </td>
-          <td className="text-right">
+          <td className="invoice-btn-group">
             <Button bsStyle="link" onClick={_.noop}>
               <Glyphicon glyph="edit"/>
             </Button>

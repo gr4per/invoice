@@ -10,6 +10,7 @@ const SearchResult = (
     onEdit,
     showDeleteModal,
     isEditable,
+    selectedInvoiceId,
     checkedInvoices,
     markForExport,
     unMarkForExport
@@ -48,7 +49,7 @@ const SearchResult = (
         {
           invoices.map((inv) => {
             return (
-              <tr key={inv.key}>
+              <tr key={inv.key} className={inv.key == selectedInvoiceId ? 'success' : ''}>
                 <td>
                   <Checkbox
                     onChange={(e) => (e.target.checked? markForExport([inv.key]) : unMarkForExport([inv.key]))}
@@ -80,22 +81,15 @@ const SearchResult = (
                 <td>
                   <span className="label label-default">{statusLabel(inv.statusId)}</span>
                 </td>
-                <td>
-                  <Dropdown id={`actions-${inv.key}`} pullRight={true} bsSize="small">
-                    <Button onClick={() => {
-                      onEdit(inv.key);
-                    }}
-                    >
-                      <Glyphicon glyph="edit"/> {context.i18n.getMessage("Commands.edit")}
-                    </Button>
-                    <Dropdown.Toggle/>
-                    <Dropdown.Menu>
-                      <MenuItem className={isEditable(inv.statusId) ? '' : 'hidden'}
-                                onClick={() => showDeleteModal({isShown: true, invoiceId: inv.key})}>
-                        <i className="fa fa-trash" /> {context.i18n.getMessage('Commands.delete')}
-                      </MenuItem>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                <td className="invoice-btn-group">
+                  <Button bsStyle="link" onClick={() => onEdit(inv.key)}>
+                    <Glyphicon glyph="edit"/>
+                  </Button>
+                  <Button bsStyle="link" onClick={() => showDeleteModal({isShown: true, invoiceId: inv.key})}
+                          disabled={!isEditable(inv.statusId)}
+                  >
+                    <Glyphicon glyph="trash"/>
+                  </Button>
                 </td>
               </tr>
             )

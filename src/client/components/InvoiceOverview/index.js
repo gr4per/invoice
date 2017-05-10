@@ -25,7 +25,7 @@ const InvoiceOverviewMarkup = ({
   unMarkForExport,
   exportLink
 }) => (
-  <div>
+  <div className="invoice-overview">
     <div className="row">
       <div className="col-md-12">
         <SearchForm onSearch={onSearch} statuses={statuses}/>
@@ -36,13 +36,13 @@ const InvoiceOverviewMarkup = ({
           onEdit={onEdit}
           showDeleteModal={showDeleteModal}
           isEditable={isEditable}
+          selectedInvoiceId={editInvoiceId}
           checkedInvoices={checkedInvoices}
           markForExport={markForExport}
           unMarkForExport={unMarkForExport}
         />
         <br/>
         <ActionBar exportLink={exportLink}/>
-        <br/>
         <Pagination
           className={pagination.last === pagination.length ? 'hidden' : 'shown'}
           prev
@@ -55,6 +55,7 @@ const InvoiceOverviewMarkup = ({
           onSelect={(e) => onSearch(COUNT * (e - 1), COUNT)}/>
       </div>
     </div>
+    <br/><br/>
     <div className="row equal">
       <div className="col-md-6">
         {/* Rendering static pdf for test purposes */}

@@ -1,10 +1,11 @@
+import './EditInvoice.less';
 import React, { PropTypes } from 'react';
 import EditInvoiceHeaderFormWrapper from './EditInvoiceHeaderFormWrapper.react';
 import InvoiceItemsOverview from '../InvoicePositions/InvoiceItemsOverview.react';
 import InvoiceItemsPricePanel from '../InvoicePositions/InvoiceItemsPricePanel.react';
 
 const EditInvoiceMarkup = (props, context) => (
-  <div>
+  <div className="edit-invoice">
     <EditInvoiceHeaderFormWrapper
       invoice={props.invoice}
       customer={props.customer}

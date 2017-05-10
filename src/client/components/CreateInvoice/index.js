@@ -1,8 +1,9 @@
+import './CreateInvoice.less';
 import React, { PropTypes } from 'react';
 import CreateInvoiceHeaderFormWrapper from './CreateInvoiceHeaderFormWrapper.react';
 
 const CreateInvoiceMarkup = (props, context) => (
-  <div>
+  <div className="create-invoice">
     <h1>
       {context.i18n.getMessage('Labels.createIR')}
     </h1>

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDom from 'react-dom';
 import { connect } from 'react-redux';
 import messages from './i18n/InvoiceDetails';
 import EditInvoiceMarkup from '../components/EditInvoice';
@@ -82,9 +83,15 @@ export default class InvoiceDetails extends Component {
     }
   }
 
+  componentDidUpdate() {
+    if (this._isReadyForRendering()) {
+      ReactDom.findDOMNode(this).scrollIntoView(true);
+    }
+  }
+
   _isReadyForRendering() {
-    const { invoice, customer, supplier, termsOfDelivery, termsOfPayment, methodsOfPayment, currencies } = this.props;
-    return invoice && customer && supplier && termsOfDelivery && termsOfPayment && methodsOfPayment && currencies
+    const { invoiceId, invoice, customer, supplier, termsOfDelivery, termsOfPayment, methodsOfPayment, currencies } = this.props;
+    return invoiceId && invoice && customer && supplier && termsOfDelivery && termsOfPayment && methodsOfPayment && currencies
   }
 
   render() {
