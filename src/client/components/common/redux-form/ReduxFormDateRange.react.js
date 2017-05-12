@@ -1,10 +1,13 @@
 import React, { PropTypes, Component } from 'react';
 import { Fields } from 'redux-form';
-import DatePicker from '../Datepicker/DatePicker.react';
 import _ from 'lodash';
+import DateRangeInput from 'opuscapita-react-dates/lib/DateRangeInput';
+import { parseDate } from './parseDate';
 
 const renderDateRange = (fields) => {
   const { label, fromFieldName, toFieldName, locale, dateFormat } = fields;
+  const fromFieldInput = _.get(fields, fromFieldName).input;
+  const toFieldInput = _.get(fields, toFieldName).input;
   // let fromHasError = !_.isEmpty(fields[fromFieldName].meta.error) && fields[fromFieldName].meta.touched;
   // let toHasError = !_.isEmpty(fields[toFieldName].meta.error) && fields[toFieldName].meta.touched;
 
@@ -17,22 +20,11 @@ const renderDateRange = (fields) => {
       </div>
       <div className="col-sm-7">
         <div className="input-daterange input-group">
-          <DatePicker
-            {..._.get(fields, fromFieldName).input}
-            className="form-control"
-            showIcon={false}
-            name={fromFieldName}
-            format={dateFormat}
+          <DateRangeInput
+            dateFormat={dateFormat}
             locale={locale}
-          />
-          <span className="input-group-addon">—</span>
-          <DatePicker
-            {..._.get(fields, toFieldName).input}
-            className="form-control"
-            showIcon={false}
-            name={toFieldName}
-            format={dateFormat}
-            locale={locale}
+            value={[fromFieldInput.value, toFieldInput.value]}
+            onChange={(value) => { fromFieldInput.onChange(value[0]); toFieldInput.onChange(value[1]); }}
           />
         </div>
       </div>
@@ -51,12 +43,7 @@ const ReduxFormDateRange = (props, context) => {
       component={renderDateRange}
       dateFormat={context.i18n.dateFormat}
       locale={context.i18n.locale}
-      parse={(value, name) => {
-        return context.i18n.parseDate(value)
-      }}
-      format={(value, name) => {
-        return context.i18n.formatDate(value)
-      }}
+      format={(value, name) => (parseDate(value))}
     />
   );
 };
