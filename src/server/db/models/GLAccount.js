@@ -4,7 +4,7 @@ const Sequelize = require("sequelize");
 module.exports.init = function (db, config) {
 
   return db.define('GLAccount', {
-      glAccountId: {
+      id: {
         field: 'GLAccountID',
         type: Sequelize.STRING(100),
         allowNull: false,

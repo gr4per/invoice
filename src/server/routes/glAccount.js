@@ -11,7 +11,7 @@ module.exports = function(epilogue, db) {
     model: db.models.GLAccount,
     endpoints: [
       '/glAccounts',
-      '/glAccounts/:glAccountId'
+      '/glAccounts/:id'
     ]
   });
 };

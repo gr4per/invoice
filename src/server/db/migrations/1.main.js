@@ -1,5 +1,5 @@
 'use strict';
-const createGLAccount = require('./invoice-migration/createGLAccount');
+const createGLAccount = require('./glaccount-migration/createGLAccount');
 
 module.exports.up = function(db, config) {
   return createGLAccount(db.getQueryInterface());

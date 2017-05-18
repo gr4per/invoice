@@ -46,12 +46,12 @@ module.exports = function(queryInterface) {
       allowNull: false
     }
   }).then(() => {
-    return Promise.all([
+    return Promise.resolve(
       queryInterface.addIndex(
         'GLAccount',
         ['CustomerID'],
         { indexName: 'GLAccount_CustomerID_idx' }
       )
-    ])
+    )
   })
 };
