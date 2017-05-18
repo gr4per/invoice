@@ -39,7 +39,8 @@
     "lodash": "4.16.6",
     "content-range": "1.1.0",
     "react-dropzone": "^3.7.3",
-    "async": "^2.3.0"
+    "async": "^2.3.0",
+    "opuscapita-react-dates": "0.0.1-beta.13"
   },
   "devDependencies": {
     "command-line-args": "^4.0.1",
@@ -71,8 +72,7 @@
     "eslint": "^3.10.2",
     "eslint-plugin-react": "6.7.1",
     "eslint-config-opuscapita": "1.0.1",
-    "jquery": "2.1.4",
-    "moment": "2.10.6"
+    "moment": "2.18.1"
   },
   "scripts": {
     "start": "node src/server/index.js",
