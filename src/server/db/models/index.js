@@ -14,6 +14,7 @@ module.exports.init = function(db, config) {
   require('./CostDistributionPos.js').init(db, config);
   require('./InvoiceReceipt.js').init(db, config);
   require('./InvoiceReceiptItem.js').init(db, config);
+  require('./GLAccount.js').init(db, config);
 
     // Always return a promise.
   return Promise.resolve();

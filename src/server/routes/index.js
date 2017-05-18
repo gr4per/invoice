@@ -14,6 +14,7 @@ const userAssignment = require('./userAssignment');
 const unitsOfMeasure = require('./unitsOfMeasure');
 const invoicereceiptImport = require('./invoicereceiptImport');
 const invoiceReceiptExport = require('./invoiceReceiptExport');
+const glAccount = require('./glAccount');
 const epilogue = require('epilogue');
 
 /**
@@ -36,6 +37,7 @@ module.exports.init = function(app, db, config) {
   invoiceReceiptExport(app, db);
   invoiceRoutes(epilogue, db);
   invoiceItemsRoutes(epilogue, db);
+  glAccount(epilogue, db);
   staticResources(app, db);
   suppliers(app, db);
   customers(app, db);
