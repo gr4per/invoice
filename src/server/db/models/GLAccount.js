@@ -41,11 +41,11 @@ module.exports.init = function (db, config) {
       },
       customerId: {
         field: 'CustomerID',
-        type: Sequelize.BIGINT(30),
+        type: Sequelize.STRING(30),
         allowNull: false,
         defaultValue: 'jcat001'
       },
-      descShort: {
+      shortDescription: {
         field: 'DescShort',
         type: Sequelize.STRING(100),
         allowNull: true
@@ -53,12 +53,12 @@ module.exports.init = function (db, config) {
       validFrom: {
         field: 'ValidFrom',
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: true
       },
       validTo: {
         field: 'ValidTo',
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: true
       }
     },
     {

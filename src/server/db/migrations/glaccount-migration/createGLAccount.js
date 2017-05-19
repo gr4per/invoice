@@ -39,11 +39,11 @@ module.exports = function(queryInterface) {
     },
     ValidFrom: {
       type: Sequelize.DATE,
-      allowNull: false
+      allowNull: true
     },
     ValidTo: {
       type: Sequelize.DATE,
-      allowNull: false
+      allowNull: true
     }
   }).then(() => {
     return Promise.resolve(
