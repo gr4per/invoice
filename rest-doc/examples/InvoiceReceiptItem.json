@@ -1,0 +1,21 @@
+{
+  "key": 1,
+  "changedBy": "jcadmin",
+  "changedOn": "2017-05-24T14:22:20.000Z",
+  "createdBy": "jcadmin",
+  "createdOn": "2017-05-24T14:22:20.000Z",
+  "currencyId": null,
+  "netPrice": 100,
+  "orderItemNo": 0,
+  "priceUnit": 1,
+  "productDescShort": "Example description",
+  "productId": "123",
+  "productKey": "123",
+  "quantity": 5,
+  "taxAmount": null,
+  "totalGrossPrice": null,
+  "totalNetPrice": null,
+  "uomId": "2P",
+  "taxId": "0",
+  "taxRate": 0
+}

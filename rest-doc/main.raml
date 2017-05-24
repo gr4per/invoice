@@ -1,19 +1,16 @@
 #%RAML 1.0
-title: Your Service Documentation
-description: Your Service Description
+title: Invoice
+description: Invoice API
 version: 1.0.0
-baseUri: http://localhost
+baseUri: /api
 mediaType:
   - application/json
 protocols:
-  - http
-  - https
+  - HTTP
+  - HTTPS
 
 types: !include schemas/index.raml
-traits:
-    acceptLanguage: !include traits/acceptLanguage.raml
-    sendNotFound: !include traits/sendNotFound.raml
+traits: !include traits/index.raml
 
-/countries: !include resourceTypes/country.raml
-/currencies: !include resourceTypes/currency.raml
-/languages: !include resourceTypes/language.raml
+/glAccounts: !include resourceTypes/glAccount.raml
+/invoices: !include resourceTypes/invoice.raml
