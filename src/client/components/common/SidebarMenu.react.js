@@ -30,6 +30,11 @@ const SidebarMenu = () => (
             Import Invoices
           </Link>
         </li>
+        <li key="GLAccountEditor">
+          <Link to="/invoice/glAccounts">
+            GlAccounts
+          </Link>
+        </li>
       </ul>
     </nav>
   </section>

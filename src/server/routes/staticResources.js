@@ -8,7 +8,8 @@ module.exports = function(app, db) {
     '/edit/:id',
     '/edit/:id/items',
     '/create',
-    '/import'
+    '/import',
+    '/glAccounts'
   ], (req, res) => {
     res.sendFile(path.normalize(__dirname + '/../static/index.html'));
   });
