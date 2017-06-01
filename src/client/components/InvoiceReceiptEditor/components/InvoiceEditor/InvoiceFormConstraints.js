@@ -1,29 +1,29 @@
 export default {
-  "invoice.extInvoiceReceiptId": {
+  "extInvoiceReceiptId": {
     presence: {
       message: "^Errors.notNull"
     }
   },
 
-  "invoice.invoiceDate": {
+  "invoiceDate": {
     presence: {
       message: "^Errors.notNull"
     }
   },
 
-  "invoice.termsOfPaymentId": {
+  "termsOfPaymentId": {
     presence: {
       message: "^Errors.notNull"
     }
   },
 
-  "invoice.methodOfPaymentId": {
+  "methodOfPaymentId": {
     presence: {
       message: "^Errors.notNull"
     }
   },
 
-  "invoice.currencyId": {
+  "currencyId": {
     presence: {
       message: "^Errors.notNull"
     }

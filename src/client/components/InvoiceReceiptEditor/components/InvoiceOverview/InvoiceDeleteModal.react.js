@@ -28,6 +28,6 @@ InvoiceDeleteModal.propTypes = {
 
 InvoiceDeleteModal.contextTypes = {
   i18n: PropTypes.object.isRequired
-}
+};
 
 export default InvoiceDeleteModal;

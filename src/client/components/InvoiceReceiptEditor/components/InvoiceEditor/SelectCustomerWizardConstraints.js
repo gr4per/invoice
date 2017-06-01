@@ -1,5 +1,5 @@
 export default {
-  "invoice.customerId": {
+  "customerId": {
     presence: {
       message: "^Errors.notNull"
     }

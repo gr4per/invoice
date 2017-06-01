@@ -1,28 +1,11 @@
 export default {
-  "item.productDescShort": {
+  "productDescShort": {
     presence: {
       message: "^Errors.notNull"
     }
   },
 
-  "item.quantity": {
-    presence: {
-      message: "^Errors.notNull"
-    },
-    numericality: {
-      greaterThanOrEqualTo: 0,
-      notValid: "^Errors.invalidNumber",
-      notGreaterThanOrEqualTo: "^Errors.notGreaterThanOrEqualTo"
-    }
-  },
-
-  "item.uomId": {
-    presence: {
-      message: "^Errors.notNull"
-    }
-  },
-
-  "item.netPrice": {
+  "quantity": {
     presence: {
       message: "^Errors.notNull"
     },
@@ -33,7 +16,13 @@ export default {
     }
   },
 
-  "item.priceUnit": {
+  "uomId": {
+    presence: {
+      message: "^Errors.notNull"
+    }
+  },
+
+  "netPrice": {
     presence: {
       message: "^Errors.notNull"
     },
@@ -44,7 +33,10 @@ export default {
     }
   },
 
-  "item.totalNetPrice": {
+  "priceUnit": {
+    presence: {
+      message: "^Errors.notNull"
+    },
     numericality: {
       greaterThanOrEqualTo: 0,
       notValid: "^Errors.invalidNumber",
@@ -52,7 +44,15 @@ export default {
     }
   },
 
-  "item.totalGrossPrice": {
+  "totalNetPrice": {
+    numericality: {
+      greaterThanOrEqualTo: 0,
+      notValid: "^Errors.invalidNumber",
+      notGreaterThanOrEqualTo: "^Errors.notGreaterThanOrEqualTo"
+    }
+  },
+
+  "totalGrossPrice": {
     numericality: {
       greaterThanOrEqualTo: 0,
       notValid: "^Errors.invalidNumber",

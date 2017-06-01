@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
-import MessageInfo from '../common/MessageInfo.react';
+import MessageInfo from '../../../common/MessageInfo.react';
 import { Button, Table, MenuItem, Glyphicon, Dropdown, Checkbox } from 'react-bootstrap';
 
 const SearchResult = (

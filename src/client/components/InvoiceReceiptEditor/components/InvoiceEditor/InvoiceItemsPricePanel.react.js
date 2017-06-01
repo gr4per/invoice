@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { formattedTotalSum } from '../../utils/MathUtils';
+import { formattedTotalSum } from '../../../../utils/MathUtils';
 import { Button, Glyphicon, Table } from 'react-bootstrap';
 
 const InvoiceItemsPricePanel = ({ invoice, items, onAddPositions }, context) => {
