@@ -58,14 +58,21 @@ export default class GLAccountEditor extends Component {
     })
   }
 
-  handleCreateGlAccount(glAccount) {
+  handleCreateGlAccount(glAccount, reset, invalidateForm) {
     return request.post('/invoice/api/glAccounts').set(
       'Accept', 'application/json'
-    ).send(glAccount).then((response) => {
+    ).send(glAccount).then((response) => Promise.resolve(
       this.setState({
         glAccounts: _.concat(this.state.glAccounts, response.body)
       })
-    });
+    )).then(() => reset()
+    ).catch((response) => {
+      if(_.get(response, 'body.errors[0].field') === 'PRIMARY') {
+        invalidateForm({id: 'GlAccount.isUnique'});
+      } else {
+        throw Error(response);
+      }
+    })
   }
 
   handleUpdateGlAccount(glAccountData) {

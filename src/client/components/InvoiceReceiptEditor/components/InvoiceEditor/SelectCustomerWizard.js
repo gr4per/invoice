@@ -1,7 +1,8 @@
 import React, { PropTypes, Component } from 'react';
-import FormsyTextInput from '../common/formsy-components/FormsyTextInput.react';
-import validate from 'validate.js';
+import FormsyTextInput from '../../../common/form-components/FormsyTextInput.react';
 import constraints from './SelectCustomerWizardConstraints';
+import { validateForm } from '../../../common/form-components/validateForm';
+const validate = validateForm(constraints);
 
 export default class SelectCustomerWizard extends Component {
 
@@ -20,16 +21,8 @@ export default class SelectCustomerWizard extends Component {
     onSubmit: PropTypes.func.isRequired
   };
 
-  _validateForm(values) {
-    const validationResult = {};
-    _.forEach(validate(values, constraints), (value, key) => {
-      _.set(validationResult, key, value[0])
-    });
-    return validationResult;
-  }
-
   _submitForm(model, resetForm, invalidateForm) {
-    const errors = this._validateForm(model);
+    const errors = validate(model);
     _.isEmpty(errors) ? this.props.onSubmit(model.customerId, resetForm) : invalidateForm(errors);
   }
 
@@ -38,15 +31,14 @@ export default class SelectCustomerWizard extends Component {
       <div>
         <h1>{this.context.i18n.getMessage('CreateInvoice.header')}</h1>
         <div className="form-horizontal">
-          <Formsy.Form onSubmit={(model, resetForm, invalidateForm) => this._submitForm(model, resetForm, invalidateForm)}
+          <Formsy.Form onSubmit={::this._submitForm}
                        validationErrors={this.state.validationErrors}
-                       onChange={(currentValues) => this.setState({validationErrors: this._validateForm(currentValues)})}>
+                       onChange={(currentValues) => this.setState({validationErrors: validate(currentValues)})}>
             <div className="row">
               <div className="col-md-6">
                 <FormsyTextInput
                   label="CreateInvoice.customer"
                   name='customerId'
-                  value={''}
                   required={true}
                 />
               </div>

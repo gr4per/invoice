@@ -25,6 +25,10 @@ export default class GlAccountEditorWrapper extends PureComponent {
     pagination: {}
   };
 
+  static contextTypes = {
+    i18n: PropTypes.object.isRequired
+  };
+
   state = {
     showCreateForm: false
   };
@@ -43,7 +47,7 @@ export default class GlAccountEditorWrapper extends PureComponent {
           <GlAccountForm
             onCancel={() => (this.setState({ showCreateForm: false }))}
             onSubmit={this.props.onCreateGlAccount}
-            formHeader={"Create Invoice"}
+            formHeader={this.context.i18n.getMessage('GlAccount.createFormHeader')}
           />
         }
         <SearchResult

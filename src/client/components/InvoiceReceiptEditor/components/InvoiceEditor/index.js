@@ -8,20 +8,27 @@ import SelectCustomerWizard from './SelectCustomerWizard';
 import messages from '../../i18n/InvoiceEditor';
 import InvoiceItemsOverview from './InvoiceItemsOverview.react';
 import InvoiceItemsPricePanel from './InvoiceItemsPricePanel.react';
+import {
+  fetchInvoiceReceipt,
+  fetchInvoiceReceiptItems,
+  fetchCustomer,
+  fetchSupplier,
+  fetchTermsOfDelivery,
+  fetchTermsOfPayment,
+  fetchMethodsOfPayment,
+  fetchCurrencies,
+  fetchUserAssignment
+} from '../../common/fetchers';
 
 export default class InvoiceEditor extends Component {
 
   static propTypes = {
     createMode: PropTypes.bool,
-    onCreate: PropTypes.func,
-    onUpdate: PropTypes.func,
     onCancel: PropTypes.func
   };
 
   static defaultProps = {
     createMode: false,
-    onCreate: () => console.log('Invoice is created'),
-    onUpdate: () => console.log('Invoice is updated')
   };
 
   static contextTypes = {
@@ -48,73 +55,6 @@ export default class InvoiceEditor extends Component {
         return status ? status.description : statusId;
       }
     };
-    this.initInvoiceData = this.initInvoiceData.bind(this);
-    this.updateInvoice = this.updateInvoice.bind(this);
-    this.createInvoice = this.createInvoice.bind(this);
-  }
-
-  _fetchInvoiceReceipt(id) {
-    return request.get(`/invoice/api/invoices/${id}`).set(
-      'Accept', 'application/json'
-    ).then((response) => Promise.resolve(response.body)
-    ).catch((error) => { throw Error(error); })
-  }
-
-  _fetchInvoiceReceiptItems(id) {
-    return request.get(`/invoice/api/invoices/${id}/items`).set(
-      'Accept', 'application/json'
-    ).then((response) => Promise.resolve(response.body)
-    ).catch((error) => { throw Error(error); })
-  }
-
-  _fetchCustomer(id) {
-    return request.get(`/invoice/api/customers/${id}`).set(
-      'Accept', 'application/json'
-    ).then((response) => Promise.resolve(response.body)
-    ).catch((error) => { throw Error(error); })
-  }
-
-  _fetchSupplier(id) {
-    return request.get(`/invoice/api/suppliers/${id}`).set(
-      'Accept', 'application/json'
-    ).then((response) => Promise.resolve(response.body)
-    ).catch((error) => { throw Error(error); })
-  }
-
-  _fetchTermsOfDelivery() {
-    return request.get('/invoice/api/termsOfDelivery/').set(
-      'Accept', 'application/json'
-    ).then((response) => Promise.resolve(response.body)
-    ).catch((error) => { throw Error(error); })
-  }
-
-  _fetchTermsOfPayment() {
-    return request.get('/invoice/api/termsOfPayment/').set(
-      'Accept', 'application/json'
-    ).then((response) => Promise.resolve(response.body)
-    ).catch((error) => { throw Error(error); })
-  }
-
-  _fetchMethodsOfPayment() {
-    return request.get('/invoice/api/methodOfPayment/').set(
-      'Accept', 'application/json'
-    ).then((response) => Promise.resolve(response.body)
-    ).catch((error) => { throw Error(error); })
-  }
-
-  _fetchCurrencies() {
-    return request.get('/invoice/api/currency/').set(
-      'Accept', 'application/json'
-    ).then((response) => Promise.resolve(response.body)
-    ).catch((error) => { throw Error(error); })
-  }
-
-  // TODO: dummy user
-  _fetchUserAssignment() {
-    return request.get(`/invoice/api/userAssignment/${1}`).set(
-      'Accept', 'application/json'
-    ).then((response) => (response.body)
-    ).catch((error) => console.log(error));
   }
 
   componentWillMount() {
@@ -130,28 +70,28 @@ export default class InvoiceEditor extends Component {
 
   _loadMasterData() {
     Promise.props({
-      userAssignment: this._fetchUserAssignment(),
-      termsOfDelivery: this._fetchTermsOfDelivery(),
-      termsOfPayment: this._fetchTermsOfPayment(),
-      methodsOfPayment: this._fetchMethodsOfPayment(),
-      currencies: this._fetchCurrencies(),
+      userAssignment: fetchUserAssignment(),
+      termsOfDelivery: fetchTermsOfDelivery(),
+      termsOfPayment: fetchTermsOfPayment(),
+      methodsOfPayment: fetchMethodsOfPayment(),
+      currencies: fetchCurrencies(),
       isMasterDataReady: true
     }).then((masterData) => this.setState(masterData)
-    ).catch((error) => console.error(error));
+    ).catch((error) => { throw Error(error); });
   }
 
   _loadInvoiceData(invoiceId) {
-    this._fetchInvoiceReceipt(invoiceId).then((invoice) => {
+    fetchInvoiceReceipt(invoiceId).then((invoice) => {
         return Promise.props({
           invoice: invoice,
-          customer: this._fetchCustomer(invoice.customerId),
-          supplier: this._fetchSupplier(invoice.supplierId),
-          items: this._fetchInvoiceReceiptItems(invoice.key),
+          customer: fetchCustomer(invoice.customerId),
+          supplier: fetchSupplier(invoice.supplierId),
+          items: fetchInvoiceReceiptItems(invoice.key),
           isInvoiceDataReady: true
         });
       }
     ).then((invoiceData) => this.setState(invoiceData)
-    ).catch((error) => console.error(error));
+    ).catch((error) => { throw Error(error); })
   }
 
   _unloadInvoiceData() {
@@ -170,29 +110,27 @@ export default class InvoiceEditor extends Component {
         bookingDate: new Date()
       },
       supplier: this.state.userAssignment.supplier,
-      customer: this._fetchCustomer(customerId),
+      customer: fetchCustomer(customerId),
       items: [],
       isInvoiceDataReady: true
     }).then((invoiceData) => this.setState(invoiceData)
-    ).catch((error) => console.error(error));
+    ).catch((error) => { throw Error(error); })
   }
 
   updateInvoice(payload, reset) {
     request.put(`/invoice/api/invoices/${this.state.invoice.key}`).set(
       'Accept', 'application/json'
     ).send(payload).then((response) => Promise.resolve(response.body)
-    ).then((invoice) => Promise.resolve(this.setState({invoice: invoice}))
-    ).then(() => this.props.onUpdate()
-    ).catch((error) => console.log(error));
+    ).then((invoice) => this.setState({invoice: invoice})
+    ).catch((error) => { throw Error(error); })
   }
 
   createInvoice(payload, reset) {
     request.post(`/invoice/api/invoices`).set(
       'Accept', 'application/json'
     ).send(_.assign({}, this.state.invoice, payload)
-    ).then((response) => Promise.resolve(reset())
-    ).then(() => this.props.onCreate()
-    ).catch((error) => console.log(error));
+    ).then((response) => reset()
+    ).catch((error) => { throw Error(error); })
   }
 
   render() {
@@ -200,8 +138,8 @@ export default class InvoiceEditor extends Component {
       if (this.state.isInvoiceDataReady) {
         return this.props.createMode ?
           <div className="create-invoice">
-              <h1>{this.context.i18n.getMessage('Labels.createIR')}</h1>
               <InvoiceForm
+                formHeader={this.context.i18n.getMessage('Labels.createIR')}
                 invoice={this.state.invoice}
                 items={this.state.items}
                 customer={this.state.customer}
@@ -214,7 +152,7 @@ export default class InvoiceEditor extends Component {
 
                 statusLabel={this.state.statusLabel}
                 onCancel={this.props.onCancel}
-                onSave={this.createInvoice}/>
+                onSave={::this.createInvoice}/>
           </div>
           :
           <div className="edit-invoice">
@@ -231,7 +169,7 @@ export default class InvoiceEditor extends Component {
 
                 statusLabel={this.state.statusLabel}
                 onCancel={this.props.onCancel}
-                onSave={this.updateInvoice}
+                onSave={::this.updateInvoice}
               />
               <br/>
               <InvoiceItemsOverview items={this.state.items}/>

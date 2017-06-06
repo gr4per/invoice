@@ -31,7 +31,7 @@ export default class InvoiceOverviewMarkup extends Component {
       <div className="invoice-overview">
         <div className="row">
           <div className="col-md-12">
-            <SearchForm ref="search" onSearch={this.props.onSearch} statuses={this.props.statuses}/>
+            <SearchForm ref="searchForm" onSearch={this.props.onSearch} statuses={this.props.statuses}/>
             <br/>
             <SearchResult
               invoices={this.props.invoices}
@@ -55,7 +55,7 @@ export default class InvoiceOverviewMarkup extends Component {
               items={Math.ceil(this.props.pagination.length / COUNT)}
               maxButtons={3}
               activePage={1 + Math.floor(this.props.pagination.first / COUNT)}
-              onSelect={(e) => this.props.onSearch(this.refs.search.getSearchParameters(), COUNT * (e - 1), COUNT)}/>
+              onSelect={(e) => this.props.onSearch(this.refs.searchForm.refs.searchFormMarkup.getModel(), COUNT * (e - 1), COUNT)}/>
           </div>
         </div>
         <br/><br/>
@@ -68,7 +68,7 @@ export default class InvoiceOverviewMarkup extends Component {
           <div className="col-md-6"><InvoiceEditor invoiceId={this.props.editInvoiceId} onCancel={this.props.onCancel}/></div>
         </div>
         <InvoiceDeleteModal {...this.props.deleteModal}
-                            onDelete={(id) => this.props.onDelete(id, this.refs.search.getSearchParameters())}
+                            onDelete={(id) => this.props.onDelete(id, this.refs.searchForm.refs.searchFormMarkup.getModel())}
                             onCancel={() => this.props.showDeleteModal({ isShown: false })}/>
       </div>
     )

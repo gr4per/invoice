@@ -1,11 +1,12 @@
 import React, { PropTypes, Component } from 'react';
 import Formsy from 'formsy-react';
-import FormsyTextInput from '../common/formsy-components/FormsyTextInput.react'
-import FormsySelect from '../common/formsy-components/FormsySelect.react';
+import FormsyTextInput from '../../../common/form-components/FormsyTextInput.react'
+import FormsySelect from '../../../common/form-components/FormsySelect.react';
 import { Button } from 'react-bootstrap';
-import validate from 'validate.js';
-import constraints from './InvoiceItemFormConstraints';
 import _ from 'lodash';
+import constraints from './InvoiceItemFormConstraints';
+import { validateForm } from '../../../common/form-components/validateForm';
+const validate = validateForm(constraints);
 
 export default class InvoiceItemForm extends Component {
 
@@ -25,23 +26,15 @@ export default class InvoiceItemForm extends Component {
   static defaultProps = {
     item: {},
     unitsOfMeasure: []
-  }
+  };
 
   static contextTypes = {
     i18n: PropTypes.object.isRequired,
     unitsOfMeasure: PropTypes.array
   };
 
-  _validateForm(values) {
-    const validationResult = {};
-    _.forEach(validate(values, constraints), (value, key) => {
-      _.set(validationResult, key, value[0])
-    });
-    return validationResult;
-  }
-
   _submitForm(model, resetForm, invalidateForm) {
-    const errors = this._validateForm(model);
+    const errors = validate(model);
     _.isEmpty(errors) ? this.props.onSave(model, resetForm) : invalidateForm(errors);
   }
 
@@ -52,9 +45,9 @@ export default class InvoiceItemForm extends Component {
           {this.context.i18n.getMessage('Labels.irPositions')}
         </h1>
         <div className="form-horizontal">
-          <Formsy.Form onSubmit={(model, resetForm, invalidateForm) => this._submitForm(model, resetForm, invalidateForm)}
+          <Formsy.Form onSubmit={::this._submitForm}
                        validationErrors={this.state.validationErrors}
-                       onChange={(currentValues) => this.setState({validationErrors: this._validateForm(currentValues)})}>
+                       onChange={(currentValues) => this.setState({validationErrors: validate(currentValues)})}>
             <div className="row">
               <div className="col-md-6">
                 <FormsyTextInput
@@ -132,7 +125,7 @@ export default class InvoiceItemForm extends Component {
               </div>
             </div>
             <div className="form-submit text-right">
-              <Button className="pull-left" onClick={() => this.props.onBack()}>{this.context.i18n.getMessage('Commands.backtoInvoice')}</Button>
+              <Button className="pull-left" onClick={this.props.onBack}>{this.context.i18n.getMessage('Commands.backtoInvoice')}</Button>
               <Button bsStyle="primary" type="submit">{this.context.i18n.getMessage('Commands.addNewPosition')}</Button>
             </div>
           </Formsy.Form>

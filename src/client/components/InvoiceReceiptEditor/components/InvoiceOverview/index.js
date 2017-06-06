@@ -10,18 +10,6 @@ import { COUNT } from '../../../../constants/pagination';
 
 export default class InvoiceOverview extends Component {
 
-  constructor(props) {
-    super(props);
-    this.handleSearchInvoices = this.handleSearchInvoices.bind(this);
-    this.handleEditInvoice = this.handleEditInvoice.bind(this);
-    this.handleDeleteInvoice = this.handleDeleteInvoice.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
-    this.showDeleteModal = this.showDeleteModal.bind(this);
-    this.markForExport = this.markForExport.bind(this);
-    this.unMarkForExport = this.unMarkForExport.bind(this);
-    this.isEditable = this.isEditable.bind(this);
-  }
-
   static contextTypes = {
     i18n: PropTypes.object.isRequired
   };
@@ -82,7 +70,7 @@ export default class InvoiceOverview extends Component {
             pagination: contentRange.parse(response.header['content-range']),
             exportLink: this._calculateExportLink(response.body, [])
         });
-      }).catch((error) => (console.log(error)));
+      }).catch((error) => { throw Error(error); })
   }
 
   handleDeleteInvoice(id, searchParams = {}) {
@@ -101,7 +89,7 @@ export default class InvoiceOverview extends Component {
           this.handleEditInvoice();
         }
       });
-    }).catch((error) => (console.log(error)));
+    }).catch((error) => { throw Error(error); })
   }
 
   handleEditInvoice(id) {
@@ -135,21 +123,21 @@ export default class InvoiceOverview extends Component {
   render() {
     return (
       <InvoiceOverviewMarkup
-        onSearch={this.handleSearchInvoices}
+        onSearch={::this.handleSearchInvoices}
         invoices={this.state.invoices}
         checkedInvoices={this.state.checkedInvoices}
         statuses={this.state.statuses}
         statusLabel={this.state.statusLabel}
         pagination={this.state.pagination}
         editInvoiceId={this.state.editInvoiceId}
-        onEdit={this.handleEditInvoice}
-        onDelete={this.handleDeleteInvoice}
-        onCancel={this.handleCancel}
-        showDeleteModal={this.showDeleteModal}
+        onEdit={::this.handleEditInvoice}
+        onDelete={::this.handleDeleteInvoice}
+        onCancel={::this.handleCancel}
+        showDeleteModal={::this.showDeleteModal}
         deleteModal={this.state.deleteModal}
-        isEditable={this.isEditable}
-        markForExport={this.markForExport}
-        unMarkForExport={this.unMarkForExport}
+        isEditable={::this.isEditable}
+        markForExport={::this.markForExport}
+        unMarkForExport={::this.unMarkForExport}
         exportLink={this.state.exportLink}
       />
     )

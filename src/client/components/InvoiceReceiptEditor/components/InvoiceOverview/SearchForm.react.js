@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react';
-import FormsyTextInput from '../common/formsy-components/FormsyTextInput.react';
-import FormsySelect from '../common/formsy-components/FormsySelect.react';
-import _ from 'lodash';
+import FormsyTextInput from '../../../common/form-components/FormsyTextInput.react';
+import FormsySelect from '../../../common/form-components/FormsySelect.react';
 
 export default class SearchForm extends Component {
 
@@ -14,31 +13,21 @@ export default class SearchForm extends Component {
     i18n: PropTypes.object.isRequired
   };
 
-  getSearchParameters() {
-    return this.refs.search.getModel();
-  }
-
-  _mapInputs(inputs) {
-    return _.omitBy(inputs, (value, key) => (_.isNil(value) || value === ''));
-  }
-
   render() {
     return (
       <div>
         <h1>{this.context.i18n.getMessage('Labels.header')}</h1>
         <div className="form-horizontal">
-          <Formsy.Form ref="search" onSubmit={(model) => this.props.onSearch(model)} mapping={this._mapInputs}>
+          <Formsy.Form ref="searchFormMarkup" onSubmit={(model) => this.props.onSearch(model)}>
             <div className="row">
               <div className="col-md-6">
                 <FormsyTextInput
                   label="Labels.invoice"
                   name='invoiceReceiptId'
-                  value={''}
                 />
                 <FormsySelect
                   label="Labels.status"
                   name='statusId'
-                  value={''}
                   values={this.props.statuses}
                   toOptionConverter={
                     (status) => (
@@ -52,13 +41,12 @@ export default class SearchForm extends Component {
                 <FormsyTextInput
                   label="Labels.customer"
                   name='customerId'
-                  value={''}
                 />
               </div>
             </div>
             <div className="form-submit text-right">
               <button className="btn btn-link" type="button"
-                      onClick={() => this.refs.search.reset()}
+                      onClick={() => this.refs.searchFormMarkup.reset()}
               >
                 {this.context.i18n.getMessage('Commands.reset')}
               </button>

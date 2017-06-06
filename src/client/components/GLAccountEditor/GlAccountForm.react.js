@@ -1,18 +1,10 @@
 import React, { PropTypes, PureComponent } from 'react';
 import Formsy from 'formsy-react';
-import FormsyTextInput from './input-components/FormsyTextInput.react';
-import FormsyDateRange from './input-components/FormsyDateRange.react';
+import FormsyTextInput from '../common/form-components/FormsyTextInput.react';
+import FormsyDateRange from '../common/form-components/FormsyDateRange.react';
 import { Button } from 'react-bootstrap';
 import _ from 'lodash';
-import validate from 'validate.js';
-
-const defaultFormValue = {
-  customerId: '',
-  id: '',
-  accountType: '',
-  shortDescription: '',
-  validRange: {}
-};
+import { validateForm } from '../common/form-components/validateForm';
 
 const constraints = {
   "id": {
@@ -27,7 +19,7 @@ const constraints = {
     }
   },
 };
-
+const validate = validateForm(constraints);
 
 export default class GlAccountForm extends PureComponent {
   static propTypes = {
@@ -44,42 +36,38 @@ export default class GlAccountForm extends PureComponent {
   };
 
   static defaultProps = {
-    formValue: defaultFormValue
+    formValue: { validRange: {} }
   };
 
   static contextTypes = {
     i18n: PropTypes.object.isRequired
   };
 
-  validateForm(values) {
-    this.setState({validationErrors:_.mapValues(validate(values, constraints), (errors) => {
-      return this.context.i18n.getMessage(errors[0]);
-    })})
+  _submitForm(model, resetForm, invalidateForm) {
+    const errors = validate(model);
+    _.isEmpty(errors) ? this.props.onSubmit(model, resetForm, invalidateForm) : invalidateForm(errors);
+  }
+
+  _mapInputs(inputs) {
+    return {
+      ..._.omit(inputs, 'validRange'),
+      validFrom: inputs.validRange.from,
+      validTo: inputs.validRange.to
+    };
   }
 
   render() {
     const { i18n } = this.context;
-    const {onCancel, onSubmit, formHeader, formValue, mode} = this.props;
+    const {onCancel, formHeader, formValue, mode} = this.props;
     return (
       <Formsy.Form
-        onValidSubmit={(data, resetForm, invalidateForm) => {
-          onSubmit(data).catch((response) => {
-            if(response.body.errors[0].field === 'PRIMARY') {
-              invalidateForm({id: i18n.getMessage('GlAccount.isUnique')})
-            }
-          })
-        }}
-        onInvalid={() => (this.setState({disableSubmitButton: true}))}
-        onValid={() => (this.setState({disableSubmitButton: false}))}
         ref="glAccountForm"
-        mapping={(inputs) => ({
-          ..._.omit(inputs, 'validRange'),
-          validFrom: inputs.validRange.from,
-          validTo: inputs.validRange.to
-        })}
-        onChange={::this.validateForm}
+        onSubmit={::this._submitForm}
+        onInvalid={() => (this.setState({disableSubmitButton: false}))}
+        onValid={() => (this.setState({disableSubmitButton: false}))}
+        mapping={this._mapInputs}
+        onChange={(currentValues) => this.setState({validationErrors: validate(currentValues)})}
         validationErrors={this.state.validationErrors}
-
       >
         {formHeader && <h1>{formHeader}</h1>}
         <div className="form-horizontal">
@@ -95,7 +83,7 @@ export default class GlAccountForm extends PureComponent {
             </div>
           </div>
           <div className="form-submit form-submit text-right">
-            <Button type="reset" bsStyle="link" onClick={()=>(this.refs.glAccountForm.reset(defaultFormValue))}>{i18n.getMessage('GlAccount.reset')}</Button>
+            <Button type="reset" bsStyle="link" onClick={()=>(this.refs.glAccountForm.reset())}>{i18n.getMessage('GlAccount.reset')}</Button>
             <Button bsStyle="default" onClick={onCancel}>{i18n.getMessage('GlAccount.cancelButton')}</Button>
             <Button type="submit" bsStyle="primary" disabled={this.state.disableSubmitButton}>{i18n.getMessage('GlAccount.save')}</Button>
           </div>

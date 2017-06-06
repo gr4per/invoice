@@ -1,15 +1,15 @@
 import React, {PropTypes, Component} from 'react';
 import Formsy from 'formsy-react';
-import FormsyTextInput from '../common/formsy-components/FormsyTextInput.react';
-import FormsyDateInput from '../common/formsy-components/FormsyDateInput.react';
-import FormsyDateRange from '../common/formsy-components/FormsyDateRange.react';
-import FormsySelect from '../common/formsy-components/FormsySelect.react';
-import { parseDate } from '../../../common/redux-form/parseDate';
+import FormsyTextInput from '../../../common/form-components/FormsyTextInput.react';
+import FormsyDateInput from '../../../common/form-components/FormsyDateInput.react';
+import FormsyDateRange from '../../../common/form-components/FormsyDateRange.react';
+import FormsySelect from '../../../common/form-components/FormsySelect.react';
 import FormGroupMarkup from '../../../common/FormGroupMarkup/index';
 import InvoiceHeaderStaticFields from './InvoiceHeaderStaticFields.react';
-import validate from 'validate.js';
-import constraints from './InvoiceFormConstraints';
 import _ from 'lodash';
+import constraints from './InvoiceFormConstraints';
+import { validateForm } from '../../../common/form-components/validateForm';
+const validate = validateForm(constraints);
 
 export default class InvoiceForm extends Component {
 
@@ -28,6 +28,7 @@ export default class InvoiceForm extends Component {
     termsOfPayment: PropTypes.array.isRequired,
     methodsOfPayment: PropTypes.array.isRequired,
     currencies: PropTypes.array.isRequired,
+    formHeader: PropTypes.string,
     onSave: PropTypes.func.isRequired
   };
 
@@ -37,91 +38,91 @@ export default class InvoiceForm extends Component {
 
   _mapInputs(inputs) {
     const model = _.transform(inputs, (result, value, key) => {
-      if (key === 'periodOfService') {
-        result.periodOfServiceFrom = value[0];
-        result.periodOfServiceTo = value[1];
+      if (key === 'periodOfService' && !_.isNil(value)) {
+        result.periodOfServiceFrom = value.from;
+        result.periodOfServiceTo = value.to;
       } else {
-        result[key] = value !== '' ? value : null;
+        result[key] = value;
       }
     }, {});
     return model;
   };
 
-  _validateForm(values) {
-    const validationResult = {};
-    _.forEach(validate(values, constraints), (value, key) => {
-      _.set(validationResult, key, value[0])
-    });
-    return validationResult;
-  }
-
   _submitForm(model, resetForm, invalidateForm) {
-    const errors = this._validateForm(model);
+    const errors = validate(model);
     _.isEmpty(errors) ? this.props.onSave(model, resetForm) : invalidateForm(errors);
   }
 
   render() {
+    const {
+      formHeader,
+      customer,
+      supplier,
+      invoice,
+      statusLabel,
+      termsOfPayment,
+      methodsOfPayment,
+      termsOfDelivery,
+      currencies,
+      onCancel
+    } = this.props;
     return (
-      <div className="form-horizontal">
-        <Formsy.Form onSubmit={(model, resetForm, invalidateForm) => this._submitForm(model, resetForm, invalidateForm)}
-                     validationErrors={this.state.validationErrors}
-                     mapping={this._mapInputs}
-                     onChange={(currentValues) => this.setState({validationErrors: this._validateForm(currentValues)})}>
+      <Formsy.Form onSubmit={::this._submitForm}
+                   validationErrors={this.state.validationErrors}
+                   mapping={this._mapInputs}
+                   onChange={(currentValues) => this.setState({validationErrors: validate(currentValues)})}>
+        {formHeader && <h1>{formHeader}</h1>}
+        <div className="form-horizontal">
           <div className="row">
             <div className="col-md-6">
-              <InvoiceHeaderStaticFields supplier={this.props.supplier} customer={this.props.customer}/>
+              <InvoiceHeaderStaticFields supplier={supplier} customer={customer}/>
               <FormsyTextInput
                 label="Labels.extInvoiceReceiptId"
                 name='extInvoiceReceiptId'
                 required={true}
-                value={this.props.invoice.extInvoiceReceiptId || ''}
+                value={this.props.invoice.extInvoiceReceiptId}
               />
               <FormsyDateInput
                 label="Labels.invoiceDate"
                 name='invoiceDate'
                 required={true}
-                value={parseDate(this.props.invoice.invoiceDate)}
+                value={invoice.invoiceDate}
               />
               <FormsyDateRange
                 label="Labels.periodOfService"
                 name="periodOfService"
-                value={[
-                  parseDate(this.props.invoice.periodOfServiceFrom),
-                  parseDate(this.props.invoice.periodOfServiceTo)
-                ]}
+                value={{from: invoice.periodOfServiceFrom, to: invoice.periodOfServiceTo}}
               />
             </div>
             <div className="col-md-6">
               <FormGroupMarkup label="Labels.status">
                 <span className="label label-default">
                   <nobr>
-                    {this.props.statusLabel(this.props.invoice.statusId)}
+                    {statusLabel(invoice.statusId)}
                   </nobr>
                 </span>
               </FormGroupMarkup>
               <FormsyTextInput
                 label="Labels.accountingRecordId"
                 name='accountingRecordId'
-                required={true}
-                value={this.props.invoice.accountingRecordId || ''}
+                value={invoice.accountingRecordId}
               />
               <FormsyTextInput
                 label="Labels.referenceInformation"
                 name='referenceInformation'
-                required={true}
-                value={this.props.invoice.referenceInformation || ''}
+                value={invoice.referenceInformation}
               />
               <FormsyDateInput
                 label="Labels.dueDate"
                 name='dueDate'
-                required={true}
-                value={parseDate(this.props.invoice.dueDate)}
+                value={invoice.dueDate}
               />
               <FormsySelect
                 label="Labels.termsOfPayment"
                 name="termsOfPaymentId"
-                value={this.props.invoice.termsOfPaymentId || ''}
-                values={this.props.termsOfPayment}
+                required={true}
+                value={invoice.termsOfPaymentId}
+                values={termsOfPayment}
                 toOptionConverter={
                   (tod) => (
                     <option key={`term-of-payment-${tod.id}`} value={tod.id}>
@@ -134,8 +135,9 @@ export default class InvoiceForm extends Component {
               <FormsySelect
                 label="Labels.methodOfPayment"
                 name="methodOfPaymentId"
-                value={this.props.invoice.methodOfPaymentId || ''}
-                values={this.props.methodsOfPayment}
+                required={true}
+                value={invoice.methodOfPaymentId}
+                values={methodsOfPayment}
                 toOptionConverter={
                   (mop) => (
                     <option key={`method-of-payment-${mop.id}`} value={mop.id}>
@@ -148,8 +150,8 @@ export default class InvoiceForm extends Component {
               <FormsySelect
                 label="Labels.termsOfDelivery"
                 name="termsOfDeliveryId"
-                value={this.props.invoice.termsOfDeliveryId || ''}
-                values={this.props.termsOfDelivery}
+                value={invoice.termsOfDeliveryId}
+                values={termsOfDelivery}
                 toOptionConverter={
                   (tod) => (
                     <option key={`term-of-delivery-${tod.id}`} value={tod.id}>
@@ -162,8 +164,7 @@ export default class InvoiceForm extends Component {
               <FormsyTextInput
                 label="Labels.comment"
                 name='commentary'
-                required={true}
-                value={this.props.invoice.commentary || ''}
+                value={invoice.commentary}
                 componentClass="textarea"
               />
             </div>
@@ -174,8 +175,9 @@ export default class InvoiceForm extends Component {
               <FormsySelect
                 label="Labels.currency"
                 name="currencyId"
-                value={this.props.invoice.currencyId || ''}
-                values={this.props.currencies}
+                required={true}
+                value={invoice.currencyId}
+                values={currencies}
                 toOptionConverter={
                   (currency) => (
                     <option key={`currency-${currency.id}`} value={currency.id}>
@@ -190,21 +192,20 @@ export default class InvoiceForm extends Component {
               <FormsyTextInput
                 label="Labels.orderNumber"
                 name='orderNumber'
-                required={true}
-                value={this.props.invoice.orderNumber || ''}
+                value={invoice.orderNumber}
               />
             </div>
           </div>
           <div className="form-submit text-right">
-            {this.props.onCancel ? (
-              <button className="btn btn-link" type="button" onClick={() => this.props.onCancel()}>
+            {onCancel ? (
+              <button className="btn btn-link" type="button" onClick={() => onCancel()}>
                 {this.context.i18n.getMessage('Commands.cancel')}
               </button>
             ) : null}
             <button className="btn btn-primary" type="submit">{this.context.i18n.getMessage('Commands.save')}</button>
           </div>
-        </Formsy.Form>
-      </div>
+        </div>
+      </Formsy.Form>
     )
   }
 }

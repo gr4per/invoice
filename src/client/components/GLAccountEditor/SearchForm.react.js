@@ -1,6 +1,6 @@
 import React, { PropTypes, PureComponent } from 'react';
 import Formsy from 'formsy-react';
-import FormsyTextInput from './input-components/FormsyTextInput.react';
+import FormsyTextInput from '../common/form-components/FormsyTextInput.react';
 import { Button } from 'react-bootstrap';
 
 export default class SearchForm extends PureComponent {
