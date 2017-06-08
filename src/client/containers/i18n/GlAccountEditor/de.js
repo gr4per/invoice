@@ -15,6 +15,7 @@ GlAccount.search = 'Suchen';
 GlAccount.create = 'Hinzufügen';
 GlAccount.noItems = 'No Items Found';
 GlAccount.searchFormHeader = 'Sachkontenliste';
+GlAccount.createFormHeader = 'Sachkonto hinzufügen';
 GlAccount.isRequired = 'Property cannot be null';
 GlAccount.isUnique = 'Value must be unique';
 

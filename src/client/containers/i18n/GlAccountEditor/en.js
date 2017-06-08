@@ -15,6 +15,7 @@ GlAccount.search = 'Search';
 GlAccount.create = 'Create';
 GlAccount.noItems = 'No Items Found';
 GlAccount.searchFormHeader = 'GL Accounts';
+GlAccount.createFormHeader = 'Create GL Account';
 GlAccount.isRequired = 'Property cannot be null';
 GlAccount.isUnique = 'Value must be unique';
 
