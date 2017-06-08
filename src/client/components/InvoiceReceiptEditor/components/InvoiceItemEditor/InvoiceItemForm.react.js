@@ -39,6 +39,7 @@ export default class InvoiceItemForm extends Component {
   }
 
   render() {
+    const { item } = this.props;
     return (
       <div>
         <h1>
@@ -47,31 +48,31 @@ export default class InvoiceItemForm extends Component {
         <div className="form-horizontal">
           <Formsy.Form onSubmit={::this._submitForm}
                        validationErrors={this.state.validationErrors}
-                       onChange={(currentValues) => this.setState({validationErrors: validate(currentValues)})}>
+                       onChange={(currentValues) => this.setState({ validationErrors: validate(currentValues) })}>
             <div className="row">
               <div className="col-md-6">
                 <FormsyTextInput
                   label='Labels.productId'
                   name='productId'
-                  value={this.props.item.productId || ''}
+                  value={item.productId || ''}
                 />
                 <FormsyTextInput
                   label="Labels.productDescShort"
                   name='productDescShort'
                   required={true}
-                  value={this.props.item.productDescShort || ''}
+                  value={item.productDescShort || ''}
                 />
                 <FormsyTextInput
                   label="Labels.quantity"
                   name='quantity'
                   required={true}
-                  value={this.props.item.quantity || ''}
+                  value={item.quantity || ''}
                 />
                 <FormsySelect
                   label="Labels.uom"
                   name='uomId'
                   required={true}
-                  value={this.props.item.uomId || ''}
+                  value={item.uomId || ''}
                   values={this.props.unitsOfMeasure}
                   toOptionConverter={
                     (uom) => (
@@ -86,7 +87,7 @@ export default class InvoiceItemForm extends Component {
                   label="Labels.netPrice"
                   name='netPrice'
                   required={true}
-                  value={this.props.item.netPrice || ''}
+                  value={item.netPrice}
                 />
                 <FormsyTextInput
                   label="Labels.priceUnit"
@@ -99,33 +100,34 @@ export default class InvoiceItemForm extends Component {
                 <FormsyTextInput
                   label='Labels.ean'
                   name='extProductId'
-                  value={this.props.item.extProductId || ''}
+                  value={item.extProductId}
                 />
                 <FormsyTextInput
                   label='Labels.taxRate'
                   name='taxPercentage'
-                  value={this.props.item.taxPercentage || ''}
+                  value={item.taxPercentage}
                 />
                 <FormsyTextInput
                   label='Labels.totalNetPrice'
                   name='totalNetPrice'
-                  value={this.props.item.totalNetPrice || ''}
+                  value={item.totalNetPrice}
                 />
                 <FormsyTextInput
                   label='Labels.taxAmount'
                   name='taxAmount'
                   disabled={true}
-                  value={this.props.item.taxAmount || ''}
+                  value={item.taxAmount}
                 />
                 <FormsyTextInput
                   label='Labels.totalGrossPrice'
                   name='totalGrossPrice'
-                  value={this.props.item.totalGrossPrice || ''}
+                  value={item.totalGrossPrice}
                 />
               </div>
             </div>
             <div className="form-submit text-right">
-              <Button className="pull-left" onClick={this.props.onBack}>{this.context.i18n.getMessage('Commands.backtoInvoice')}</Button>
+              <Button className="pull-left"
+                      onClick={this.props.onBack}>{this.context.i18n.getMessage('Commands.backtoInvoice')}</Button>
               <Button bsStyle="primary" type="submit">{this.context.i18n.getMessage('Commands.addNewPosition')}</Button>
             </div>
           </Formsy.Form>
