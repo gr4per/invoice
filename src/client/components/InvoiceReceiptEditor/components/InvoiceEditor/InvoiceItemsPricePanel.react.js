@@ -1,8 +1,13 @@
 import React, { PropTypes } from 'react';
 import { formattedTotalSum } from '../../../../utils/MathUtils';
 import { Button, Glyphicon, Table } from 'react-bootstrap';
+import _ from 'lodash';
 
 const InvoiceItemsPricePanel = ({ invoice, items, onAddPositions }, context) => {
+  if(!invoice) {
+    return null;
+  }
+
   const {i18n} = context;
   let itemsTotalNetPriceSum = formattedTotalSum(i18n, items, 'totalNetPrice');
   let itemsTotalTaxAmountPriceSum = formattedTotalSum(i18n, items, 'taxAmount');

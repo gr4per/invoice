@@ -77,7 +77,9 @@ export default class InvoiceEditor extends Component {
       currencies: fetchCurrencies(),
       isMasterDataReady: true
     }).then((masterData) => this.setState(masterData)
-    ).catch((error) => { throw Error(error); });
+    ).catch((error) => {
+      throw Error(error);
+    });
   }
 
   _loadInvoiceData(invoiceId) {
@@ -91,7 +93,9 @@ export default class InvoiceEditor extends Component {
         });
       }
     ).then((invoiceData) => this.setState(invoiceData)
-    ).catch((error) => { throw Error(error); })
+    ).catch((error) => {
+      throw Error(error);
+    })
   }
 
   _unloadInvoiceData() {
@@ -114,15 +118,19 @@ export default class InvoiceEditor extends Component {
       items: [],
       isInvoiceDataReady: true
     }).then((invoiceData) => this.setState(invoiceData)
-    ).catch((error) => { throw Error(error); })
+    ).catch((error) => {
+      throw Error(error);
+    })
   }
 
   updateInvoice(payload, reset) {
     request.put(`/invoice/api/invoices/${this.state.invoice.key}`).set(
       'Accept', 'application/json'
     ).send(payload).then((response) => Promise.resolve(response.body)
-    ).then((invoice) => this.setState({invoice: invoice})
-    ).catch((error) => { throw Error(error); })
+    ).then((invoice) => this.setState({ invoice: invoice })
+    ).catch((error) => {
+      throw Error(error);
+    })
   }
 
   createInvoice(payload, reset) {
@@ -130,53 +138,43 @@ export default class InvoiceEditor extends Component {
       'Accept', 'application/json'
     ).send(_.assign({}, this.state.invoice, payload)
     ).then((response) => reset()
-    ).catch((error) => { throw Error(error); })
+    ).catch((error) => {
+      throw Error(error);
+    })
   }
+
 
   render() {
     if (this.state.isMasterDataReady) {
       if (this.state.isInvoiceDataReady) {
-        return this.props.createMode ?
-          <div className="create-invoice">
-              <InvoiceForm
-                formHeader={this.context.i18n.getMessage('Labels.createIR')}
-                invoice={this.state.invoice}
+        const { createMode } = this.props;
+        return (
+          <div className={`${createMode ? 'create' : 'edit'}-invoice`}>
+            <InvoiceForm
+              formHeader={createMode ? this.context.i18n.getMessage('Labels.createIR') : ''}
+              invoice={this.state.invoice}
+              items={this.state.items}
+              customer={this.state.customer}
+              supplier={this.state.supplier}
+
+              termsOfDelivery={this.state.termsOfDelivery}
+              termsOfPayment={this.state.termsOfPayment}
+              methodsOfPayment={this.state.methodsOfPayment}
+              currencies={this.state.currencies}
+
+              statusLabel={this.state.statusLabel}
+              onCancel={this.props.onCancel}
+              onSave={createMode ? ::this.createInvoice : ::this.updateInvoice}/>
+
+            <br/>
+            <InvoiceItemsOverview items={this.state.items}/>
+            <InvoiceItemsPricePanel
                 items={this.state.items}
-                customer={this.state.customer}
-                supplier={this.state.supplier}
-
-                termsOfDelivery={this.state.termsOfDelivery}
-                termsOfPayment={this.state.termsOfPayment}
-                methodsOfPayment={this.state.methodsOfPayment}
-                currencies={this.state.currencies}
-
-                statusLabel={this.state.statusLabel}
-                onCancel={this.props.onCancel}
-                onSave={::this.createInvoice}/>
+                invoice={this.state.invoice.invoiceReceiptId? this.state.invoice : undefined}
+                onAddPositions={() => (this.context.router.push(`/invoice/edit/${this.props.invoiceId}/items`))}
+            />
           </div>
-          :
-          <div className="edit-invoice">
-              <InvoiceForm
-                invoice={this.state.invoice}
-                items={this.state.items}
-                customer={this.state.customer}
-                supplier={this.state.supplier}
-
-                termsOfDelivery={this.state.termsOfDelivery}
-                termsOfPayment={this.state.termsOfPayment}
-                methodsOfPayment={this.state.methodsOfPayment}
-                currencies={this.state.currencies}
-
-                statusLabel={this.state.statusLabel}
-                onCancel={this.props.onCancel}
-                onSave={::this.updateInvoice}
-              />
-              <br/>
-              <InvoiceItemsOverview items={this.state.items}/>
-              {this.state.items && <InvoiceItemsPricePanel items={this.state.items}
-                                                           invoice={this.state.invoice}
-                                                           onAddPositions={() => (this.context.router.push(`/invoice/edit/${this.props.invoiceId}/items`))}/>}
-          </div>
+        );
       } else {
         return this.props.createMode ?
           <SelectCustomerWizard onSubmit={(customerId) => this.initInvoiceData(customerId)}/> : null;

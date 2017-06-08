@@ -65,7 +65,9 @@ export default class InvoiceOverviewMarkup extends Component {
             <object width="100%" height="100%"
                     data={this.props.editInvoiceId ? "/invoice/static/test_workarea/invoiceReceipt_TEST.pdf" : ''}></object>
           </div>
-          <div className="col-md-6"><InvoiceEditor invoiceId={this.props.editInvoiceId} onCancel={this.props.onCancel}/></div>
+          <div className="col-md-6">
+            <InvoiceEditor invoiceId={this.props.editInvoiceId} onCancel={this.props.onCancel}/>
+          </div>
         </div>
         <InvoiceDeleteModal {...this.props.deleteModal}
                             onDelete={(id) => this.props.onDelete(id, this.refs.searchForm.refs.searchFormMarkup.getModel())}
