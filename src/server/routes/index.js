@@ -40,7 +40,6 @@ module.exports.init = function(app, db, config) {
   glAccount(epilogue, db);
   staticResources(app, db);
   suppliers(app, db);
-  customers(app, db);
   termsOfPayment(app, db);
   termsOfDelivery(app, db);
   methodOfPayment(app, db);

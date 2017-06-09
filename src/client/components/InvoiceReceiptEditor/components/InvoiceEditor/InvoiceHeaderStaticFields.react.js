@@ -3,6 +3,9 @@ import FormGroupMarkup from '../../../common/FormGroupMarkup/index';
 import _ from 'lodash';
 
 const _extractInvoiceAddress = (addressAssociations) => {
+  if(!addressAssociations) {
+    return null;
+  }
   let addressAssociation = _.find(addressAssociations, (association) => {
     return association.address.type === 'invoice' && association.isDefault
   });
@@ -82,7 +85,7 @@ const InvoiceHeaderStaticFields = ({ customer, supplier }) => {
     {
       name: 'customerInfo',
       label: 'Labels.customer',
-      value: `${customer.customerId} - ${customer.customerName}`
+      value: `${customer.id} - ${customer.customerName}`
     },
     {
       name: 'customerAddress',

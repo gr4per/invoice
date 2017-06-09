@@ -19,13 +19,33 @@ services:
      - '${PORT}:${PORT}'
     command: "npm run dev"
 
+  customer:
+    image: opuscapita/customer:dev
+    depends_on:
+      - mysql
+      - consul
+      - registrator
+    labels:
+      SERVICE_NAME: 'customer'
+    environment:
+      PORT: ${CUSTOMER_PORT}
+      HOST_IP: ${HOST_IP}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      REDIS_AUTH: ${REDIS_AUTH}
+    extra_hosts:
+      - 'consul:${HOST_IP}'
+    ports:
+       - '${CUSTOMER_PORT}:${CUSTOMER_PORT}'
+    command: 'npm run dev'
+
   mysql:
     image: "mysql:5.6"
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: "notSecurePa55w0rd"
-      MYSQL_DATABASE: "bnp"
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     depends_on:
       - registrator
 
@@ -44,6 +64,7 @@ services:
      - '8080:8080'
     depends_on:
      - main
+     - customer
      - registrator
     environment:
       PORT: '8080'

@@ -12,6 +12,7 @@ import {
   fetchInvoiceReceipt,
   fetchInvoiceReceiptItems,
   fetchCustomer,
+  fetchCustomers,
   fetchSupplier,
   fetchTermsOfDelivery,
   fetchTermsOfPayment,
@@ -75,6 +76,7 @@ export default class InvoiceEditor extends Component {
       termsOfPayment: fetchTermsOfPayment(),
       methodsOfPayment: fetchMethodsOfPayment(),
       currencies: fetchCurrencies(),
+      customers: fetchCustomers(),
       isMasterDataReady: true
     }).then((masterData) => this.setState(masterData)
     ).catch((error) => {
@@ -177,7 +179,10 @@ export default class InvoiceEditor extends Component {
         );
       } else {
         return this.props.createMode ?
-          <SelectCustomerWizard onSubmit={(customerId) => this.initInvoiceData(customerId)}/> : null;
+          <SelectCustomerWizard
+            customers={this.state.customers}
+            onSubmit={(customerId) => this.initInvoiceData(customerId)}
+          /> : null;
       }
     } else {
       return null;

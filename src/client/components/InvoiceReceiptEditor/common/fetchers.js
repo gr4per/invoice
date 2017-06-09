@@ -16,7 +16,14 @@ export const fetchInvoiceReceiptItems = (id) => {
 };
 
 export const fetchCustomer = (id) => {
-  return request.get(`/invoice/api/customers/${id}`).set(
+  return request.get(`/customer/api/customers/${id}`).set(
+    'Accept', 'application/json'
+  ).then((response) => Promise.resolve(response.body)
+  ).catch((error) => { throw Error(error); })
+};
+
+export const fetchCustomers = () => {
+  return request.get(`/customer/api/customers`).set(
     'Accept', 'application/json'
   ).then((response) => Promise.resolve(response.body)
   ).catch((error) => { throw Error(error); })

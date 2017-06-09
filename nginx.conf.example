@@ -1,0 +1,49 @@
+#This is an example of nginx conf required for the development
+#Copy this file into your copy of 'nginx-rp' repo
+#Remove the original nginx.conf file and rename it to nginx.conf
+#Rebuild gr4per/nginx-rp:dev locally
+
+
+upstream invoice {
+  least_conn;
+    {{range service "invoice"}} server {{.Address}}:{{.Port}} max_fails=3 fail_timeout=60 weight=1;
+    {{else}}
+    server 127.0.0.1:65535; # force a 502
+    {{end}}
+}
+upstream customer {
+  least_conn;
+    {{range service "customer"}} server {{.Address}}:{{.Port}} max_fails=3 fail_timeout=60 weight=1;
+    {{else}}
+    server 127.0.0.1:65535; # force a 502
+    {{end}}
+}
+
+server {
+  listen {{env "PORT"}} default_server;
+
+  # For below proxy_set_header settings see documentation at
+  # https://www.nginx.com/resources/wiki/start/topics/examples/likeapache/
+  # https://expressjs.com/en/guide/behind-proxies.html
+
+location /public {
+  root /var/www/;
+  expires 0d;
+}
+location ~ /invoice(/.*) {
+  set $path $1;
+  proxy_pass http://invoice$path$is_args$args;
+  proxy_set_header X-Forwarded-Host $host:{{env "DOCKER_CONTAINERS_HOST_EXTERNAL_PORT"}};
+  proxy_set_header X-Forwarded-Server $host;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+}
+location ~ /customer(/.*) {
+  set $pazz $1;
+  proxy_pass http://customer$pazz$is_args$args;
+  proxy_set_header X-Forwarded-Host $host:{{env "DOCKER_CONTAINERS_HOST_EXTERNAL_PORT"}};
+  proxy_set_header X-Forwarded-Server $host;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+}
+}
