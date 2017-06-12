@@ -4,8 +4,6 @@ const Promise = require('bluebird');
 const invoiceRoutes = require('./invoiceReceipt');
 const invoiceItemsRoutes = require('./invoiceReceiptItems');
 const staticResources = require('./staticResources');
-const suppliers = require('./suppliers');
-const customers = require('./customers');
 const termsOfPayment = require('./termsOfPayment');
 const termsOfDelivery = require('./termsOfDelivery');
 const methodOfPayment = require('./methodOfPayment');
@@ -39,7 +37,6 @@ module.exports.init = function(app, db, config) {
   invoiceItemsRoutes(epilogue, db);
   glAccount(epilogue, db);
   staticResources(app, db);
-  suppliers(app, db);
   termsOfPayment(app, db);
   termsOfDelivery(app, db);
   methodOfPayment(app, db);

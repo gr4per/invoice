@@ -109,13 +109,13 @@ export default class InvoiceEditor extends Component {
   initInvoiceData(customerId) {
     Promise.props({
       invoice: {
-        supplierId: this.state.userAssignment.supplier.supplierId,
+        supplierId: this.state.userAssignment.supplierId,
         customerId: customerId,
         statusId: _.find(this.state.statuses, { statusId: '100' }).statusId,
         intrastatId: '000',
         bookingDate: new Date()
       },
-      supplier: this.state.userAssignment.supplier,
+      supplier: fetchSupplier(this.state.userAssignment.supplierId),
       customer: fetchCustomer(customerId),
       items: [],
       isInvoiceDataReady: true

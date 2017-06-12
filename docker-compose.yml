@@ -39,6 +39,26 @@ services:
        - '${CUSTOMER_PORT}:${CUSTOMER_PORT}'
     command: 'npm run dev'
 
+  supplier:
+    image: opuscapita/supplier:dev
+    depends_on:
+      - mysql
+      - consul
+      - registrator
+    labels:
+      SERVICE_NAME: 'supplier'
+    environment:
+      PORT: ${SUPPLIER_PORT}
+      HOST_IP: ${HOST_IP}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      REDIS_AUTH: ${REDIS_AUTH}
+    extra_hosts:
+      - 'consul:${HOST_IP}'
+    ports:
+       - '${SUPPLIER_PORT}:${SUPPLIER_PORT}'
+    command: 'npm run local'
+
   mysql:
     image: "mysql:5.6"
     ports:

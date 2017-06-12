@@ -18,6 +18,13 @@ upstream customer {
     server 127.0.0.1:65535; # force a 502
     {{end}}
 }
+upstream supplier {
+  least_conn;
+    {{range service "supplier"}} server {{.Address}}:{{.Port}} max_fails=3 fail_timeout=60 weight=1;
+    {{else}}
+    server 127.0.0.1:65535; # force a 502
+    {{end}}
+}
 
 server {
   listen {{env "PORT"}} default_server;
@@ -41,6 +48,14 @@ location ~ /invoice(/.*) {
 location ~ /customer(/.*) {
   set $pazz $1;
   proxy_pass http://customer$pazz$is_args$args;
+  proxy_set_header X-Forwarded-Host $host:{{env "DOCKER_CONTAINERS_HOST_EXTERNAL_PORT"}};
+  proxy_set_header X-Forwarded-Server $host;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+}
+location ~ /supplier(/.*) {
+  set $pazz $1;
+  proxy_pass http://supplier$pazz$is_args$args;
   proxy_set_header X-Forwarded-Host $host:{{env "DOCKER_CONTAINERS_HOST_EXTERNAL_PORT"}};
   proxy_set_header X-Forwarded-Server $host;
   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

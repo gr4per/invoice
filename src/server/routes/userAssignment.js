@@ -1,7 +1,5 @@
 'use strict';
 
-const suppliers = require('../stubData/suppliers.json').suppliers;
-
 /**
  * Stub rest endpoint for getting user assignment in format
  * {
@@ -19,7 +17,7 @@ module.exports = function(app, db) {
     res.json({
       isSupplier: true,
       isCustomer: false,
-      supplier: suppliers[0]
+      supplierId: 'car001'
     });
   });
 };

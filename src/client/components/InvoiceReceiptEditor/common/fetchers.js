@@ -30,7 +30,7 @@ export const fetchCustomers = () => {
 };
 
 export const fetchSupplier = (id) => {
-  return request.get(`/invoice/api/suppliers/${id}`).set(
+  return request.get(`/supplier/api/suppliers/${id}`).set(
     'Accept', 'application/json'
   ).then((response) => Promise.resolve(response.body)
   ).catch((error) => { throw Error(error); })
