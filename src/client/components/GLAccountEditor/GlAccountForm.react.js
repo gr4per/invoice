@@ -30,22 +30,26 @@ export default class GlAccountForm extends PureComponent {
     mode: PropTypes.oneOf(['edit', 'create'])
   };
 
-  state = {
-    validationErrors: {},
-    disableSubmitButton: false
+  static contextTypes = {
+    i18n: PropTypes.object.isRequired
   };
 
   static defaultProps = {
     formValue: { validRange: {} }
   };
 
-  static contextTypes = {
-    i18n: PropTypes.object.isRequired
+  state = {
+    validationErrors: {},
+    disableSubmitButton: false
   };
 
   _submitForm(model, resetForm, invalidateForm) {
     const errors = validate(model);
-    _.isEmpty(errors) ? this.props.onSubmit(model, resetForm, invalidateForm) : invalidateForm(errors);
+    if (_.isEmpty(errors)) {
+      this.props.onSubmit(model, resetForm, invalidateForm);
+    } else {
+      invalidateForm(errors);
+    }
   }
 
   _mapInputs(inputs) {
@@ -58,34 +62,64 @@ export default class GlAccountForm extends PureComponent {
 
   render() {
     const { i18n } = this.context;
-    const {onCancel, formHeader, formValue, mode} = this.props;
+    const { onCancel, formHeader, formValue, mode } = this.props;
     return (
       <Formsy.Form
         ref="glAccountForm"
         onSubmit={::this._submitForm}
-        onInvalid={() => (this.setState({disableSubmitButton: false}))}
-        onValid={() => (this.setState({disableSubmitButton: false}))}
+        onInvalid={() => (this.setState({ disableSubmitButton: false }))}
+        onValid={() => (this.setState({ disableSubmitButton: false }))}
         mapping={this._mapInputs}
-        onChange={(currentValues) => this.setState({validationErrors: validate(currentValues)})}
+        onChange={(currentValues) => this.setState({ validationErrors: validate(currentValues) })}
         validationErrors={this.state.validationErrors}
       >
         {formHeader && <h1>{formHeader}</h1>}
         <div className="form-horizontal">
           <div className="row">
             <div className="col-md-6">
-              <FormsyTextInput disabled={mode === 'edit'} required label={i18n.getMessage('GlAccount.customerId')} name="customerId" value={formValue.customerId}/>
-              <FormsyTextInput disabled={mode === 'edit'} required label={i18n.getMessage('GlAccount.id')} name="id" value={formValue.id}/>
-              <FormsyTextInput label={i18n.getMessage('GlAccount.accountType')} name="accountType" value={formValue.accountType}/>
+              <FormsyTextInput
+                disabled={mode === 'edit'}
+                required={true}
+                label={i18n.getMessage('GlAccount.customerId')}
+                name="customerId"
+                value={formValue.customerId}
+              />
+              <FormsyTextInput
+                disabled={mode === 'edit'}
+                required={true}
+                label={i18n.getMessage('GlAccount.id')}
+                name="id"
+                value={formValue.id}
+              />
+              <FormsyTextInput
+                label={i18n.getMessage('GlAccount.accountType')}
+                name="accountType"
+                value={formValue.accountType}
+              />
             </div>
             <div className="col-md-6">
-              <FormsyTextInput label={i18n.getMessage('GlAccount.shortDescription')} name="shortDescription" value={formValue.shortDescription}/>
-              <FormsyDateRange label={i18n.getMessage('GlAccount.validRange')} name="validRange" value={{from: formValue.validFrom, to: formValue.validTo}}/>
+              <FormsyTextInput
+                label={i18n.getMessage('GlAccount.shortDescription')}
+                name="shortDescription"
+                value={formValue.shortDescription}
+              />
+              <FormsyDateRange
+                label={i18n.getMessage('GlAccount.validRange')}
+                name="validRange"
+                value={{ from: formValue.validFrom, to: formValue.validTo }}
+              />
             </div>
           </div>
           <div className="form-submit form-submit text-right">
-            <Button type="reset" bsStyle="link" onClick={()=>(this.refs.glAccountForm.reset())}>{i18n.getMessage('GlAccount.reset')}</Button>
-            <Button bsStyle="default" onClick={onCancel}>{i18n.getMessage('GlAccount.cancelButton')}</Button>
-            <Button type="submit" bsStyle="primary" disabled={this.state.disableSubmitButton}>{i18n.getMessage('GlAccount.save')}</Button>
+            <Button type="reset" bsStyle="link" onClick={() => (this.refs.glAccountForm.reset())}>
+              {i18n.getMessage('GlAccount.reset')}
+            </Button>
+            <Button bsStyle="default" onClick={onCancel}>
+              {i18n.getMessage('GlAccount.cancelButton')}
+            </Button>
+            <Button type="submit" bsStyle="primary" disabled={this.state.disableSubmitButton}>
+              {i18n.getMessage('GlAccount.save')}
+            </Button>
           </div>
         </div>
       </Formsy.Form>

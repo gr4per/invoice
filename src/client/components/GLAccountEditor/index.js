@@ -21,12 +21,12 @@ export default class GlAccountEditorWrapper extends PureComponent {
     onCloseModal: PropTypes.func.isRequired
   };
 
-  static defaultProps = {
-    pagination: {}
-  };
-
   static contextTypes = {
     i18n: PropTypes.object.isRequired
+  };
+
+  static defaultProps = {
+    pagination: {}
   };
 
   state = {
@@ -62,10 +62,10 @@ export default class GlAccountEditorWrapper extends PureComponent {
         <div className="pull-right">
           <Pagination
             className={this.props.pagination.last === this.props.pagination.length ? 'hidden' : 'shown'}
-            prev
-            next
-            ellipsis
-            boundaryLinks
+            prev={true}
+            next={true}
+            ellipsis={true}
+            boundaryLinks={true}
             items={Math.ceil(this.props.pagination.length / MAX_PER_PAGE)}
             maxButtons={3}
             activePage={1 + Math.floor(this.props.pagination.first / MAX_PER_PAGE)}

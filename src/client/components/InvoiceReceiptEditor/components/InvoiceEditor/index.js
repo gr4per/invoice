@@ -24,17 +24,18 @@ import {
 export default class InvoiceEditor extends Component {
 
   static propTypes = {
+    invoiceId: PropTypes.number,
     createMode: PropTypes.bool,
     onCancel: PropTypes.func
-  };
-
-  static defaultProps = {
-    createMode: false,
   };
 
   static contextTypes = {
     i18n: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired
+  };
+
+  static defaultProps = {
+    createMode: false,
   };
 
   constructor(props) {
@@ -65,7 +66,11 @@ export default class InvoiceEditor extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.createMode && nextProps.invoiceId !== this.props.invoiceId) {
-      nextProps.invoiceId ? this._loadInvoiceData(nextProps.invoiceId) : this._unloadInvoiceData();
+      if (nextProps.invoiceId) {
+        this._loadInvoiceData(nextProps.invoiceId);
+      } else {
+        this._unloadInvoiceData();
+      }
     }
   }
 
@@ -86,14 +91,14 @@ export default class InvoiceEditor extends Component {
 
   _loadInvoiceData(invoiceId) {
     fetchInvoiceReceipt(invoiceId).then((invoice) => {
-        return Promise.props({
-          invoice: invoice,
-          customer: fetchCustomer(invoice.customerId),
-          supplier: fetchSupplier(invoice.supplierId),
-          items: fetchInvoiceReceiptItems(invoice.key),
-          isInvoiceDataReady: true
-        });
-      }
+      return Promise.props({
+        invoice: invoice,
+        customer: fetchCustomer(invoice.customerId),
+        supplier: fetchSupplier(invoice.supplierId),
+        items: fetchInvoiceReceiptItems(invoice.key),
+        isInvoiceDataReady: true
+      });
+    }
     ).then((invoiceData) => this.setState(invoiceData)
     ).catch((error) => {
       throw Error(error);
@@ -166,7 +171,8 @@ export default class InvoiceEditor extends Component {
 
               statusLabel={this.state.statusLabel}
               onCancel={this.props.onCancel}
-              onSave={createMode ? ::this.createInvoice : ::this.updateInvoice}/>
+              onSave={createMode ? ::this.createInvoice : ::this.updateInvoice}
+            />
 
             <br/>
             {this.state.invoice.invoiceReceiptId && <InvoiceItemsOverview items={this.state.items}/>}

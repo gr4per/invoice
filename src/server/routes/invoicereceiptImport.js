@@ -23,11 +23,13 @@ const importInvoiceItems = (db, invoiceReceiptItems, invoice) => {
     })
   ).then((itemImportStatistic) => {
     return Promise.resolve(_.reduce(itemImportStatistic, (statisticAccumulator, itemImportResult) => {
+      /* eslint-disable no-param-reassign */
       if (itemImportResult.created) {
         statisticAccumulator.created++;
       } else if (itemImportResult.failed) {
         statisticAccumulator.failed++;
       }
+      /* eslint-enable no-param-reassign */
       return statisticAccumulator;
     }, { created: 0, failed: 0 }));
   });
@@ -59,22 +61,22 @@ const invoiceImportFailedCallback = (invoiceReceiptId) => {
  * @return {Promise.<TResult>}
  */
 const collectInvoiceItemsImportStatistic = (invoice, invoiceData, db, originalStatisticObject) => {
-  //removing invoice receipt items
+  // removing invoice receipt items
   return db.models.InvoiceReceiptItem.destroy({
     where: {
       invoiceReceiptSn: invoice.key
     }
   }).then(() => {
-    //statrting invoice item import
+    // statrting invoice item import
     return importInvoiceItems(
       db,
       invoiceData.invoiceReceiptItems,
       invoice
     ).then((itemImportStatistic) => {
-      //collecting items import statistic
+      // collecting items import statistic
       return Promise.resolve(_.extend(
         originalStatisticObject,
-        {items: itemImportStatistic}
+        { items: itemImportStatistic }
       ));
     })
   });
@@ -88,7 +90,7 @@ const collectInvoiceItemsImportStatistic = (invoice, invoiceData, db, originalSt
  * @return {Promise.<TResult>}
  */
 const createInvoice = (insertData, db) => {
-  //creating new invoice
+  // creating new invoice
   return db.models.InvoiceReceipt.create(
     _.omit(insertData, ['invoiceReceiptItems'])
   ).then((newInvoice) => {
@@ -126,18 +128,18 @@ const updateInvoice = (invoice2Update, updateData, db) => {
  */
 module.exports = function(app, db) {
   app.post('/api/invoices/import', (req, res) => {
-    //importing all invoices in async way - each invoice - separate promise
+    // importing all invoices in async way - each invoice - separate promise
     Promise.all(
-      //converting invoice array to array of import promises
+      // converting invoice array to array of import promises
       _.map(req.body, (invoice) => {
-        //trying to get already existing invoice for invoiceReceiptId
+        // trying to get already existing invoice for invoiceReceiptId
         return db.models.InvoiceReceipt.findOne({
           where: {
             invoiceReceiptId: invoice.invoiceReceiptId
           }
         }).then((existingInvoice) => {
-          //if we already have such invoice - update it otherwise - create new one
-          return _.isNil(existingInvoice)?
+          // if we already have such invoice - update it otherwise - create new one
+          return _.isNil(existingInvoice) ?
             createInvoice(invoice, db) :
             updateInvoice(existingInvoice, invoice, db);
         })

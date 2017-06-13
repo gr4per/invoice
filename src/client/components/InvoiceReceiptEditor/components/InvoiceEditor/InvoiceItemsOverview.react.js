@@ -8,7 +8,7 @@ import { Button, Glyphicon, Table } from 'react-bootstrap';
  * @param items
  */
 const InvoiceItemsOverview = ({ items }, context) => (
-  <Table responsive key={_.uniqueId()}>
+  <Table responsive={true} key={_.uniqueId()}>
     <thead>
     <tr>
       <th>#</th>
@@ -56,7 +56,8 @@ const InvoiceItemsOverview = ({ items }, context) => (
             {item.taxAmount || '-'}
           </td>
           <td>
-            {(item.purchaseOrderId || item.purchaseOrderItemNo) ? `${item.purchaseOrderId || ''}/${item.purchaseOrderItemNo || ''}` : 'n/a'}
+            {(item.purchaseOrderId || item.purchaseOrderItemNo) ?
+                `${item.purchaseOrderId || ''}/${item.purchaseOrderItemNo || ''}` : 'n/a'}
           </td>
           <td className="invoice-btn-group">
             <Button bsStyle="link" onClick={_.noop}>
@@ -82,4 +83,4 @@ InvoiceItemsOverview.contextTypes = {
   i18n: PropTypes.object.isRequired
 };
 
-export default InvoiceItemsOverview ;
+export default InvoiceItemsOverview;

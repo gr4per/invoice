@@ -3,7 +3,7 @@ import FormGroupMarkup from '../../../common/FormGroupMarkup/index';
 import _ from 'lodash';
 
 const _extractInvoiceAddress = (addressAssociations) => {
-  if(!addressAssociations) {
+  if (!addressAssociations) {
     return null;
   }
   let addressAssociation = _.find(addressAssociations, (association) => {
@@ -65,7 +65,6 @@ const _contactToString = (contact) => {
 };
 
 const InvoiceHeaderStaticFields = ({ customer, supplier }) => {
-
   const fields = [
     {
       name: 'supplierInfo',

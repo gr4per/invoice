@@ -1,8 +1,7 @@
 import './LabelMarkup.less';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
 const LabelMarkup = (props, context) => {
-
   let wrapperClass = props.wrapperClass || 'col-sm-7';
   let fieldError;
 

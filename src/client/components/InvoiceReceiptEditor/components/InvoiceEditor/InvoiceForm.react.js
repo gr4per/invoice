@@ -1,4 +1,4 @@
-import React, {PropTypes, Component} from 'react';
+import React, { PropTypes, Component } from 'react';
 import Formsy from 'formsy-react';
 import FormsyTextInput from '../../../common/form-components/FormsyTextInput.react';
 import FormsyDateInput from '../../../common/form-components/FormsyDateInput.react';
@@ -13,13 +13,6 @@ const validate = validateForm(constraints);
 
 export default class InvoiceForm extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      validationErrors: {}
-    };
-  }
-
   static propTypes = {
     invoice: PropTypes.object.isRequired,
     customer: PropTypes.object.isRequired,
@@ -29,15 +22,25 @@ export default class InvoiceForm extends Component {
     methodsOfPayment: PropTypes.array.isRequired,
     currencies: PropTypes.array.isRequired,
     formHeader: PropTypes.string,
-    onSave: PropTypes.func.isRequired
+    statusLabel: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
+    onCancel: PropTypes.func
   };
 
   static contextTypes = {
     i18n: PropTypes.object.isRequired
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      validationErrors: {}
+    };
+  }
+
   _mapInputs(inputs) {
-    const model = _.transform(inputs, (result, value, key) => {
+    /* eslint-disable no-param-reassign */
+    return _.transform(inputs, (result, value, key) => {
       if (key === 'periodOfService' && !_.isNil(value)) {
         result.periodOfServiceFrom = value.from;
         result.periodOfServiceTo = value.to;
@@ -45,12 +48,16 @@ export default class InvoiceForm extends Component {
         result[key] = value;
       }
     }, {});
-    return model;
-  };
+    /* eslint-enable no-param-reassign */
+  }
 
   _submitForm(model, resetForm, invalidateForm) {
     const errors = validate(model);
-    _.isEmpty(errors) ? this.props.onSave(model, resetForm) : invalidateForm(errors);
+    if (_.isEmpty(errors)) {
+      this.props.onSave(model, resetForm);
+    } else {
+      invalidateForm(errors);
+    }
   }
 
   render() {
@@ -68,9 +75,10 @@ export default class InvoiceForm extends Component {
     } = this.props;
     return (
       <Formsy.Form onSubmit={::this._submitForm}
-                   validationErrors={this.state.validationErrors}
-                   mapping={this._mapInputs}
-                   onChange={(currentValues) => this.setState({validationErrors: validate(currentValues)})}>
+        validationErrors={this.state.validationErrors}
+        mapping={this._mapInputs}
+        onChange={(currentValues) => this.setState({ validationErrors: validate(currentValues) })}
+      >
         {formHeader && <h1>{formHeader}</h1>}
         <div className="form-horizontal">
           <div className="row">
@@ -91,7 +99,7 @@ export default class InvoiceForm extends Component {
               <FormsyDateRange
                 label="Labels.periodOfService"
                 name="periodOfService"
-                value={{from: invoice.periodOfServiceFrom, to: invoice.periodOfServiceTo}}
+                value={{ from: invoice.periodOfServiceFrom, to: invoice.periodOfServiceTo }}
               />
             </div>
             <div className="col-md-6">

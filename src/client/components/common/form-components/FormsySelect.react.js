@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { FormControl } from 'react-bootstrap';
 import FormGroupMarkup from '../FormGroupMarkup/index';
-import {Decorator as FormsyElement} from 'formsy-react';
+import { Decorator as FormsyElement } from 'formsy-react';
 
 @FormsyElement()
 export default class FormsyDateRange extends Component {
@@ -12,7 +12,11 @@ export default class FormsyDateRange extends Component {
     label: PropTypes.string.isRequired,
     required: PropTypes.bool,
     toOptionConverter: PropTypes.func.isRequired,
-    defaultOption: PropTypes.object
+    defaultOption: PropTypes.object,
+    isPristine: PropTypes.func.isRequired,
+    getErrorMessage: PropTypes.func.isRequired,
+    getValue: PropTypes.func.isRequired,
+    setValue: PropTypes.func.isRequired
   };
 
   static contextTypes = {
@@ -26,7 +30,11 @@ export default class FormsyDateRange extends Component {
 
   render() {
     return (
-      <FormGroupMarkup error={this.props.isPristine() ? null : this.props.getErrorMessage()} label={this.props.label} required={this.props.required}>
+      <FormGroupMarkup
+        error={this.props.isPristine() ? null : this.props.getErrorMessage()}
+        label={this.props.label}
+        required={this.props.required}
+      >
         <FormControl
           componentClass="select"
           value={this.props.getValue() || ''}
@@ -39,4 +47,4 @@ export default class FormsyDateRange extends Component {
       </FormGroupMarkup>
     )
   }
-};
+}

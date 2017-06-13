@@ -1,4 +1,4 @@
-import { UOMS_LOAD_SUCCESS} from '../constants/unitsOfMeasure';
+import { UOMS_LOAD_SUCCESS } from '../constants/unitsOfMeasure';
 
 // State of invoicePositions reducer:
 // {

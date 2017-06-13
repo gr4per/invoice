@@ -18,7 +18,7 @@ export default class InvoiceOverview extends Component {
     invoices: [],
     pagination: { first: 0, last: 0, length: 0 },
     checkedInvoices: [],
-    deleteModal: {isShown: false},
+    deleteModal: { isShown: false },
     statuses: [
       { 'statusId': '070', 'description': 'rejected' },
       { 'statusId': '100', 'description': 'created' },
@@ -59,23 +59,23 @@ export default class InvoiceOverview extends Component {
   }
 
   handleSearchInvoices(searchParams = {}, offset = 0, count = COUNT) {
-    return request.get('/invoice/api/invoices')
-      .query(searchParams)
-      .query({offset: offset, count: count})
-      .set(
+    return request.get('/invoice/api/invoices').
+      query(searchParams).
+      query({ offset: offset, count: count }).
+      set(
         'Accept', 'application/json'
       ).then((response) => {
         this.setState({
-            invoices: response.body,
-            pagination: contentRange.parse(response.header['content-range']),
-            exportLink: this._calculateExportLink(response.body, [])
+          invoices: response.body,
+          pagination: contentRange.parse(response.header['content-range']),
+          exportLink: this._calculateExportLink(response.body, [])
         });
       }).catch((error) => { throw Error(error); })
   }
 
   handleDeleteInvoice(id, searchParams = {}) {
     Promise.resolve(
-      this.setState({deleteModal: {isShown: false}})
+      this.setState({ deleteModal: { isShown: false } })
     ).then(() => (
       request.delete(`/invoice/api/invoices/${id}`).set(
         'Accept', 'application/json')
@@ -93,15 +93,15 @@ export default class InvoiceOverview extends Component {
   }
 
   handleEditInvoice(id) {
-    this.setState({editInvoiceId: id});
+    this.setState({ editInvoiceId: id });
   }
 
   handleCancel() {
-    this.setState({editInvoiceId: null});
+    this.setState({ editInvoiceId: null });
   }
 
   showDeleteModal(deleteModal) {
-    this.setState({deleteModal: deleteModal});
+    this.setState({ deleteModal: deleteModal });
   }
 
   markForExport(invoiceIds) {

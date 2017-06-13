@@ -12,7 +12,7 @@ import _ from 'lodash';
 
 export function cleanupImportReducer() {
   return function(dispatch, getState) {
-    dispatch({type: CLEANUP_IMPORT})
+    dispatch({ type: CLEANUP_IMPORT })
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import MessageInfo from '../../../common/MessageInfo.react';
-import { Button, Table, MenuItem, Glyphicon, Dropdown, Checkbox } from 'react-bootstrap';
+import { Button, Table, Glyphicon, Checkbox } from 'react-bootstrap';
 
 const SearchResult = (
   {
@@ -30,7 +30,7 @@ const SearchResult = (
             <Checkbox
               onChange={(e) => {
                 let invoiceKeys = (_.map(invoices, (inv) => (inv.key)));
-                return e.target.checked? markForExport(invoiceKeys) : unMarkForExport(invoiceKeys)
+                return e.target.checked ? markForExport(invoiceKeys) : unMarkForExport(invoiceKeys)
               }}
               checked={_.size(checkedInvoices) === _.size(invoices)}
             />
@@ -49,10 +49,10 @@ const SearchResult = (
         {
           invoices.map((inv) => {
             return (
-              <tr key={inv.key} className={inv.key == selectedInvoiceId ? 'success' : ''}>
+              <tr key={inv.key} className={inv.key === selectedInvoiceId ? 'success' : ''}>
                 <td>
                   <Checkbox
-                    onChange={(e) => (e.target.checked? markForExport([inv.key]) : unMarkForExport([inv.key]))}
+                    onChange={(e) => (e.target.checked ? markForExport([inv.key]) : unMarkForExport([inv.key]))}
                     checked={_.includes(checkedInvoices, inv.key)}
                   />
                 </td>
@@ -85,8 +85,8 @@ const SearchResult = (
                   <Button bsStyle="link" onClick={() => onEdit(inv.key)}>
                     <Glyphicon glyph="edit"/>
                   </Button>
-                  <Button bsStyle="link" onClick={() => showDeleteModal({isShown: true, invoiceId: inv.key})}
-                          disabled={!isEditable(inv.statusId)}
+                  <Button bsStyle="link" onClick={() => showDeleteModal({ isShown: true, invoiceId: inv.key })}
+                    disabled={!isEditable(inv.statusId)}
                   >
                     <Glyphicon glyph="trash"/>
                   </Button>
@@ -107,6 +107,7 @@ SearchResult.propTypes = {
   showDeleteModal: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   isEditable: PropTypes.func.isRequired,
+  selectedInvoiceId: PropTypes.number,
   markForExport: PropTypes.func.isRequired,
   unMarkForExport: PropTypes.func.isRequired,
   checkedInvoices: PropTypes.array

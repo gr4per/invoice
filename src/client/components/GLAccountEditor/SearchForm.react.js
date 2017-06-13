@@ -19,8 +19,8 @@ export default class SearchForm extends PureComponent {
   }
 
   render() {
-    const {i18n} = this.context;
-    const {onCreateClick, onSearch} = this.props;
+    const { i18n } = this.context;
+    const { onCreateClick, onSearch } = this.props;
 
     return (
       <Formsy.Form onSubmit={(data, resetForm, invalidateForm) => (onSearch(data))} ref="glAcountSearchForm">
@@ -34,12 +34,18 @@ export default class SearchForm extends PureComponent {
             </div>
           </div>
           <div className="form-submit form-submit text-right">
-            <Button type="reset" bsStyle="link" onClick={() => (this.refs.glAcountSearchForm.reset())}>{i18n.getMessage('GlAccount.reset')}</Button>
-            <Button bsStyle="default" onClick={onCreateClick}>{i18n.getMessage('GlAccount.create')}</Button>
-            <Button bsStyle="primary" type="submit">{i18n.getMessage('GlAccount.search')}</Button>
+            <Button type="reset" bsStyle="link" onClick={() => (this.refs.glAcountSearchForm.reset())}>
+              {i18n.getMessage('GlAccount.reset')}
+            </Button>
+            <Button bsStyle="default" onClick={onCreateClick}>
+              {i18n.getMessage('GlAccount.create')}
+            </Button>
+            <Button bsStyle="primary" type="submit">
+              {i18n.getMessage('GlAccount.search')}
+            </Button>
           </div>
         </div>
       </Formsy.Form>
     );
   }
-};
+}

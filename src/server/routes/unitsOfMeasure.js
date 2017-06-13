@@ -1,7 +1,6 @@
 'use strict';
 
 const unitsOfMeasure = require('../stubData/unitsOfMeasure.json').unitsOfMeasure;
-const _ = require('lodash');
 
 /**
  * Stub rest endpoint for unitsOfMeasure

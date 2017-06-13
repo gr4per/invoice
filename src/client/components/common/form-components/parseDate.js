@@ -7,7 +7,7 @@
  */
 export const parseDate = (value) => {
   let dateValue = value;
-  if (value == null || value === '') {
+  if (value === null || value === undefined || value === '') {
     dateValue = null;
   } else if (!(value instanceof Date)) {
     const timestamp = Date.parse(value);

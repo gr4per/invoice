@@ -10,8 +10,8 @@ console.log(statusLabel);
  */
 describe("statusLabel", () => {
   const statuses = [
-    {statusId: 'testId0', description: "test_descriptions_0"},
-    {statusId: 'testId1', description: "test_descriptions_1"}
+    { statusId: 'testId0', description: "test_descriptions_0" },
+    { statusId: 'testId1', description: "test_descriptions_1" }
   ];
 
   it("testing correct label calculation", () => {

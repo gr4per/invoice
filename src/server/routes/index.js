@@ -25,7 +25,6 @@ const epilogue = require('epilogue');
  * @see [Minimum setup]{@link https://github.com/OpusCapitaBusinessNetwork/web-init#minimum-setup}
  */
 module.exports.init = function(app, db, config) {
-
   epilogue.initialize({
     app: app,
     sequelize: db,

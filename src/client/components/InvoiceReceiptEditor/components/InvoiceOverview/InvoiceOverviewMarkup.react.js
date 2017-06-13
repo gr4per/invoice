@@ -13,12 +13,14 @@ export default class InvoiceOverviewMarkup extends Component {
     onSearch: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
     showDeleteModal: PropTypes.func.isRequired,
     invoices: PropTypes.array,
     statuses: PropTypes.array.isRequired,
     statusLabel: PropTypes.func.isRequired,
     pagination: PropTypes.object.isRequired,
     deleteModal: PropTypes.object.isRequired,
+    editInvoiceId: PropTypes.number,
     isEditable: PropTypes.func.isRequired,
     markForExport: PropTypes.func.isRequired,
     unMarkForExport: PropTypes.func.isRequired,
@@ -48,14 +50,16 @@ export default class InvoiceOverviewMarkup extends Component {
             <ActionBar exportLink={this.props.exportLink}/>
             <Pagination
               className={this.props.pagination.last === this.props.pagination.length ? 'hidden' : 'shown'}
-              prev
-              next
-              ellipsis
-              boundaryLinks
+              prev={true}
+              next={true}
+              ellipsis={true}
+              boundaryLinks={true}
               items={Math.ceil(this.props.pagination.length / COUNT)}
               maxButtons={3}
               activePage={1 + Math.floor(this.props.pagination.first / COUNT)}
-              onSelect={(e) => this.props.onSearch(this.refs.searchForm.refs.searchFormMarkup.getModel(), COUNT * (e - 1), COUNT)}/>
+              onSelect={(e) => this.props.onSearch(this.refs.searchForm.refs.searchFormMarkup.getModel(),
+                COUNT * (e - 1), COUNT)}
+            />
           </div>
         </div>
         <br/><br/>
@@ -63,16 +67,18 @@ export default class InvoiceOverviewMarkup extends Component {
           <div className="col-md-6">
             {/* Rendering static pdf for test purposes */}
             <object width="100%" height="100%"
-                    data={this.props.editInvoiceId ? "/invoice/static/test_workarea/invoiceReceipt_TEST.pdf" : ''}></object>
+              data={this.props.editInvoiceId ? "/invoice/static/test_workarea/invoiceReceipt_TEST.pdf" : ''}
+            />
           </div>
           <div className="col-md-6">
             <InvoiceEditor invoiceId={this.props.editInvoiceId} onCancel={this.props.onCancel}/>
           </div>
         </div>
         <InvoiceDeleteModal {...this.props.deleteModal}
-                            onDelete={(id) => this.props.onDelete(id, this.refs.searchForm.refs.searchFormMarkup.getModel())}
-                            onCancel={() => this.props.showDeleteModal({ isShown: false })}/>
+          onDelete={(id) => this.props.onDelete(id, this.refs.searchForm.refs.searchFormMarkup.getModel())}
+          onCancel={() => this.props.showDeleteModal({ isShown: false })}
+        />
       </div>
     )
   }
-};
+}

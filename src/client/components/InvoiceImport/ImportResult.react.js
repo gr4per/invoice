@@ -16,13 +16,13 @@ const importResultLabel = (invoiceImportResult) => {
     labelModel.message = 'Failed';
   }
 
-  return(
+  return (
     <span className={`label label-${labelModel.labelStyle}`}>{labelModel.message}</span>
   );
 };
 
 const renderInvoiceItemsStatistic = (itemsImportResult) => {
-  return(
+  return (
     <span>
       <span className={`label label-success invoiceItemBadge`}>{itemsImportResult.created}</span>{` / `}
       <span className={`label label-danger invoiceItemBadge`}>{itemsImportResult.failed}</span>
@@ -63,7 +63,8 @@ const ImportResult = ({ importStatistics, cleanImportResult }, { i18n }) => (
 );
 
 ImportResult.propTypes = {
-  importStatistics: PropTypes.array.isRequired
+  importStatistics: PropTypes.array.isRequired,
+  cleanImportResult: PropTypes.func.isRequired
 };
 
 ImportResult.defaultProps = {

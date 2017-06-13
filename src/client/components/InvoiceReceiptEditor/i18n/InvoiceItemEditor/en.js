@@ -59,8 +59,8 @@ Errors.invalidNumber = 'Value must be a valid number';
 Errors.notGreaterThanOrEqualTo = "Value is less than minimum value '0'";
 
 export default {
-    Labels: Labels,
-    States: States,
-    Commands: Commands,
-    Errors: Errors
+  Labels: Labels,
+  States: States,
+  Commands: Commands,
+  Errors: Errors
 };

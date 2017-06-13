@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import Formsy from 'formsy-react';
 import FormsyTextInput from '../../../common/form-components/FormsyTextInput.react';
 import FormsySelect from '../../../common/form-components/FormsySelect.react';
 
@@ -34,7 +35,9 @@ export default class SearchForm extends Component {
                       <option key={status.statusId} value={status.statusId}>{status.description}</option>
                     )
                   }
-                  defaultOption={<option value="" defaultValue={true}>{this.context.i18n.getMessage('Labels.all')}</option>}
+                  defaultOption={
+                    <option value="" defaultValue={true}>{this.context.i18n.getMessage('Labels.all')}</option>
+                  }
                 />
               </div>
               <div className="col-md-6">
@@ -46,7 +49,7 @@ export default class SearchForm extends Component {
             </div>
             <div className="form-submit text-right">
               <button className="btn btn-link" type="button"
-                      onClick={() => this.refs.searchFormMarkup.reset()}
+                onClick={() => this.refs.searchFormMarkup.reset()}
               >
                 {this.context.i18n.getMessage('Commands.reset')}
               </button>
@@ -59,4 +62,4 @@ export default class SearchForm extends Component {
       </div>
     );
   }
-};
+}
