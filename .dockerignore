@@ -57,3 +57,6 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
+
+#For npm ^5.0.1
+package-lock.json

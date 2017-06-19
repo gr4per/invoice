@@ -7,13 +7,38 @@ const staticResources = require('./staticResources');
 const termsOfPayment = require('./termsOfPayment');
 const termsOfDelivery = require('./termsOfDelivery');
 const methodOfPayment = require('./methodOfPayment');
-const currency = require('./currency');
-const userAssignment = require('./userAssignment');
+const userData = require('./userData');
 const unitsOfMeasure = require('./unitsOfMeasure');
 const invoicereceiptImport = require('./invoicereceiptImport');
 const invoiceReceiptExport = require('./invoiceReceiptExport');
 const glAccount = require('./glAccount');
 const epilogue = require('epilogue');
+
+const testUser = {
+  "sub": "scott.tiger@example.com",
+  "id": "scott.tiger@example.com",
+  "phoneno": "+49123456789",
+  "supplierid": "hard001",
+  "customerid": "",
+  "status": "firstLogin",
+  "roles": [
+    "admin",
+    "user"
+  ],
+  "languageid": "de",
+  "firstname": "Scott",
+  "lastname": "Tiger",
+  "email": "scott.tiger@example.com",
+};
+
+const userIdentityWrapper = (NODE_ENV) => {
+  return NODE_ENV === 'development' ? (req, res, next) => {
+    req.opuscapita.userData = () => {
+      return testUser;
+    };
+    next();
+  } : require('useridentity-middleware')
+};
 
 /**
  * Initializes all routes for RESTful access.
@@ -25,6 +50,8 @@ const epilogue = require('epilogue');
  * @see [Minimum setup]{@link https://github.com/OpusCapitaBusinessNetwork/web-init#minimum-setup}
  */
 module.exports.init = function(app, db, config) {
+
+  app.use(userIdentityWrapper(process.env.NODE_ENV));
 
   epilogue.initialize({
     app: app,
@@ -40,8 +67,7 @@ module.exports.init = function(app, db, config) {
   termsOfPayment(app, db);
   termsOfDelivery(app, db);
   methodOfPayment(app, db);
-  userAssignment(app, db);
-  currency(app, db);
+  userData(app, db);
   unitsOfMeasure(app, db);
   invoicereceiptImport(app, db);
 

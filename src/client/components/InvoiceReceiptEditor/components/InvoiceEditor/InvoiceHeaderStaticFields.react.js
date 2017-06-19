@@ -2,21 +2,21 @@ import React, { PropTypes } from 'react';
 import FormGroupMarkup from '../../../common/FormGroupMarkup/index';
 import _ from 'lodash';
 
-const _extractInvoiceAddress = (addressAssociations) => {
-  if(!addressAssociations) {
+const _extractInvoiceAddress = (addresses) => {
+  if(!addresses) {
     return null;
   }
-  let addressAssociation = _.find(addressAssociations, (association) => {
-    return association.address.type === 'invoice' && association.isDefault
+  let extractedAddress = _.find(addresses, (address) => {
+    return address.type === 'invoice'
   });
 
-  if (!addressAssociation) {
-    addressAssociation = _.find(addressAssociations, (association) => {
-      return association.type === "default"
+  if (!extractedAddress) {
+    extractedAddress = _.find(addresses, (address) => {
+      return address.type === "default"
     })
   }
 
-  return addressAssociation.address
+  return extractedAddress;
 };
 
 const _addressToString = (address) => {
@@ -64,45 +64,44 @@ const _contactToString = (contact) => {
   return result
 };
 
-const InvoiceHeaderStaticFields = ({ customer, supplier }) => {
+const InvoiceHeaderStaticFields = ({
+  customer,
+  supplier,
+  supplierAddresses,
+  supplierContacts
+}) => {
 
   const fields = [
     {
-      name: 'supplierInfo',
       label: 'Labels.supplier',
       value: `${supplier.supplierId} - ${supplier.supplierName}`
     },
     {
-      name: 'supplierAddress',
       label: 'Labels.supplierAddress',
-      value: _addressToString(_extractInvoiceAddress(supplier.addressAssociations))
+      value: _addressToString(_extractInvoiceAddress(supplierAddresses))
     },
     {
-      name: 'supplierContact',
       label: 'Labels.supplierContact',
-      value: _contactToString(supplier.contact)
+      value: _contactToString(supplierContacts? supplierContacts[0] : undefined)
     },
     {
-      name: 'customerInfo',
       label: 'Labels.customer',
       value: `${customer.id} - ${customer.customerName}`
     },
     {
-      name: 'customerAddress',
       label: 'Labels.customerAddress',
       value: _addressToString(_extractInvoiceAddress(customer.addressAssociations))
     },
     {
-      name: 'vatRegNo',
       label: 'Labels.vatRegNo',
-      value: supplier.supplierVatRegNo
+      value: supplier.vatRegNo
     }
   ];
 
   return (
     <div>
       {fields.map((field) => (
-        <FormGroupMarkup key={field.name} label={field.label}>
+        <FormGroupMarkup key={_.uniqueId()} label={field.label}>
             <span>
               {field.value || '-'}
             </span>

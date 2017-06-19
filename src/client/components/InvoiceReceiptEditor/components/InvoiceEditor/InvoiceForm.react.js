@@ -24,12 +24,19 @@ export default class InvoiceForm extends Component {
     invoice: PropTypes.object.isRequired,
     customer: PropTypes.object.isRequired,
     supplier: PropTypes.object.isRequired,
+    supplierAddresses: PropTypes.array,
+    supplierContacts: PropTypes.array,
     termsOfDelivery: PropTypes.array.isRequired,
     termsOfPayment: PropTypes.array.isRequired,
     methodsOfPayment: PropTypes.array.isRequired,
     currencies: PropTypes.array.isRequired,
     formHeader: PropTypes.string,
     onSave: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    supplierAddresses: [],
+    supplierContacts: []
   };
 
   static contextTypes = {
@@ -58,6 +65,8 @@ export default class InvoiceForm extends Component {
       formHeader,
       customer,
       supplier,
+      supplierAddresses,
+      supplierContacts,
       invoice,
       statusLabel,
       termsOfPayment,
@@ -75,7 +84,12 @@ export default class InvoiceForm extends Component {
         <div className="form-horizontal">
           <div className="row">
             <div className="col-md-6">
-              <InvoiceHeaderStaticFields supplier={supplier} customer={customer}/>
+              <InvoiceHeaderStaticFields
+                supplier={supplier}
+                supplierAddresses={supplierAddresses}
+                supplierContacts={supplierContacts}
+                customer={customer}
+              />
               <FormsyTextInput
                 label="Labels.extInvoiceReceiptId"
                 name='extInvoiceReceiptId'
@@ -181,7 +195,7 @@ export default class InvoiceForm extends Component {
                 toOptionConverter={
                   (currency) => (
                     <option key={`currency-${currency.id}`} value={currency.id}>
-                      {currency.description}
+                      {currency.name}
                     </option>
                   )
                 }

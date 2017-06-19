@@ -5,13 +5,16 @@ import configureStore from '../store';
 import routes from '../routes';
 import Router from 'react-router/lib/Router';
 import I18nContext from '../components/util/I18nContext.react';
+import UserInfoProvider from '../components/util/UserInfoProvider.react';
 
 const InvoiceApplication = ({ locale, formatPatterns }) => (
   <Provider store={configureStore({})}>
     <I18nContext locale={locale} formatPatterns={formatPatterns}>
-      <Router history={browserHistory}>
-        {routes('')}
-      </Router >
+      <UserInfoProvider>
+        <Router history={browserHistory}>
+          {routes('')}
+        </Router >
+      </UserInfoProvider>
     </I18nContext>
   </Provider>
 );

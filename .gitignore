@@ -10,3 +10,4 @@ workarea/
 .nyc_output/
 coverage/
 test-results.xml
+package-lock.json

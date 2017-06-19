@@ -13,6 +13,7 @@ services:
     extra_hosts:
      - 'consul:${HOST_IP}'
     environment:
+      NODE_ENV: 'development'
       PORT: ${PORT}
       HOST_IP: ${HOST_IP}
     ports:
@@ -58,6 +59,27 @@ services:
     ports:
        - '${SUPPLIER_PORT}:${SUPPLIER_PORT}'
     command: 'npm run local'
+
+  isodata:
+    image: opuscapita/isodata:dev
+    depends_on:
+      - mysql
+      - consul
+      - registrator
+      - nginx
+    ports:
+      - '${ISOADATA_PORT}:${ISOADATA_PORT}'
+    extra_hosts:
+      - 'consul:${HOST_IP}'
+    labels:
+      SERVICE_NAME: isodata
+      SERVICE_TAGS: 'external'
+    environment:
+      HOST_IP: ${HOST_IP}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      PORT: ${ISOADATA_PORT}
+    command: 'npm run dev:production'
 
   mysql:
     image: "mysql:5.6"

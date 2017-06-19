@@ -36,6 +36,20 @@ export const fetchSupplier = (id) => {
   ).catch((error) => { throw Error(error); })
 };
 
+export const fetchSupplierAddresses = (id) => {
+  return request.get(`/supplier/api/suppliers/${id}/addresses`).set(
+    'Accept', 'application/json'
+  ).then((response) => Promise.resolve(response.body)
+  ).catch((error) => { throw Error(error); })
+};
+
+export const fetchSupplierContacts = (id) => {
+  return request.get(`/supplier/api/suppliers/${id}/contacts`).set(
+    'Accept', 'application/json'
+  ).then((response) => Promise.resolve(response.body)
+  ).catch((error) => { throw Error(error); })
+};
+
 export const fetchTermsOfDelivery = () => {
   return request.get('/invoice/api/termsOfDelivery/').set(
     'Accept', 'application/json'
@@ -58,17 +72,9 @@ export const fetchMethodsOfPayment = () => {
 };
 
 export const fetchCurrencies = () => {
-  return request.get('/invoice/api/currency/').set(
+  return request.get('/isodata/currencies/').set(
     'Accept', 'application/json'
-  ).then((response) => Promise.resolve(response.body)
-  ).catch((error) => { throw Error(error); })
-};
-
-// TODO: dummy user
-export const fetchUserAssignment = () => {
-  return request.get(`/invoice/api/userAssignment/${1}`).set(
-    'Accept', 'application/json'
-  ).then((response) => Promise.resolve(response.body)
+  ).then((response) => Promise.resolve(Array.from(Object.values(response.body)))
   ).catch((error) => { throw Error(error); })
 };
 

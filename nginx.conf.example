@@ -25,6 +25,13 @@ upstream supplier {
     server 127.0.0.1:65535; # force a 502
     {{end}}
 }
+upstream isodata {
+  least_conn;
+    {{range service "isodata"}} server {{.Address}}:{{.Port}} max_fails=3 fail_timeout=60 weight=1;
+    {{else}}
+    server 127.0.0.1:65535; # force a 502
+    {{end}}
+}
 
 server {
   listen {{env "PORT"}} default_server;
@@ -46,16 +53,24 @@ location ~ /invoice(/.*) {
   proxy_set_header X-Forwarded-Proto $scheme;
 }
 location ~ /customer(/.*) {
-  set $pazz $1;
-  proxy_pass http://customer$pazz$is_args$args;
+  set $path $1;
+  proxy_pass http://customer$path$is_args$args;
   proxy_set_header X-Forwarded-Host $host:{{env "DOCKER_CONTAINERS_HOST_EXTERNAL_PORT"}};
   proxy_set_header X-Forwarded-Server $host;
   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
   proxy_set_header X-Forwarded-Proto $scheme;
 }
 location ~ /supplier(/.*) {
-  set $pazz $1;
-  proxy_pass http://supplier$pazz$is_args$args;
+  set $path $1;
+  proxy_pass http://supplier$path$is_args$args;
+  proxy_set_header X-Forwarded-Host $host:{{env "DOCKER_CONTAINERS_HOST_EXTERNAL_PORT"}};
+  proxy_set_header X-Forwarded-Server $host;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+}
+location ~ /isodata(/.*) {
+  set $path $1;
+  proxy_pass http://isodata$path$is_args$args;
   proxy_set_header X-Forwarded-Host $host:{{env "DOCKER_CONTAINERS_HOST_EXTERNAL_PORT"}};
   proxy_set_header X-Forwarded-Server $host;
   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

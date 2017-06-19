@@ -14,11 +14,12 @@ import {
   fetchCustomer,
   fetchCustomers,
   fetchSupplier,
+  fetchSupplierAddresses,
+  fetchSupplierContacts,
   fetchTermsOfDelivery,
   fetchTermsOfPayment,
   fetchMethodsOfPayment,
-  fetchCurrencies,
-  fetchUserAssignment
+  fetchCurrencies
 } from '../../common/fetchers';
 
 export default class InvoiceEditor extends Component {
@@ -34,7 +35,8 @@ export default class InvoiceEditor extends Component {
 
   static contextTypes = {
     i18n: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
+    currentUserData: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -71,7 +73,6 @@ export default class InvoiceEditor extends Component {
 
   _loadMasterData() {
     Promise.props({
-      userAssignment: fetchUserAssignment(),
       termsOfDelivery: fetchTermsOfDelivery(),
       termsOfPayment: fetchTermsOfPayment(),
       methodsOfPayment: fetchMethodsOfPayment(),
@@ -109,13 +110,15 @@ export default class InvoiceEditor extends Component {
   initInvoiceData(customerId) {
     Promise.props({
       invoice: {
-        supplierId: this.state.userAssignment.supplierId,
+        supplierId: this.context.currentUserData.supplierid,
         customerId: customerId,
         statusId: _.find(this.state.statuses, { statusId: '100' }).statusId,
         intrastatId: '000',
         bookingDate: new Date()
       },
-      supplier: fetchSupplier(this.state.userAssignment.supplierId),
+      supplier: fetchSupplier(this.context.currentUserData.supplierid),
+      supplierAddresses: fetchSupplierAddresses(this.context.currentUserData.supplierid),
+      supplierContacts: fetchSupplierContacts(this.context.currentUserData.supplierid),
       customer: fetchCustomer(customerId),
       items: [],
       isInvoiceDataReady: true
@@ -158,6 +161,8 @@ export default class InvoiceEditor extends Component {
               items={this.state.items}
               customer={this.state.customer}
               supplier={this.state.supplier}
+              supplierAddresses={this.state.supplierAddresses}
+              supplierContacts={this.state.supplierContacts}
 
               termsOfDelivery={this.state.termsOfDelivery}
               termsOfPayment={this.state.termsOfPayment}

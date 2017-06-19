@@ -35,13 +35,14 @@ db.init(
 ).then((db) => {
   return Promise.resolve(server.init({
     server: {
+      mode : server.Server.Mode.Dev,
       port: 3003,
       staticFilePath: express.static(__dirname + '/static'),
+      indexFilePath: __dirname + '/static/' + 'index.html',
       webpack: {
         useWebpack: true,
-        configFilePath: process.cwd() + '/webpack.config.js'
-      },
-      mode: server.Server.Mode.Dev,
+        configFilePath: process.cwd() + '/webpack.config.js',
+      }
     },
     routes: {
       addRoutes: true,
