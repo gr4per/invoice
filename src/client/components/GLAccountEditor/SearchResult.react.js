@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
-import { Button, Table, MenuItem, Glyphicon, Dropdown } from 'react-bootstrap';
+import { Button, Table, Glyphicon } from 'react-bootstrap';
 import DeleteModal from './DeleteModal.react';
 import EditModal from './EditModal.react';
 
@@ -60,7 +60,7 @@ const SearchResult = ({
         }
         </tbody>
         <DeleteModal
-          onDelete={()=> {onDelete(glAccountToModify.id)}}
+          onDelete={() => {onDelete(glAccountToModify.id)}}
           onHide={() => (onCloseModal('delete'))}
           display={modals.delete}
         />

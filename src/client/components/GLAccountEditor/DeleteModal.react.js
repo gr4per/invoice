@@ -1,9 +1,9 @@
-import React, {PropTypes} from 'react';
-import {Modal, Button} from 'react-bootstrap';
+import React, { PropTypes } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 
-const DeleteModal = ({display, onHide, onDelete}, {i18n}) => (
+const DeleteModal = ({ display, onHide, onDelete }, { i18n }) => (
   <Modal show={display} onHide={onHide}>
-    <Modal.Header closeButton>
+    <Modal.Header closeButton={true}>
       <Modal.Title>{i18n.getMessage('GlAccount.areYouSureMessage')}</Modal.Title>
     </Modal.Header>
 

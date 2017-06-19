@@ -7,7 +7,7 @@
  * @param db
  */
 module.exports = function(epilogue, db) {
-  const glAccountResource = epilogue.resource({
+  epilogue.resource({
     model: db.models.GLAccount,
     endpoints: [
       '/glAccounts',

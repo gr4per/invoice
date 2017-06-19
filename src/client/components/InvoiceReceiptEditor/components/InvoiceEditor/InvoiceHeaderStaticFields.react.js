@@ -70,7 +70,6 @@ const InvoiceHeaderStaticFields = ({
   supplierAddresses,
   supplierContacts
 }) => {
-
   const fields = [
     {
       label: 'Labels.supplier',

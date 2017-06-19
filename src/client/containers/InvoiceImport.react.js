@@ -1,4 +1,4 @@
-import React, {PropTypes, Component} from 'react';
+import React, { PropTypes, Component } from 'react';
 import InvoiceImportMarkup from '../components/InvoiceImport';
 import messages from './i18n/InvoiceImport';
 import { connect } from 'react-redux';
@@ -41,8 +41,8 @@ export default class InvoiceImport extends Component {
   }
 
   render() {
-    const {importInProgress, importPercentage, handleImportInvoices, importResult, cleanImportResult} = this.props;
-    return(
+    const { importInProgress, importPercentage, handleImportInvoices, importResult, cleanImportResult } = this.props;
+    return (
       <div>
         <InvoiceImportMarkup
           onImport={handleImportInvoices}

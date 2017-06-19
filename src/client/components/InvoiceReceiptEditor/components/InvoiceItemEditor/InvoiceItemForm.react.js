@@ -10,22 +10,11 @@ const validate = validateForm(constraints);
 
 export default class InvoiceItemForm extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      validationErrors: {}
-    };
-  }
-
   static propTypes = {
     item: PropTypes.object,
+    unitsOfMeasure: PropTypes.array,
     onSave: PropTypes.func.isRequired,
     onBack: PropTypes.func.isRequired
-  };
-
-  static defaultProps = {
-    item: {},
-    unitsOfMeasure: []
   };
 
   static contextTypes = {
@@ -33,9 +22,25 @@ export default class InvoiceItemForm extends Component {
     unitsOfMeasure: PropTypes.array
   };
 
+  static defaultProps = {
+    item: {},
+    unitsOfMeasure: []
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      validationErrors: {}
+    };
+  }
+
   _submitForm(model, resetForm, invalidateForm) {
     const errors = validate(model);
-    _.isEmpty(errors) ? this.props.onSave(model, resetForm) : invalidateForm(errors);
+    if (_.isEmpty(errors)) {
+      this.props.onSave(model, resetForm);
+    } else {
+      invalidateForm(errors);
+    }
   }
 
   render() {
@@ -47,8 +52,9 @@ export default class InvoiceItemForm extends Component {
         </h1>
         <div className="form-horizontal">
           <Formsy.Form onSubmit={::this._submitForm}
-                       validationErrors={this.state.validationErrors}
-                       onChange={(currentValues) => this.setState({ validationErrors: validate(currentValues) })}>
+            validationErrors={this.state.validationErrors}
+            onChange={(currentValues) => this.setState({ validationErrors: validate(currentValues) })}
+          >
             <div className="row">
               <div className="col-md-6">
                 <FormsyTextInput
@@ -127,7 +133,8 @@ export default class InvoiceItemForm extends Component {
             </div>
             <div className="form-submit text-right">
               <Button className="pull-left"
-                      onClick={this.props.onBack}>{this.context.i18n.getMessage('Commands.backtoInvoice')}</Button>
+                onClick={this.props.onBack}
+              >{this.context.i18n.getMessage('Commands.backtoInvoice')}</Button>
               <Button bsStyle="primary" type="submit">{this.context.i18n.getMessage('Commands.addNewPosition')}</Button>
             </div>
           </Formsy.Form>
@@ -135,4 +142,4 @@ export default class InvoiceItemForm extends Component {
       </div>
     );
   }
-};
+}

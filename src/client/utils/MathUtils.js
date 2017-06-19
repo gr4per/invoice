@@ -1,5 +1,9 @@
 import _ from 'lodash';
 
+function roundDecimalNumber(number) {
+  return parseFloat(number.toFixed(6))
+}
+
 /**
  * Calculates the sum of the list item's field with the next behaviour:
  * sum([]) == 0
@@ -17,9 +21,9 @@ function calculateTotalSum(i18n, list, field) {
     }
   });
 
-  if(_.size(numericListValues) > 0) {
+  if (_.size(numericListValues) > 0) {
     return roundDecimalNumber(_.sumBy(numericListValues, (item) => i18n.parseDecimalNumber(item[field])));
-  } else if(_.size(list) > 0) {
+  } else if (_.size(list) > 0) {
     return NaN;
   } else {
     return 0;
@@ -34,10 +38,6 @@ function formattedTotalSum(i18n, list, field) {
 
 function isDecimalNumbersEqual(left, right) {
   return roundDecimalNumber(left) === roundDecimalNumber(right)
-}
-
-function roundDecimalNumber(number) {
-  return parseFloat(number.toFixed(6))
 }
 
 export {

@@ -1,11 +1,24 @@
 import React, { PropTypes, Component } from 'react';
-import FormsyTextInput from '../../../common/form-components/FormsyTextInput.react';
+import Formsy from 'formsy-react';
 import FormsySelect from '../../../common/form-components/FormsySelect.react';
 import constraints from './SelectCustomerWizardConstraints';
 import { validateForm } from '../../../common/form-components/validateForm';
 const validate = validateForm(constraints);
 
 export default class SelectCustomerWizard extends Component {
+
+  static propTypes = {
+    customers: PropTypes.array.isRequired,
+    onSubmit: PropTypes.func.isRequired
+  };
+
+  static contextTypes = {
+    i18n: PropTypes.object.isRequired
+  };
+
+  static defaultProps = {
+    customers: []
+  };
 
   constructor(props) {
     super(props);
@@ -14,22 +27,13 @@ export default class SelectCustomerWizard extends Component {
     };
   }
 
-  static contextTypes = {
-    i18n: PropTypes.object.isRequired
-  };
-
-  static propTypes = {
-    customers: PropTypes.array.isRequired,
-    onSubmit: PropTypes.func.isRequired
-  };
-
-  static defaultProps = {
-    customers: []
-  };
-
   _submitForm(model, resetForm, invalidateForm) {
     const errors = validate(model);
-    _.isEmpty(errors) ? this.props.onSubmit(model.customerId, resetForm) : invalidateForm(errors);
+    if (_.isEmpty(errors)) {
+      this.props.onSubmit(model.customerId, resetForm);
+    } else {
+      invalidateForm(errors);
+    }
   }
 
   render() {
@@ -38,8 +42,9 @@ export default class SelectCustomerWizard extends Component {
         <h1>{this.context.i18n.getMessage('CreateInvoice.header')}</h1>
         <div className="form-horizontal">
           <Formsy.Form onSubmit={::this._submitForm}
-                       validationErrors={this.state.validationErrors}
-                       onChange={(currentValues) => this.setState({validationErrors: validate(currentValues)})}>
+            validationErrors={this.state.validationErrors}
+            onChange={(currentValues) => this.setState({ validationErrors: validate(currentValues) })}
+          >
             <div className="row">
               <div className="col-md-6">
                 <FormsySelect
@@ -66,4 +71,4 @@ export default class SelectCustomerWizard extends Component {
       </div>
     );
   }
-};
+}

@@ -35,5 +35,4 @@ module.exports = function(epilogue, db) {
       }
     }
   });
-
 };

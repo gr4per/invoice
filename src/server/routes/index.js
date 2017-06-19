@@ -50,7 +50,6 @@ const userIdentityWrapper = (NODE_ENV) => {
  * @see [Minimum setup]{@link https://github.com/OpusCapitaBusinessNetwork/web-init#minimum-setup}
  */
 module.exports.init = function(app, db, config) {
-
   app.use(userIdentityWrapper(process.env.NODE_ENV));
 
   epilogue.initialize({

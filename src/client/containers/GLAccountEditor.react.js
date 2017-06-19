@@ -11,20 +11,20 @@ export default class GLAccountEditor extends Component {
     i18n: PropTypes.object.isRequired
   };
 
-  componentWillMount(){
-    this.context.i18n.register('GLAccountEditor', messages);
-  }
-
   state = {
-    showCreateForm: false, //controls open/closed state of create form
-    modals: { //controls state of search form corresponding modals (delete, edit)
+    showCreateForm: false, // controls open/closed state of create form
+    modals: { // controls state of search form corresponding modals (delete, edit)
       edit: false,
       delete: false
     },
-    glAccountToModify: undefined, //holds the gl account that is going to be modified (e.g. deleted or updated)
-    glAccounts: [], //list of the gl accounts to display in search form
-    errors: {create: {}, edit:{}}
+    glAccountToModify: undefined, // holds the gl account that is going to be modified (e.g. deleted or updated)
+    glAccounts: [], // list of the gl accounts to display in search form
+    errors: { create: {}, edit: {} }
   };
+
+  componentWillMount() {
+    this.context.i18n.register('GLAccountEditor', messages);
+  }
 
   handleOpenModal(modalName, glAccount) {
     this.setState({
@@ -49,7 +49,7 @@ export default class GLAccountEditor extends Component {
   handleSearchGlAccounts(searchParams, offset = 0, count = 5) {
     return request.get('/invoice/api/glAccounts').set(
       'Accept', 'application/json'
-    ).query(searchParams).query({offset, count}).then((response) => {
+    ).query(searchParams).query({ offset, count }).then((response) => {
       this.setState(
         {
           glAccounts: response.body,
@@ -67,8 +67,8 @@ export default class GLAccountEditor extends Component {
       })
     )).then(() => reset()
     ).catch((response) => {
-      if(_.get(response, 'body.errors[0].field') === 'PRIMARY') {
-        invalidateForm({id: 'GlAccount.isUnique'});
+      if (_.get(response, 'body.errors[0].field') === 'PRIMARY') {
+        invalidateForm({ id: 'GlAccount.isUnique' });
       } else {
         throw Error(response);
       }
@@ -81,7 +81,7 @@ export default class GLAccountEditor extends Component {
     ).send(glAccountData).then((response) => {
       this.setState({
         glAccounts: _.map(this.state.glAccounts, (glAccount) => {
-          if(glAccount.id === glAccountData.id) {
+          if (glAccount.id === glAccountData.id) {
             return response.body;
           } else {
             return glAccount;
@@ -105,18 +105,18 @@ export default class GLAccountEditor extends Component {
           ...this.state.modals,
           delete: false
         },
-        glAccounts: _.reject(this.state.glAccounts, {id: id})
+        glAccounts: _.reject(this.state.glAccounts, { id: id })
       });
     })
   }
 
 
   changeDeleteModalDisplayMode() {
-    this.setState({showDeleteModal: !this.state.showDeleteModal});
+    this.setState({ showDeleteModal: !this.state.showDeleteModal });
   }
 
   changeEditModalDisplayMode() {
-    this.setState({showEditModal: !this.state.showEditModal});
+    this.setState({ showEditModal: !this.state.showEditModal });
   }
 
   render() {

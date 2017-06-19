@@ -43,10 +43,11 @@ module.exports = function(epilogue, db) {
                 }
               }).then((maxOrderItemNo) => {
                 db.models.CostDistribution.create().then((costDistribution) => {
+                  /* eslint-disable no-param-reassign */
                   context.attributes.costDistributionSn = costDistribution.key;
                   context.attributes.invoiceReceiptSn = req.params.id;
                   context.attributes.orderItemNo = maxOrderItemNo ? maxOrderItemNo + 1 : 0;
-
+                  /* eslint-enable no-param-reassign */
                   context.continue();
                 });
               });

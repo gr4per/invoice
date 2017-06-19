@@ -5,9 +5,6 @@ import {
   EDIT_INVOICE
 } from '../constants/invoice';
 import {
-  INVOICE_EXPORT_ERROR,
-  INVOICE_EXPORT_START,
-  INVOICE_EXPORT_SUCCESS,
   MARK_FOR_EXPORT,
   UNMARK_FOR_EXPORT
 } from '../constants/invoiceExport';
@@ -22,7 +19,7 @@ function calculateExportLink(invoices, checked) {
     url = url.concat(`exportIds=${id}&`)
   });
   return url;
-};
+}
 
 // State of invoiceOverview reducer:
 // {
@@ -37,7 +34,7 @@ function calculateExportLink(invoices, checked) {
 const defaultInvoiceOverviewState = {
   pagination: { first: 0, last: 0, length: 0 },
   checked: [],
-  exportLink: calculateExportLink([],[])
+  exportLink: calculateExportLink([], [])
 };
 
 export default function invoiceOverview(state = defaultInvoiceOverviewState, action) {
@@ -76,7 +73,7 @@ export default function invoiceOverview(state = defaultInvoiceOverviewState, act
       };
     case UNMARK_FOR_EXPORT:
 
-      let checkedIds =  _.reject(state.checked, (id) => {
+      let checkedIds = _.reject(state.checked, (id) => {
         return _.includes(action.items, id);
       });
       return {

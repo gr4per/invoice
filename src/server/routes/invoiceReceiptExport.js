@@ -15,18 +15,18 @@ module.exports = function(app, db) {
     db.models.InvoiceReceipt.findAll({
       where: {
         key: {
-          $in: _.map(_.castArray(req.query.exportIds), (stringId) => (parseInt(stringId)))
+          $in: _.map(_.castArray(req.query.exportIds), (stringId) => (parseInt(stringId, 10)))
         }
       },
       include: [{
-        model: db.models.InvoiceReceiptItem, as:'invoiceReceiptItems'
+        model: db.models.InvoiceReceiptItem, as: 'invoiceReceiptItems'
       }]
     }).then((invoiceReceipts) => {
       res.set({
         'Content-Disposition': `attachment; filename=invoiceExport-${Date.now()}.json`,
         'Content-type': 'text/csv'
       });
-      res.send((_.isEmpty(invoiceReceipts) || _.isNil(invoiceReceipts))? {} : invoiceReceipts);
+      res.send((_.isEmpty(invoiceReceipts) || _.isNil(invoiceReceipts)) ? {} : invoiceReceipts);
     });
   });
 };

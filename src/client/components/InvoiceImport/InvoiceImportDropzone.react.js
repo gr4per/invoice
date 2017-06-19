@@ -1,17 +1,16 @@
 import './import.less';
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import Dropzone from 'react-dropzone';
 
 const supportedFileExtensions = ['json'];
 
-const InvoiceImportDropzone = ({onImport}, {i18n}) => {
-
+const InvoiceImportDropzone = ({ onImport }, { i18n }) => {
   const onDrop = (acceptedFiles, rejectedFiles) => {
     if (acceptedFiles.length > 0) {
       if (supportedFileExtensions.includes(acceptedFiles[0].name.split('.').pop())) {
         let reader = new FileReader();
 
-        reader.onload= (e) => {
+        reader.onload = (e) => {
           onImport(JSON.parse(e.target.result))
         };
 
@@ -24,7 +23,7 @@ const InvoiceImportDropzone = ({onImport}, {i18n}) => {
     }
   };
 
-  return(
+  return (
     <Dropzone className="dropzoneContainer" multiple={false} onDrop={onDrop}>
       <div className="dropzoneMessage">
         {i18n.getMessage('InvoiceImport.dropZoneMessage')}
