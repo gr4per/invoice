@@ -12,7 +12,9 @@ export default class InvoiceItemEditor extends Component {
 
   static contextTypes = {
     i18n: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
+    showNotification: PropTypes.func.isRequired,
+    hideNotification: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -32,15 +34,20 @@ export default class InvoiceItemEditor extends Component {
   handleCreateInvoiceItem(invoiceKey, payload, reset) {
     return request.post(`/invoice/api/invoices/${invoiceKey}/items`).set(
       'Accept', 'application/json'
-    ).send({ ...payload, productKey: payload.productId }).then((response) => reset()
-    ).catch((error) => { throw Error(error); })
+    ).send({ ...payload, productKey: payload.productId }
+    ).then((response) => Promise.resolve(reset())
+    ).then(() => this.context.showNotification('Labels.saved', 'success')
+    ).catch((error) => {
+      this.context.showNotification('Labels.notSaved', 'error', 10);
+      throw Error(error);
+    }).finally(() => this.context.hideNotification());
   }
 
   // TODO: get rid of router usage
   render() {
     return (
       <InvoiceItemForm unitsOfMeasure={this.state.unitsOfMeasure}
-        onSave={::this.handleCreateInvoiceItem.bind(null, this.context.router.params.id)}
+        onSave={this.handleCreateInvoiceItem.bind(this, this.context.router.params.id)}
         onBack={() => (this.context.router.push('/invoice/'))}
       />
     )
