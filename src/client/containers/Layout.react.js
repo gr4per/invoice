@@ -1,59 +1,19 @@
-import React, { Component, PropTypes } from 'react';
-import NotificationSystem from 'react-notification-system';
+import React from 'react';
 import SidebarMenu from '../components/common/SidebarMenu.react';
-import { connect } from 'react-redux';
-import _ from 'lodash';
+import NotificationProvider from '../components/common/NotificationProvider.react';
 
-@connect(
-  state => ({
-    notification: state.notification
-  })
-)
-export default class Layout extends Component {
+// TODO: Not place NotificationProvider in representational component
+const Layout = (props) => (
+  <span>
+    <SidebarMenu/>
+    <section className="content" style={{ 'backgroundColor': 'white' }}>
+      <div className="container-fluid">
+        <NotificationProvider>
+          {props.children}
+        </NotificationProvider>
+      </div>
+    </section>
+  </span>
+);
 
-  static propTypes = {
-    notification: PropTypes.object.isRequired
-  };
-
-  static contextTypes = {
-    i18n: PropTypes.object.isRequired
-  };
-
-  componentWillReceiveProps(nextProps) {
-    const { notification } = nextProps;
-    if (_.size(notification.message) > 0) {
-      // to support notification message translation we send i18 keys via redux and change them to
-      // real translation before displaying
-      this.refs.notificationSystem.addNotification(
-        {
-          ...notification,
-          message: this.context.i18n.getMessage(notification.message, notification.attributes)
-        }
-      );
-    } else {
-      this.removeNotification()
-    }
-  }
-
-  removeNotification() {
-    setTimeout(() => {
-      this.refs.notificationSystem.removeNotification(this.props.notification);
-    }, 5000);
-  }
-
-  render() {
-    return (
-      <span>
-        <SidebarMenu/>
-        <section className="content" style={{ 'backgroundColor': 'white' }}>
-          <div className="container-fluid">
-            <NotificationSystem ref="notificationSystem"/>
-            <div>
-              {this.props.children}
-            </div>
-          </div>
-        </section>
-      </span>
-    );
-  }
-}
+export default Layout;
