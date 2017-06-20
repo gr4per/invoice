@@ -11,7 +11,9 @@ import { COUNT } from '../../../../constants/pagination';
 export default class InvoiceOverview extends Component {
 
   static contextTypes = {
-    i18n: PropTypes.object.isRequired
+    i18n: PropTypes.object.isRequired,
+    showNotification: PropTypes.func.isRequired,
+    hideNotification: PropTypes.func.isRequired
   };
 
   state = {
@@ -59,18 +61,23 @@ export default class InvoiceOverview extends Component {
   }
 
   handleSearchInvoices(searchParams = {}, offset = 0, count = COUNT) {
-    return request.get('/invoice/api/invoices').
+    Promise.resolve(this.context.showNotification('Messages.loadingData')).then(() =>
+      request.get('/invoice/api/invoices').
       query(searchParams).
       query({ offset: offset, count: count }).
       set(
         'Accept', 'application/json'
-      ).then((response) => {
-        this.setState({
-          invoices: response.body,
-          pagination: contentRange.parse(response.header['content-range']),
-          exportLink: this._calculateExportLink(response.body, [])
-        });
-      }).catch((error) => { throw Error(error); })
+      )
+    ).then((response) => {
+      this.setState({
+        invoices: response.body,
+        pagination: contentRange.parse(response.header['content-range']),
+        exportLink: this._calculateExportLink(response.body, [])
+      });
+    }).catch((error) => {
+      this.context.showNotification('Messages.loadingDataError', 'error', 10, false);
+      throw Error(error);
+    }).finally(() => this.context.hideNotification());
   }
 
   handleDeleteInvoice(id, searchParams = {}) {
@@ -80,6 +87,7 @@ export default class InvoiceOverview extends Component {
       request.delete(`/invoice/api/invoices/${id}`).set(
         'Accept', 'application/json')
       )
+    ).then(() => Promise.resolve(this.context.showNotification('Labels.invoiceDeleted', 'success'))
     ).then(() => {
       const shift = (this.state.pagination.last / this.state.pagination.first) === 1 ? 1 : 0;
       return Promise.resolve(
@@ -89,7 +97,10 @@ export default class InvoiceOverview extends Component {
           this.handleEditInvoice();
         }
       });
-    }).catch((error) => { throw Error(error); })
+    }).catch((error) => {
+      this.context.showNotification('Labels.notDeleted', 'error', 10);
+      throw Error(error);
+    }).finally(() => this.context.hideNotification());
   }
 
   handleEditInvoice(id) {

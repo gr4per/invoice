@@ -33,7 +33,9 @@ export default class InvoiceEditor extends Component {
   static contextTypes = {
     i18n: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired,
-    currentUserData: PropTypes.object.isRequired
+    currentUserData: PropTypes.object.isRequired,
+    showNotification: PropTypes.func.isRequired,
+    hideNotification: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -91,7 +93,9 @@ export default class InvoiceEditor extends Component {
   }
 
   _loadInvoiceData(invoiceId) {
-    fetchInvoiceReceipt(invoiceId).then((invoice) => {
+    Promise.resolve(this.context.showNotification('Messages.loadingData')
+    ).then(() => fetchInvoiceReceipt(invoiceId)
+    ).then((invoice) => {
       return Promise.props({
         invoice: invoice,
         customer: fetchCustomer(invoice.customerId),
@@ -102,8 +106,9 @@ export default class InvoiceEditor extends Component {
     }
     ).then((invoiceData) => this.setState(invoiceData)
     ).catch((error) => {
+      this.context.showNotification('Messages.loadingDataError', 'error', 10, false);
       throw Error(error);
-    })
+    }).finally(() => this.context.hideNotification());
   }
 
   _unloadInvoiceData() {
@@ -137,20 +142,24 @@ export default class InvoiceEditor extends Component {
     request.put(`/invoice/api/invoices/${this.state.invoice.key}`).set(
       'Accept', 'application/json'
     ).send(payload).then((response) => Promise.resolve(response.body)
-    ).then((invoice) => this.setState({ invoice: invoice })
+    ).then((invoice) => Promise.resolve(this.setState({ invoice: invoice }))
+    ).then(() => this.context.showNotification('Labels.saved', 'success')
     ).catch((error) => {
+      this.context.showNotification('Labels.notSaved', 'error', 10);
       throw Error(error);
-    })
+    }).finally(() => this.context.hideNotification());
   }
 
   createInvoice(payload, reset) {
     request.post(`/invoice/api/invoices`).set(
       'Accept', 'application/json'
     ).send(_.assign({}, this.state.invoice, payload)
-    ).then((response) => reset()
+    ).then((response) => Promise.resolve(reset())
+    ).then(() => this.context.showNotification('Labels.saved', 'success')
     ).catch((error) => {
+      this.context.showNotification('Labels.notSaved', 'error', 10);
       throw Error(error);
-    })
+    }).finally(() => this.context.hideNotification());
   }
 
 

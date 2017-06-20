@@ -33,9 +33,7 @@ const testUser = {
 
 const userIdentityWrapper = (NODE_ENV) => {
   return NODE_ENV === 'development' ? (req, res, next) => {
-    req.opuscapita.userData = () => {
-      return testUser;
-    };
+    req.opuscapita = { userData: () => testUser };
     next();
   } : require('useridentity-middleware')
 };
