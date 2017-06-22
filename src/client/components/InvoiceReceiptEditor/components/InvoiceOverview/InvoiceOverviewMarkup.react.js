@@ -4,7 +4,7 @@ import SearchForm from './SearchForm.react';
 import { Pagination } from 'react-bootstrap';
 import { COUNT } from '../../../../constants/pagination';
 import InvoiceDeleteModal from "./InvoiceDeleteModal.react";
-import InvoiceEditor from '../InvoiceEditor';
+import InvoiceEditorSplitScreen from '../InvoiceEditor/InvoiceEditorSplitScreen.react';
 import ActionBar from './ActionBar.react';
 
 export default class InvoiceOverviewMarkup extends Component {
@@ -63,16 +63,17 @@ export default class InvoiceOverviewMarkup extends Component {
           </div>
         </div>
         <br/><br/>
-        <div className="row equal">
-          <div className="col-md-6">
-            {/* Rendering static pdf for test purposes */}
-            <object width="100%" height="100%"
-              data={this.props.editInvoiceId ? "/invoice/static/test_workarea/invoiceReceipt_TEST.pdf" : ''}
-            />
-          </div>
-          <div className="col-md-6">
-            <InvoiceEditor invoiceId={this.props.editInvoiceId} onCancel={this.props.onCancel}/>
-          </div>
+        <div className="row">
+          <InvoiceEditorSplitScreen invoiceId={this.props.editInvoiceId} onCancel={this.props.onCancel}/>
+          {/*<div className="col-md-6">*/}
+            {/*/!* Rendering static pdf for test purposes *!/*/}
+            {/*<object width="100%" height="100%"*/}
+              {/*data={this.props.editInvoiceId ? "/invoice/static/test_workarea/invoiceReceipt_TEST.pdf" : ''}*/}
+            {/*/>*/}
+          {/*</div>*/}
+          {/*<div className="col-md-6">*/}
+            {/*<InvoiceEditor invoiceId={this.props.editInvoiceId} onCancel={this.props.onCancel}/>*/}
+          {/*</div>*/}
         </div>
         <InvoiceDeleteModal {...this.props.deleteModal}
           onDelete={(id) => this.props.onDelete(id, this.refs.searchForm.refs.searchFormMarkup.getModel())}

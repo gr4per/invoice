@@ -12,8 +12,7 @@ export default class InvoiceOverview extends Component {
 
   static contextTypes = {
     i18n: PropTypes.object.isRequired,
-    showNotification: PropTypes.func.isRequired,
-    hideNotification: PropTypes.func.isRequired
+    showNotification: PropTypes.func.isRequired
   };
 
   state = {
@@ -33,7 +32,8 @@ export default class InvoiceOverview extends Component {
       let status = _.find(this.state.statuses, { statusId: statusId });
       return status ? status.description : statusId;
     },
-    exportLink: this._calculateExportLink([], [])
+    exportLink: this._calculateExportLink([], []),
+    editInvoiceId: null
   };
 
   componentWillMount() {
@@ -61,7 +61,7 @@ export default class InvoiceOverview extends Component {
   }
 
   handleSearchInvoices(searchParams = {}, offset = 0, count = COUNT) {
-    Promise.resolve(this.context.showNotification('Messages.loadingData')).then(() =>
+    return Promise.resolve(this.context.showNotification('Messages.loadingData')).then(() =>
       request.get('/invoice/api/invoices').
       query(searchParams).
       query({ offset: offset, count: count }).
@@ -72,12 +72,13 @@ export default class InvoiceOverview extends Component {
       this.setState({
         invoices: response.body,
         pagination: contentRange.parse(response.header['content-range']),
-        exportLink: this._calculateExportLink(response.body, [])
+        exportLink: this._calculateExportLink(response.body, []),
+        editInvoiceId: null
       });
     }).catch((error) => {
       this.context.showNotification('Messages.loadingDataError', 'error', 10, false);
       throw Error(error);
-    }).finally(() => this.context.hideNotification());
+    });
   }
 
   handleDeleteInvoice(id, searchParams = {}) {
@@ -100,7 +101,7 @@ export default class InvoiceOverview extends Component {
     }).catch((error) => {
       this.context.showNotification('Labels.notDeleted', 'error', 10);
       throw Error(error);
-    }).finally(() => this.context.hideNotification());
+    });
   }
 
   handleEditInvoice(id) {

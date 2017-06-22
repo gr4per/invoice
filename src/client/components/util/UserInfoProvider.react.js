@@ -13,7 +13,7 @@ const loadCurrentUserData = function () {
 
 export default class UserInfoProvider extends PureComponent {
   static childContextTypes = {
-    currentUserData: React.PropTypes.object.isRequired
+    currentUserData: PropTypes.object.isRequired
   };
 
   state = {

@@ -8,7 +8,7 @@ import { Button, Glyphicon, Table } from 'react-bootstrap';
  * @param items
  */
 const InvoiceItemsOverview = ({ items }, context) => (
-  <Table responsive={true} key={_.uniqueId()}>
+  <Table key={_.uniqueId()}>
     <thead>
     <tr>
       <th>#</th>

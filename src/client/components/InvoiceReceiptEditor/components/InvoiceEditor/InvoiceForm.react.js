@@ -26,12 +26,14 @@ export default class InvoiceForm extends Component {
     formHeader: PropTypes.string,
     statusLabel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
-    onCancel: PropTypes.func
+    onCancel: PropTypes.func,
+    displayMode: PropTypes.oneOf(['one-column', 'two-column'])
   };
 
   static defaultProps = {
     supplierAddresses: [],
-    supplierContacts: []
+    supplierContacts: [],
+    displayMode: 'two-column'
   };
 
   static contextTypes = {
@@ -80,116 +82,143 @@ export default class InvoiceForm extends Component {
       methodsOfPayment,
       termsOfDelivery,
       currencies,
-      onCancel
+      onCancel,
+      displayMode
     } = this.props;
-    return (
-      <Formsy.Form onSubmit={::this._submitForm}
-        validationErrors={this.state.validationErrors}
-        mapping={this._mapInputs}
-        onChange={(currentValues) => this.setState({ validationErrors: validate(currentValues) })}
-      >
-        {formHeader && <h1>{formHeader}</h1>}
-        <div className="form-horizontal">
-          <div className="row">
-            <div className="col-md-6">
-              <InvoiceHeaderStaticFields
-                supplier={supplier}
-                supplierAddresses={supplierAddresses}
-                supplierContacts={supplierContacts}
-                customer={customer}
-              />
-              <FormsyTextInput
-                label="Labels.extInvoiceReceiptId"
-                name='extInvoiceReceiptId'
-                required={true}
-                value={this.props.invoice.extInvoiceReceiptId}
-              />
-              <FormsyDateInput
-                label="Labels.invoiceDate"
-                name='invoiceDate'
-                required={true}
-                value={invoice.invoiceDate}
-              />
-              <FormsyDateRange
-                label="Labels.periodOfService"
-                name="periodOfService"
-                value={{ from: invoice.periodOfServiceFrom, to: invoice.periodOfServiceTo }}
-              />
-            </div>
-            <div className="col-md-6">
-              <FormGroupMarkup label="Labels.status">
+    const leftColumnFields = [
+      <InvoiceHeaderStaticFields
+        key='headerFields'
+        supplier={supplier}
+        supplierAddresses={supplierAddresses}
+        supplierContacts={supplierContacts}
+        customer={customer}
+      />,
+      <FormsyTextInput
+        key='extInvoiceReceiptId'
+        label="Labels.extInvoiceReceiptId"
+        name='extInvoiceReceiptId'
+        required={true}
+        value={this.props.invoice.extInvoiceReceiptId}
+      />,
+      <FormsyDateInput
+        key='invoiceDate'
+        label="Labels.invoiceDate"
+        name='invoiceDate'
+        required={true}
+        value={invoice.invoiceDate}
+      />,
+      <FormsyDateRange
+        key='periodOfService'
+        label="Labels.periodOfService"
+        name="periodOfService"
+        value={{ from: invoice.periodOfServiceFrom, to: invoice.periodOfServiceTo }}
+      />
+    ];
+
+    const rightColumnFields = [
+      <FormGroupMarkup label="Labels.status" key='status'>
                 <span className="label label-default">
                   <nobr>
                     {statusLabel(invoice.statusId)}
                   </nobr>
                 </span>
-              </FormGroupMarkup>
-              <FormsyTextInput
-                label="Labels.accountingRecordId"
-                name='accountingRecordId'
-                value={invoice.accountingRecordId}
-              />
-              <FormsyTextInput
-                label="Labels.referenceInformation"
-                name='referenceInformation'
-                value={invoice.referenceInformation}
-              />
-              <FormsyDateInput
-                label="Labels.dueDate"
-                name='dueDate'
-                value={invoice.dueDate}
-              />
-              <FormsySelect
-                label="Labels.termsOfPayment"
-                name="termsOfPaymentId"
-                required={true}
-                value={invoice.termsOfPaymentId}
-                values={termsOfPayment}
-                toOptionConverter={
-                  (tod) => (
-                    <option key={`term-of-payment-${tod.id}`} value={tod.id}>
-                      {tod.description ? tod.description : tod.id}
-                    </option>
-                  )
-                }
-                defaultOption={<option value="" defaultValue={true}/>}
-              />
-              <FormsySelect
-                label="Labels.methodOfPayment"
-                name="methodOfPaymentId"
-                required={true}
-                value={invoice.methodOfPaymentId}
-                values={methodsOfPayment}
-                toOptionConverter={
-                  (mop) => (
-                    <option key={`method-of-payment-${mop.id}`} value={mop.id}>
-                      {mop.description}
-                    </option>
-                  )
-                }
-                defaultOption={<option value="" defaultValue={true}/>}
-              />
-              <FormsySelect
-                label="Labels.termsOfDelivery"
-                name="termsOfDeliveryId"
-                value={invoice.termsOfDeliveryId}
-                values={termsOfDelivery}
-                toOptionConverter={
-                  (tod) => (
-                    <option key={`term-of-delivery-${tod.id}`} value={tod.id}>
-                      {tod.description}
-                    </option>
-                  )
-                }
-                defaultOption={<option value="" defaultValue={true}/>}
-              />
-              <FormsyTextInput
-                label="Labels.comment"
-                name='commentary'
-                value={invoice.commentary}
-                componentClass="textarea"
-              />
+      </FormGroupMarkup>,
+      <FormsyTextInput
+        key='accountingRecordId'
+        label="Labels.accountingRecordId"
+        name='accountingRecordId'
+        value={invoice.accountingRecordId}
+      />,
+      <FormsyTextInput
+        key='referenceInformation'
+        label="Labels.referenceInformation"
+        name='referenceInformation'
+        value={invoice.referenceInformation}
+      />,
+      <FormsyDateInput
+        key='dueDate'
+        label="Labels.dueDate"
+        name='dueDate'
+        value={invoice.dueDate}
+      />,
+      <FormsySelect
+        key='termsOfPaymentId'
+        label="Labels.termsOfPayment"
+        name="termsOfPaymentId"
+        required={true}
+        value={invoice.termsOfPaymentId}
+        values={termsOfPayment}
+        toOptionConverter={
+          (tod) => (
+            <option key={`term-of-payment-${tod.id}`} value={tod.id}>
+              {tod.description ? tod.description : tod.id}
+            </option>
+          )
+        }
+        defaultOption={<option value="" defaultValue={true}/>}
+      />,
+      <FormsySelect
+        key='methodOfPaymentId'
+        label="Labels.methodOfPayment"
+        name="methodOfPaymentId"
+        required={true}
+        value={invoice.methodOfPaymentId}
+        values={methodsOfPayment}
+        toOptionConverter={
+          (mop) => (
+            <option key={`method-of-payment-${mop.id}`} value={mop.id}>
+              {mop.description}
+            </option>
+          )
+        }
+        defaultOption={<option value="" defaultValue={true}/>}
+      />,
+      <FormsySelect
+        key='termsOfDeliveryId'
+        label="Labels.termsOfDelivery"
+        name="termsOfDeliveryId"
+        value={invoice.termsOfDeliveryId}
+        values={termsOfDelivery}
+        toOptionConverter={
+          (tod) => (
+            <option key={`term-of-delivery-${tod.id}`} value={tod.id}>
+              {tod.description}
+            </option>
+          )
+        }
+        defaultOption={<option value="" defaultValue={true}/>}
+      />,
+      <FormsyTextInput
+        key='commentary'
+        label="Labels.comment"
+        name='commentary'
+        value={invoice.commentary}
+        componentClass="textarea"
+      />
+    ];
+
+
+    return (
+      <Formsy.Form onSubmit={::this._submitForm}
+                   validationErrors={this.state.validationErrors}
+                   mapping={this._mapInputs}
+                   onChange={(currentValues) => this.setState({ validationErrors: validate(currentValues) })}
+      >
+        {formHeader && <h1>{formHeader}</h1>}
+        <div className="form-horizontal">
+          <div className="row">
+            {displayMode === 'one-column' ? <div className="col-sm-12">
+              {leftColumnFields.map((input => input))}
+              {rightColumnFields.map((input => input))}
+            </div> : <div>
+              <div className="col-md-6">
+                {leftColumnFields.map((input => input))}
+              </div>
+              <div className="col-md-6">
+                {rightColumnFields.map((input => input))}
+              </div>
             </div>
+            }
           </div>
           <hr/>
           <div className="row">

@@ -6,7 +6,6 @@ import _ from 'lodash';
 import InvoiceForm from './InvoiceForm.react';
 import SelectCustomerWizard from './SelectCustomerWizard';
 import messages from '../../i18n/InvoiceEditor';
-import InvoiceItemsOverview from './InvoiceItemsOverview.react';
 import InvoiceItemsPricePanel from './InvoiceItemsPricePanel.react';
 import {
   fetchInvoiceReceipt,
@@ -186,10 +185,10 @@ export default class InvoiceEditor extends Component {
               statusLabel={this.state.statusLabel}
               onCancel={this.props.onCancel}
               onSave={createMode ? ::this.createInvoice : ::this.updateInvoice}
+              displayMode={createMode ? 'two-column' : 'one-column'}
             />
 
             <br/>
-            {this.state.invoice.invoiceReceiptId && <InvoiceItemsOverview items={this.state.items}/>}
             <InvoiceItemsPricePanel
               items={this.state.items}
               invoice={this.state.invoice.invoiceReceiptId ? this.state.invoice : undefined}
