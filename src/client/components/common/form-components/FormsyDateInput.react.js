@@ -41,6 +41,7 @@ export default class FormsyDateInput extends Component {
           value={parseDate(this.props.getValue())}
           onChange={(value) => this.props.setValue(value || undefined)}
           onBlur={(e) => this.props.isPristine() && this.props.setValue(this.props.getValue())}
+          variants={[]}
         />
       </FormGroupMarkup>
     )
