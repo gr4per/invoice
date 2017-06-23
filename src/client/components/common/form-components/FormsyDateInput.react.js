@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import FormGroupMarkup from '../FormGroupMarkup/index';
-import DateInput from 'opuscapita-react-dates/lib/DateInput';
-import I18nLinker from 'opuscapita-react-dates/lib/I18nLinker';
+import DateInput from '@opuscapita/react-dates/lib/DateInput';
 import { Decorator as FormsyElement } from 'formsy-react';
 import { parseDate } from './parseDate';
 
@@ -36,12 +35,13 @@ export default class FormsyDateInput extends Component {
         label={this.props.label}
         required={this.props.required}
       >
-        <I18nLinker>
-          <DateInput value={parseDate(this.props.getValue())}
-            onChange={(value) => this.props.setValue(value || undefined)}
-            onBlur={(e) => this.props.isPristine() && this.props.setValue(this.props.getValue())}
-          />
-        </I18nLinker>
+        <DateInput
+          locale={this.context.i18n.locale}
+          dateFormat={this.context.i18n.dateFormat}
+          value={parseDate(this.props.getValue())}
+          onChange={(value) => this.props.setValue(value || undefined)}
+          onBlur={(e) => this.props.isPristine() && this.props.setValue(this.props.getValue())}
+        />
       </FormGroupMarkup>
     )
   }
