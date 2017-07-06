@@ -6,18 +6,25 @@ services:
      - mysql
      - consul
      - registrator
+     - redis
+     - acl
     volumes:
      - .:/home/node/invoice
     labels:
       SERVICE_NAME: 'invoice'
-    extra_hosts:
-     - 'consul:${HOST_IP}'
     environment:
       NODE_ENV: 'development'
-      PORT: ${PORT}
+      PORT: ${INVOICE_PORT}
       HOST_IP: ${HOST_IP}
+      APPLICATION_NAME: 'invoice'
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      REDIS_AUTH: ${REDIS_AUTH}
+      GATEWAY_SCHEME: $GATEWAY_SCHEME
+      GATEWAY_IP: $GATEWAY_IP
+      GATEWAY_PORT: $GATEWAY_PORT
     ports:
-     - '${PORT}:${PORT}'
+     - '${INVOICE_PORT}:${INVOICE_PORT}'
     command: "npm run dev"
 
   customer:
@@ -34,8 +41,6 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       REDIS_AUTH: ${REDIS_AUTH}
-    extra_hosts:
-      - 'consul:${HOST_IP}'
     ports:
        - '${CUSTOMER_PORT}:${CUSTOMER_PORT}'
     command: 'npm run dev'
@@ -54,8 +59,6 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       REDIS_AUTH: ${REDIS_AUTH}
-    extra_hosts:
-      - 'consul:${HOST_IP}'
     ports:
        - '${SUPPLIER_PORT}:${SUPPLIER_PORT}'
     command: 'npm run local'
@@ -66,11 +69,8 @@ services:
       - mysql
       - consul
       - registrator
-      - nginx
     ports:
       - '${ISOADATA_PORT}:${ISOADATA_PORT}'
-    extra_hosts:
-      - 'consul:${HOST_IP}'
     labels:
       SERVICE_NAME: isodata
       SERVICE_TAGS: 'external'
@@ -91,38 +91,150 @@ services:
     depends_on:
       - registrator
 
-  registrator:
-    image: gliderlabs/registrator:latest
-    network_mode: host
-    depends_on:
-     - consul
-    volumes:
-     - /var/run/docker.sock:/tmp/docker.sock
-    command: ['consul://${HOST_IP}:8500']
-
-  nginx:
-    image: gr4per/nginx-rp:dev
+  postgres:
+    image: postgres:9.4
     ports:
-     - '8080:8080'
-    depends_on:
-     - main
-     - customer
-     - registrator
+      - '5432:5432'
     environment:
-      PORT: '8080'
-      DOCKER_CONTAINERS_HOST_EXTERNAL_PORT: 8080
-    expose:
-      - '8080'
+      POSTGRES_USER: $POSTGRES_DB
+      POSTGRES_DB: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    depends_on:
+      - registrator
+
+  user:
+    image: opuscapita/user:dev
+    depends_on:
+     - mysql
+     - consul
+     - registrator
     labels:
-      SERVICE_NAME: 'nginx'
+      SERVICE_NAME: 'user'
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      REDIS_AUTH: $REDIS_AUTH
+      USER_NAME: 'user'
+      PASSWORD: 'svc_user'
+    ports:
+     - '${USER_PORT}:${USER_PORT}'
+    command: 'npm run dev'
+
+  acl:
+    image: opuscapita/acl:dev
+    labels:
+      - 'SERVICE_NAME=acl'
+      - 'SERVICE_TAGS=external,kong'
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+     - '${ACL_PORT}:${ACL_PORT}'
+    depends_on:
+      - kong
+    command: 'npm run dev'
+
+  auth:
+    image: opuscapita/auth:dev
+    ports:
+     - '$APP_HOST_PORT:$APP_HOST_PORT'
+    environment:
+      NODE_ENV: $NODE_ENV
+      APP_HOST: '0.0.0.0'
+      APP_HOST_PROTOCOL: $APP_HOST_PROTOCOL
+      APP_HOST_PORT: $APP_HOST_PORT
+      GATEWAY_SCHEME: $GATEWAY_SCHEME
+      GATEWAY_IP: $GATEWAY_IP
+      GATEWAY_PORT: $GATEWAY_PORT
+      GATEWAY_CALLBACK: $GATEWAY_CALLBACK
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      REDIS_AUTH: ${REDIS_AUTH}
+      USER_NAME: 'auth'
+      PASSWORD: 'svc_auth'
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+    depends_on:
+      - kong
+      - consul
+    command: 'npm run dev'
+
+  kong:
+    #image: opuscapita/kong:dev
+    image: opuscapita/kong:1.0.14-dev-236 # temp fix until :dev image works again
+    environment:
+      KONG_DATABASE: 'postgres'
+      KONG_PG_HOST: $HOST_IP
+      KONG_PG_PORT: $KONG_PG_PORT
+      APP_HOST: $HOST_IP
+      APP_HOST_PROTOCOL: $APP_HOST_PROTOCOL
+      APP_HOST_PORT: $APP_HOST_PORT
+      GATEWAY_SCHEME: $GATEWAY_SCHEME
+      GATEWAY_IP: $GATEWAY_IP
+      GATEWAY_PORT: $GATEWAY_PORT
+      GATEWAY_CALLBACK: $GATEWAY_CALLBACK
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      LOG_PORT: 5000
+      LOG_HOST: $HOST_IP
+      ACL_HOST: $HOST_IP
+      ACL_PORT: $ACL_PORT
+      REDIS_HOST: $HOST_IP # TODO: remove after api-gw is using config
+      REDIS_PORT: 6379 # TODO: remove after api-gw is using config
+      REDIS_AUTH: $REDIS_AUTH # TODO: remove after api-gw is using config
+      SERVICE_8001_NAME: 'kong'
+      SERVICE_8080_NAME: 'kong-http'
+    ports:
+      - '8080:8080'
+      - '8443:8443'
+      - '8001:8001'
+      - '7946:7946'
+      - '7946:7946/udp'
+    depends_on:
+      - postgres
+      - mysql
+
+  api-registry:
+    image: opuscapita/api-registrator:dev
+#    build: ../api-registrator
+    ports:
+      - '$API_REGISTRY_PORT:$API_REGISTRY_PORT'
+    environment:
+      AUTH_SERVER: $HOST_IP
+      AUTH_SERVER_PORT: $AUTH_SERVER_PORT
+      API_REGISTRY_PORT: $API_REGISTRY_PORT
+      GATEWAY_CALLBACK: $GATEWAY_CALLBACK
+    depends_on:
+      - kong
+
+  redis:
+    image: 'opuscapita/redis:dev'
+    environment:
+      REDIS_AUTH: $REDIS_AUTH
+    depends_on:
+      - registrator
+    ports:
+      - $REDIS_PORT:$REDIS_PORT
+
+  registrator:
+    image: gliderlabs/registrator
+    command: consul://consul:8500
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    depends_on:
+      - consul
 
   consul:
     image: consul:latest
-    network_mode: host
     ports:
       - '8400:8400'
       - '8500:8500'
       - '8600:53/udp'
     labels:
       SERVICE_IGNORE: 'true'  # Do not add any of Consul's services to Consul's service discovery registry.
-    command: [agent, '-server', '-ui', '-bootstrap-expect=1', '-bind=${HOST_IP}', '-client=0.0.0.0']
+    command: [agent, '-server', '-ui', '-bootstrap', '-client=0.0.0.0']
+
+

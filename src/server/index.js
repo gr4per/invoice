@@ -3,6 +3,7 @@
 const server = require('ocbesbn-web-init'); // Web server
 const db = require('ocbesbn-db-init'); // Database
 const express = require('express');
+const bouncer = require('ocbesbn-bouncer');
 
 // Basic database and web server initialization.
 // See database : https://github.com/OpusCapitaBusinessNetwork/db-init
@@ -42,7 +43,13 @@ db.init(
       webpack: {
         useWebpack: true,
         configFilePath: process.cwd() + '/webpack.config.js',
-      }
+      },
+      middlewares: [bouncer({
+        host: 'consul',
+        serviceName: 'invoice',
+        acl: require('./acl.json'),
+        aclServiceName: 'acl'
+      }).Middleware]
     },
     routes: {
       addRoutes: true,

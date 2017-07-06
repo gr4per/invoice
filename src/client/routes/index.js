@@ -8,7 +8,7 @@ import GLAccountEditor from '../containers/GLAccountEditor.react';
 export default (pathPrefix) => {
   return (
     <Route component={Layout}>
-      <Route path="/invoice/" component={InvoiceOverview}/>
+      <Route path="/invoice" component={InvoiceOverview}/>
       <Route path="/invoice/create" component={InvoiceCreator}/>
       <Route path="/invoice/edit/:id/items" component={InvoiceItemEditor}/>
       <Route path="/invoice/import" component={InvoiceImport}/>

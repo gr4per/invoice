@@ -13,30 +13,7 @@ const invoicereceiptImport = require('./invoicereceiptImport');
 const invoiceReceiptExport = require('./invoiceReceiptExport');
 const glAccount = require('./glAccount');
 const epilogue = require('epilogue');
-
-const testUser = {
-  "sub": "scott.tiger@example.com",
-  "id": "scott.tiger@example.com",
-  "phoneno": "+49123456789",
-  "supplierid": "hard001",
-  "customerid": "",
-  "status": "firstLogin",
-  "roles": [
-    "admin",
-    "user"
-  ],
-  "languageid": "de",
-  "firstname": "Scott",
-  "lastname": "Tiger",
-  "email": "scott.tiger@example.com",
-};
-
-const userIdentityWrapper = (NODE_ENV) => {
-  return NODE_ENV === 'development' ? (req, res, next) => {
-    req.opuscapita = { userData: () => testUser };
-    next();
-  } : require('useridentity-middleware')
-};
+const userIdentityMiddleWare = require('useridentity-middleware');
 
 /**
  * Initializes all routes for RESTful access.
@@ -48,7 +25,9 @@ const userIdentityWrapper = (NODE_ENV) => {
  * @see [Minimum setup]{@link https://github.com/OpusCapitaBusinessNetwork/web-init#minimum-setup}
  */
 module.exports.init = function(app, db, config) {
-  app.use(userIdentityWrapper(process.env.NODE_ENV));
+
+  app.use(userIdentityMiddleWare);
+
   epilogue.initialize({
     app: app,
     sequelize: db,

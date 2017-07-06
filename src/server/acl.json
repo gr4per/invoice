@@ -1,0 +1,66 @@
+{
+  "capturing": {
+    "translations": {
+      "name" : {
+        "en": "Invoice capturing app",
+        "de": "Invoice capturing app (de)"
+      },
+      "description": {
+        "en": "CRUD + import for Invoices",
+        "de": "CRUD + import for Invoices (de)"
+      }
+    },
+    "resources": [
+      {
+        "type": "rest",
+        "resourceId": "^[/]$",
+        "actions": ["view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/api/currentUserData",
+        "actions": ["view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/api/termsOfPayment",
+        "actions": ["view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/api/unitsOfMeasure",
+        "actions": ["view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/api/termsOfDelivery",
+        "actions": ["view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/api/methodOfPayment",
+        "actions": ["view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/api/glAccounts[%w | %p]*",
+        "actions": ["edit", "delete", "view", "create"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/api/invoices/[%w | %p]*",
+        "actions": ["edit", "delete", "view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/api/invoices[/]?$",
+        "actions": ["view", "create"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/api/invoices/[^/]+/items",
+        "actions": ["view", "create", "edit"]
+      }
+    ]
+  }
+}
