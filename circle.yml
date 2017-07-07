@@ -18,9 +18,9 @@ dependencies:
 test:
   override:
     - >
-      sudo service mysql stop ;
+      sudo service mysql stop ; 
       export HOST_IP=$(ifconfig | grep "docker0" -A1 | grep -o -P "inet addr:.*? " | grep -o -P "\d+\.\d+\.\d+\.\d+") ;
-      docker-compose run main npm run test-- --reporter mocha-junit-reporter:
+    - docker-compose run main npm run test -- --reporter mocha-junit-reporter:
         environment:
           MOCHA_FILE: $CIRCLE_TEST_REPORTS/junit/task-manager-test-results.xml
 
