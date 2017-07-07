@@ -43,7 +43,9 @@
     "react-dropzone": "^3.7.3",
     "async": "^2.3.0",
     "@opuscapita/react-dates": "0.2.6",
-    "formsy-react": "0.19.2"
+    "formsy-react": "0.19.2",
+    "moment": "2.18.1",
+    "react-pdf": "1.6.1"
   },
   "devDependencies": {
     "command-line-args": "^4.0.1",
@@ -74,15 +76,13 @@
     "eslint": "^3.10.2",
     "eslint-plugin-react": "6.7.1",
     "eslint-config-opuscapita": "1.0.1",
-    "moment": "2.18.1",
-    "react-pdf": "1.6.1"
+    "chai": "3.4.1"
   },
   "scripts": {
     "start": "node src/server/index.js",
     "dev": "npm run setup-consul ; ${NODE_PATH}/.bin/nodemon --watch src/server src/server/index.js",
-    "test": "npm run clean ; npm run setup-consul ; ${NODE_PATH}/.bin/nyc ${NODE_PATH}/.bin/mocha --recursive -R mocha-junit-reporter",
+    "test": "npm run clean ; npm run setup-consul ; ${NODE_PATH}/.bin/nyc ${NODE_PATH}/.bin/mocha --require config/mocha-setup.js --recursive '**/*.spec.js' -R mocha-junit-reporter",
     "clean": "${NODE_PATH}/.bin/rimraf .nyc_output coverage test-results.xml",
-    "setup-consul1": "curl -X PUT -d 'bnp' http://${HOST_IP}:8500/v1/kv/invoice/db-init/database ; curl -X PUT -d 'root' http://${HOST_IP}:8500/v1/kv/invoice/db-init/user ; curl -X PUT -d 'notSecurePa55w0rd' http://${HOST_IP}:8500/v1/kv/invoice/db-init/password ; curl -X PUT -d 'false' http://${HOST_IP}:8500/v1/kv/invoice/db-init/populate-test-data",
     "setup-consul": "sh setup-consul.sh",
     "rest-doc": "mkdir -p wiki/rest-doc ; ${NODE_PATH}/.bin/raml2md -o file-per-resource -p wiki/rest-doc --output-ext=.endpoint.md rest-doc/main.raml",
     "domain-doc": "mkdir -p wiki/domain-doc ; ${NODE_PATH}/.bin/sq2md -o file-per-src -p wiki/domain-doc --init=init --field-bl=createdAt,updatedAt --output-ext=.model.md src/server/db/models",

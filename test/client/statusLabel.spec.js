@@ -3,8 +3,6 @@
 const assert = require('assert');
 const statusLabel = require('../../src/client/utils/statusLabel');
 
-console.log(statusLabel);
-
 /**
  * Unit tests for status lable calculation
  */
