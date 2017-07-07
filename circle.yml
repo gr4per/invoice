@@ -15,8 +15,9 @@ dependencies:
       fi
     - docker build --rm=false -t opuscapita/invoice:dev .
 
-#test:
-#  override:
+test:
+  override:
+    - echo test;
 #    - >
 #      sudo service mysql stop ; sudo service postgres stop ; sudo service kong stop ;
 #      export HOST_IP=$(ifconfig | grep "docker0" -A1 | grep -o -P "inet addr:.*? " | grep -o -P "\d+\.\d+\.\d+\.\d+") ;
