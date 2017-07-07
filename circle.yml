@@ -15,14 +15,14 @@ dependencies:
       fi
     - docker build --rm=false -t opuscapita/invoice:dev .
 
-test:
-  override:
-    - >
-      sudo service mysql stop ; sudo service postgres stop ; sudo service kong stop ;
-      export HOST_IP=$(ifconfig | grep "docker0" -A1 | grep -o -P "inet addr:.*? " | grep -o -P "\d+\.\d+\.\d+\.\d+") ;
-    - docker-compose run main npm run test -- --reporter mocha-junit-reporter:
-        environment:
-          MOCHA_FILE: $CIRCLE_TEST_REPORTS/junit/task-manager-test-results.xml
+#test:
+#  override:
+#    - >
+#      sudo service mysql stop ; sudo service postgres stop ; sudo service kong stop ;
+#      export HOST_IP=$(ifconfig | grep "docker0" -A1 | grep -o -P "inet addr:.*? " | grep -o -P "\d+\.\d+\.\d+\.\d+") ;
+#    - docker-compose run main npm run test -- --reporter mocha-junit-reporter:
+#        environment:
+#          MOCHA_FILE: $CIRCLE_TEST_REPORTS/junit/task-manager-test-results.xml
 
 deployment:
  development:
