@@ -18,6 +18,8 @@ dependencies:
 test:
   override:
     - docker-compose -f docker-compose.test.yml run main npm run test -- --reporter mocha-junit-reporter
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
     - sudo cp test-results.xml $CIRCLE_TEST_REPORTS/junit
 
 deployment:
