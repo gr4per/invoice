@@ -35,6 +35,11 @@ const SidebarMenu = () => (
             GlAccounts
           </Link>
         </li>
+        <li key="MyTasks">
+          <Link to="/invoice/my-tasks">
+            My tasks
+          </Link>
+        </li>
       </ul>
     </nav>
   </section>
