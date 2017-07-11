@@ -19,11 +19,6 @@ module.exports.init = function(db, config) {
         primaryKey: true,
         field: 'InvoiceReceiptSN'
       },
-      blockingReason: {
-        type: Sequelize.STRING(255),
-        allowNull: true,
-        field: 'BlockingReason'
-      },
       /*
        *  Planed booking date, required
        *  Is initialised with the actual date in InvoiceReceipt UI.
@@ -57,16 +52,6 @@ module.exports.init = function(db, config) {
        * Fields are set by the Invoice Validation dialog.
        * In this dialog IR can be approved are blocked.
        */
-      confirmationUserName: {
-        type: Sequelize.STRING(255),
-        allowNull: true,
-        field: 'ConfirmationUserName'
-      },
-      confirmedAt: {
-        type: Sequelize.DATE(),
-        allowNull: true,
-        field: 'ConfirmedAt'
-      },
       createdBy: {
         type: Sequelize.STRING(60),
         allowNull: false,
@@ -78,11 +63,6 @@ module.exports.init = function(db, config) {
         allowNull: false,
         field: 'CreatedOn',
         defaultValue: Sequelize.NOW
-      },
-      creditNote: {
-        type: Sequelize.STRING(255),
-        allowNull: true,
-        field: 'CreditNote'
       },
       /**
        * Currency used for the complete SalesOrder, PurchaseOrder or InvoiceReceipt.
@@ -117,31 +97,6 @@ module.exports.init = function(db, config) {
         type: Sequelize.STRING(255),
         allowNull: true,
         field: 'ExtInvoiceReceiptID'
-      },
-      /**
-       * We use the Footer Text inside our standard PurchaseOrder Formular (PDF).
-       * The footer text can contain company and address information for example.
-       */
-      footerText: {
-        type: Sequelize.STRING(2000),
-        allowNull: true,
-        field: 'FooterText'
-      },
-      /**
-       * Currently unused field.
-       */
-      freightNet: {
-        type: Sequelize.DECIMAL(19, 2),
-        allowNull: true,
-        field: 'FreightNet'
-      },
-      /**
-       * Currently unused field.
-       */
-      freightTax: {
-        type: Sequelize.DECIMAL(19, 2),
-        allowNull: true,
-        field: 'FreightTax'
       },
       /**
        * The real date from the original Invoice document, required
@@ -211,14 +166,6 @@ module.exports.init = function(db, config) {
         field: 'TermsOfPaymentID'
       },
       /**
-       * Currently unused field.
-       */
-      totalFreight: {
-        type: Sequelize.DECIMAL(19, 2),
-        allowNull: true,
-        field: 'TotalFreight'
-      },
-      /**
        * totalGrossPrice = totalNetPrice + totalTaxAmount
        */
       totalGrossPrice: {
@@ -246,11 +193,6 @@ module.exports.init = function(db, config) {
         allowNull: true,
         field: 'TotalTaxAmount'
       },
-      transferStatusId: {
-        type: Sequelize.STRING(20),
-        allowNull: true,
-        field: 'TransferStatusID'
-      },
       /**
        * Field is used to differ between Invoices and creditNotes.
        */
@@ -258,54 +200,6 @@ module.exports.init = function(db, config) {
         type: Sequelize.STRING(255),
         allowNull: true,
         field: 'Type'
-      },
-      /**
-       * UDX fields are reserved for additional (often customer specific) information.
-       */
-      udxNum1: {
-        type: Sequelize.DECIMAL(19, 2),
-        allowNull: true,
-        field: 'UdxNum1'
-      },
-      udxNum2: {
-        type: Sequelize.DECIMAL(19, 2),
-        allowNull: true,
-        field: 'UdxNum2'
-      },
-      udxNum3: {
-        type: Sequelize.DECIMAL(19, 2),
-        allowNull: true,
-        field: 'UdxNum3'
-      },
-      udxSortKey1: {
-        type: Sequelize.STRING(6),
-        allowNull: true,
-        field: 'UdxSortKey1'
-      },
-      udxSortKey2: {
-        type: Sequelize.STRING(6),
-        allowNull: true,
-        field: 'UdxSortKey2'
-      },
-      udxSortKey3: {
-        type: Sequelize.STRING(6),
-        allowNull: true,
-        field: 'UdxSortKey3'
-      },
-      udxText1: {
-        type: Sequelize.STRING(100),
-        allowNull: true,
-        field: 'udxText1'
-      },
-      udxText2: {
-        type: Sequelize.STRING(100),
-        allowNull: true,
-        field: 'udxText2'
-      },
-      udxText3: {
-        type: Sequelize.STRING(100),
-        allowNull: true,
-        field: 'udxText3'
       },
       /**
        * Loginname (last loginname) of the user who generated the SO/PO PDF.
@@ -328,86 +222,6 @@ module.exports.init = function(db, config) {
         field: 'PrintedOn'
       },
       /**
-       * Invoice Address of the Customer.
-       * Available InvoiceAddresses are defined in CustomerAddress table
-       * of type "INVOICE".
-       */
-      invoiceAddressAreaCode: {
-        type: Sequelize.STRING(10),
-        allowNull: true,
-        field: 'invoice_address_area_code'
-      },
-      invoiceAddressCity: {
-        type: Sequelize.STRING(50),
-        allowNull: true,
-        field: 'invoice_address_city'
-      },
-      invoiceAddressCountry: {
-        type: Sequelize.STRING(50),
-        allowNull: true,
-        field: 'invoice_address_country'
-      },
-      invoiceAddressEmail: {
-        type: Sequelize.STRING(100),
-        allowNull: true,
-        field: 'invoice_address_email'
-      },
-      invoiceAddressFaxNo: {
-        type: Sequelize.STRING(50),
-        allowNull: true,
-        field: 'invoice_address_fax_no'
-      },
-      invoiceAddressIsCompany: {
-        type: Sequelize.CHAR(1),
-        allowNull: true,
-        field: 'invoice_address_is_company'
-      },
-      invoiceAddressName1: {
-        type: Sequelize.STRING(100),
-        allowNull: true,
-        field: 'invoice_address_name1'
-      },
-      invoiceAddressName2: {
-        type: Sequelize.STRING(100),
-        allowNull: true,
-        field: 'invoice_address_name2'
-      },
-      invoiceAddressName3: {
-        type: Sequelize.STRING(100),
-        allowNull: true,
-        field: 'invoice_address_name3'
-      },
-      invoiceAddressPbxZipCode: {
-        type: Sequelize.STRING(10),
-        allowNull: true,
-        field: 'invoice_address_pbx_zip_code'
-      },
-      invoiceAddressPhoneNo: {
-        type: Sequelize.STRING(50),
-        allowNull: true,
-        field: 'invoice_address_phone_no'
-      },
-      invoiceAddressPobox: {
-        type: Sequelize.STRING(10),
-        allowNull: true,
-        field: 'invoice_address_pobox'
-      },
-      invoiceAddressSalutation: {
-        type: Sequelize.STRING(20),
-        allowNull: true,
-        field: 'invoice_address_salutation'
-      },
-      invoiceAddressStreet: {
-        type: Sequelize.STRING(50),
-        allowNull: true,
-        field: 'invoice_address_street'
-      },
-      invoiceAddressZipCode: {
-        type: Sequelize.STRING(10),
-        allowNull: true,
-        field: 'invoice_address_zip_code'
-      },
-      /**
        * A CostDistribution contains references to CostObjects (in CostDistributionPos)
        * of the same CostObject Type (CostCenter, Project, intOrder or for example).
        * Example CostDistribution:
@@ -427,26 +241,6 @@ module.exports.init = function(db, config) {
         type: Sequelize.BIGINT(20),
         allowNull: true,
         field: 'CostDistributionSN'
-      },
-      invoiceAddressState: {
-        type: Sequelize.STRING(50),
-        allowNull: true,
-        field: 'invoice_address_state'
-      },
-      /**  Indicates that this order was created on behalf of
-       * another user. The "Buying on Behalf Of" feature
-       * allows one user to create orders for another one user
-       * of the same customer using that user's views.
-       */
-      onBehalfOf: {
-        type: Sequelize.STRING(60),
-        allowNull: true,
-        field: 'onBehalfOf'
-      },
-      invoiceAddressMethod: {
-        type: Sequelize.STRING(50),
-        allowNull: true,
-        field: 'invoice_address_method'
       },
       /**
        * Person who received invoice.
@@ -531,58 +325,6 @@ module.exports.init = function(db, config) {
         type: Sequelize.STRING(30),
         allowNull: true,
         field: 'AccountingRecordID'
-      },
-      /**
-       * Customer country. Also available in customer address.
-       * Used for tax validation.
-       */
-      customerCountryId: {
-        type: Sequelize.STRING(2),
-        allowNull: true,
-        field: 'CustomerCountryID'
-      },
-      /**
-       * Customer state. Also available in customer address.
-       * Used for tax validation.
-       */
-      customerState: {
-        type: Sequelize.STRING(50),
-        allowNull: true,
-        field: 'CustomerState'
-      },
-      /**
-       * Supplier country. Also available in supplier address.
-       * Used for tax validation.
-       */
-      supplierCountryId: {
-        type: Sequelize.STRING(2),
-        allowNull: true,
-        field: 'SupplierCountryID'
-      },
-      /**
-       * Supplier state. Also available in supplier address.
-       * Used for tax validation.
-       */
-      supplierState: {
-        type: Sequelize.STRING(50),
-        allowNull: true,
-        field: 'SupplierState'
-      },
-      /**
-       * Approval workflow status
-       */
-      approvalStatus: {
-        type: Sequelize.STRING(255),
-        allowNull: true,
-        field: 'ApprovalStatus'
-      },
-      /**
-       * Approval workflow assignee
-       */
-      assignee: {
-        type: Sequelize.STRING(255),
-        allowNull: true,
-        field: 'Assignee'
       },
       /**
        * Intrastat is the system for collecting information and producing statistics
