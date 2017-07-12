@@ -7,6 +7,7 @@ import _ from 'lodash';
 import contentRange from 'content-range';
 import messages from '../../i18n/InvoiceOverview';
 import { COUNT } from '../../../../constants/pagination';
+import { fetchInvoiceStatuses } from '../../common/fetchers';
 
 export default class InvoiceOverview extends Component {
 
@@ -20,18 +21,7 @@ export default class InvoiceOverview extends Component {
     pagination: { first: 0, last: 0, length: 0 },
     checkedInvoices: [],
     deleteModal: { isShown: false },
-    statuses: [
-      { 'statusId': '070', 'description': 'rejected' },
-      { 'statusId': '100', 'description': 'created' },
-      { 'statusId': '390', 'description': 'approved' },
-      { 'statusId': '400', 'description': 'transferred' },
-      { 'statusId': '800', 'description': 'deleted' },
-      { 'statusId': '820', 'description': 'registered' }
-    ],
-    statusLabel: (statusId) => {
-      let status = _.find(this.state.statuses, { statusId: statusId });
-      return status ? status.description : statusId;
-    },
+    isMasterDataReady: false,
     exportLink: this._calculateExportLink([], []),
     editInvoiceId: null
   };
@@ -41,7 +31,7 @@ export default class InvoiceOverview extends Component {
   }
 
   componentDidMount() {
-    this.handleSearchInvoices();
+    this._loadMasterData(::this.handleSearchInvoices);
   }
 
   _calculateExportLink(invoices, checked) {
@@ -55,9 +45,20 @@ export default class InvoiceOverview extends Component {
     return url;
   }
 
+  statusLabel(statusId) {
+    let status = _.find(this.state.statuses, { statusId: statusId });
+    return status ? status.description : statusId;
+  }
+
   isEditable(statusId) {
     return !_.includes(['approved', 'transferred'],
       (this.state.statuses.find((status) => status.statusId === statusId) || {}).description);
+  }
+
+  _loadMasterData(masterDataReadyCallback) {
+    fetchInvoiceStatuses().then((statuses) =>
+      Promise.resolve(this.setState({ statuses: statuses, isMasterDataReady: true }, masterDataReadyCallback))
+    );
   }
 
   handleSearchInvoices(searchParams = {}, offset = 0, count = COUNT) {
@@ -133,13 +134,13 @@ export default class InvoiceOverview extends Component {
   }
 
   render() {
-    return (
+    return this.state.isMasterDataReady && (
       <InvoiceOverviewMarkup
         onSearch={::this.handleSearchInvoices}
         invoices={this.state.invoices}
         checkedInvoices={this.state.checkedInvoices}
         statuses={this.state.statuses}
-        statusLabel={this.state.statusLabel}
+        statusLabel={::this.statusLabel}
         pagination={this.state.pagination}
         editInvoiceId={this.state.editInvoiceId}
         onEdit={::this.handleEditInvoice}
