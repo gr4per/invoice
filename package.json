@@ -45,7 +45,8 @@
     "@opuscapita/react-dates": "0.2.6",
     "formsy-react": "0.19.2",
     "moment": "2.18.1",
-    "react-pdf": "1.6.1"
+    "react-pdf": "1.6.1",
+    "express-handlebars": "3.0.0"
   },
   "devDependencies": {
     "command-line-args": "^4.0.1",
