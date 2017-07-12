@@ -13,3 +13,8 @@ module.exports.up = function(db, config) {
     }
   ));
 };
+
+module.exports.down = function (db, config) {
+
+  return Promise.resolve(db.getQueryInterface().removeColumn('InvoiceReceipt', 'Assignee'));
+};
