@@ -3,12 +3,18 @@
   height: ~"calc(100% - 74px)";
 }
 
-#notification-container {
-  height: 100%;
+@media (max-width: 1150px) {
+  .container-fluid {
+    height: ~"calc(100% - 157px)";
+  }
 }
 
-#my-tasks {
-  border: solid 1px;
+@media (max-width: 860px) {
+  .container-fluid {
+    height: ~"calc(100% - 189px)";
+  }
+}
+
+#notification-container {
   height: 100%;
-  width: 100%;
 }
