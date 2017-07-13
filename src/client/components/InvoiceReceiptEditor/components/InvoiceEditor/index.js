@@ -30,12 +30,12 @@ import {
  * @returns {InvoiceEditor}
  */
 const createInvoiceEditor = (WrappedEditorComponent) => {
-
   return class InvoiceEditor extends Component {
 
     static propTypes = {
       invoiceId: PropTypes.number,
       createMode: PropTypes.bool,
+      readOnly: PropTypes.bool,
       onCancel: PropTypes.func
     };
 
@@ -48,6 +48,7 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
 
     static defaultProps = {
       createMode: false,
+      readOnly: false
     };
 
     constructor(props) {

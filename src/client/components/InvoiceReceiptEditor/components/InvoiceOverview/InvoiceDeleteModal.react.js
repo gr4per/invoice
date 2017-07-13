@@ -13,7 +13,7 @@ const InvoiceDeleteModal = ({ isShown, onDelete, onCancel, invoiceId }, context)
         {context.i18n.getMessage('Labels.questionInvoiceDelete')}
       </Modal.Body>
       <Modal.Footer>
-        <button className="btn btn-link" onClick={onCancel}>{context.i18n.getMessage('Labels.cancel')}</button>
+        <button className="btn btn-link" onClick={() => onCancel()}>{context.i18n.getMessage('Labels.cancel')}</button>
         <button className="btn btn-primary" onClick={() => onDelete(invoiceId)}>
           {context.i18n.getMessage('Labels.ok')}
         </button>

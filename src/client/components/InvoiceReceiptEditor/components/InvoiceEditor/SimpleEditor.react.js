@@ -7,6 +7,7 @@ export default class SimpleEditor extends Component {
   static propTypes = {
     invoiceId: PropTypes.number,
     createMode: PropTypes.bool,
+    readOnly: PropTypes.bool,
     onCancel: PropTypes.func,
 
     /* Props injected from higher order component (marked as not required) */
@@ -32,10 +33,11 @@ export default class SimpleEditor extends Component {
   };
 
   render() {
-    const { createMode } = this.props;
+    const { createMode, readOnly } = this.props;
     return (
       <div className={`${createMode ? 'create' : 'edit'}-invoice`}>
         <InvoiceForm
+          readOnly={readOnly}
           formHeader={createMode ? this.context.i18n.getMessage('Labels.createIR') : ''}
           invoice={this.props.invoice}
           customer={this.props.customer}
@@ -56,6 +58,7 @@ export default class SimpleEditor extends Component {
         <br/>
         {!createMode ?
           <InvoiceItemsPricePanel
+            readOnly={readOnly}
             priceInfo={this.props.itemsPriceInfo}
             onAddPositions={() => (this.context.router.push(`/invoice/edit/${this.props.invoiceId}/items`))}
           /> : null}
