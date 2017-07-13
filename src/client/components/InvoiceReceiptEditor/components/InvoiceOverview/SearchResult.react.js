@@ -8,7 +8,7 @@ const SearchResult = (
     invoices,
     statusLabel,
     onEdit,
-    showDeleteModal,
+    onDelete,
     isEditable,
     selectedInvoiceId,
     checkedInvoices,
@@ -81,16 +81,21 @@ const SearchResult = (
                 <td>
                   <span className="label label-default">{statusLabel(inv.statusId)}</span>
                 </td>
-                <td className="invoice-btn-group">
-                  <Button bsStyle="link" onClick={() => onEdit(inv.key)}>
-                    <Glyphicon glyph="edit"/>
-                  </Button>
-                  <Button bsStyle="link" onClick={() => showDeleteModal({ isShown: true, invoiceId: inv.key })}
-                    disabled={!isEditable(inv.statusId)}
-                  >
-                    <Glyphicon glyph="trash"/>
-                  </Button>
-                </td>
+                {isEditable(inv.statusId) ?
+                  <td className="invoice-btn-group">
+                    <Button bsStyle="link" onClick={() => onEdit(inv.key)}>
+                      <Glyphicon glyph="edit"/>
+                    </Button>
+                    <Button bsStyle="link" onClick={() => onDelete(inv.key)}>
+                      <Glyphicon glyph="trash"/>
+                    </Button>
+                  </td> :
+                  <td className="invoice-btn-group">
+                    <Button bsStyle="link" onClick={() => onEdit(inv.key)}>
+                      <Glyphicon glyph="eye-open"/>
+                    </Button>
+                  </td>
+                }
               </tr>
             )
           })
@@ -104,7 +109,7 @@ const SearchResult = (
 SearchResult.propTypes = {
   invoices: PropTypes.array,
   statusLabel: PropTypes.func.isRequired,
-  showDeleteModal: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   isEditable: PropTypes.func.isRequired,
   selectedInvoiceId: PropTypes.number,

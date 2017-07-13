@@ -11,9 +11,17 @@ import { fetchInvoiceStatuses } from '../../common/fetchers';
 
 export default class InvoiceOverview extends Component {
 
+  static propTypes = {
+    readOnly: PropTypes.bool
+  };
+
   static contextTypes = {
     i18n: PropTypes.object.isRequired,
     showNotification: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    readOnly: false
   };
 
   state = {
@@ -51,7 +59,7 @@ export default class InvoiceOverview extends Component {
   }
 
   isEditable(statusId) {
-    return !_.includes(['approved', 'transferred'],
+    return !this.props.readOnly && !_.includes(['approved', 'transferred'],
       (this.state.statuses.find((status) => status.statusId === statusId) || {}).description);
   }
 
@@ -113,8 +121,12 @@ export default class InvoiceOverview extends Component {
     this.setState({ editInvoiceId: null });
   }
 
-  showDeleteModal(deleteModal) {
-    this.setState({ deleteModal: deleteModal });
+  showDeleteModal(invoiceId) {
+    this.setState({ deleteModal: { isShown: true, invoiceId: invoiceId } });
+  }
+
+  hideDeleteModal() {
+    this.setState({ deleteModal: { isShown: false } });
   }
 
   markForExport(invoiceIds) {
@@ -147,11 +159,13 @@ export default class InvoiceOverview extends Component {
         onDelete={::this.handleDeleteInvoice}
         onCancel={::this.handleCancel}
         showDeleteModal={::this.showDeleteModal}
+        hideDeleteModal={::this.hideDeleteModal}
         deleteModal={this.state.deleteModal}
         isEditable={::this.isEditable}
         markForExport={::this.markForExport}
         unMarkForExport={::this.unMarkForExport}
         exportLink={this.state.exportLink}
+        readOnly={this.props.readOnly}
       />
     )
   }
