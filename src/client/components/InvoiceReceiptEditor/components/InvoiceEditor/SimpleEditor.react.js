@@ -32,6 +32,11 @@ export default class SimpleEditor extends Component {
     router: PropTypes.object.isRequired
   };
 
+  static defaultProps = {
+    createMode: false,
+    readOnly: false
+  };
+
   render() {
     const { createMode, readOnly } = this.props;
     return (

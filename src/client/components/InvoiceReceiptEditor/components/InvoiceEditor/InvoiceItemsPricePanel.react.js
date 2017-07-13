@@ -37,5 +37,9 @@ InvoiceItemsPricePanel.contextTypes = {
   i18n: PropTypes.object.isRequired
 };
 
+InvoiceItemsPricePanel.defaultProps = {
+  readOnly: false
+};
+
 export default InvoiceItemsPricePanel;
 

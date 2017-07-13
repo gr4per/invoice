@@ -37,6 +37,10 @@ export default class SplitScreenEditor extends Component {
     showNotification: PropTypes.func.isRequired
   };
 
+  static defaultProps = {
+    readOnly: false
+  };
+
   constructor(props) {
     super(props);
     this.state = {

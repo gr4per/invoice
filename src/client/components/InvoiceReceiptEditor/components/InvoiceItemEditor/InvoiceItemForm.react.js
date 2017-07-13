@@ -25,7 +25,8 @@ export default class InvoiceItemForm extends Component {
 
   static defaultProps = {
     item: {},
-    unitsOfMeasure: []
+    unitsOfMeasure: [],
+    readOnly: false
   };
 
   constructor(props) {
@@ -61,28 +62,28 @@ export default class InvoiceItemForm extends Component {
                 <FormsyTextInput
                   label='Labels.productId'
                   name='productId'
-                  value={item.productId || ''}
+                  value={item.productId}
                   disabled={readOnly}
                 />
                 <FormsyTextInput
                   label="Labels.productDescShort"
                   name='productDescShort'
                   required={true}
-                  value={item.productDescShort || ''}
+                  value={item.productDescShort}
                   disabled={readOnly}
                 />
                 <FormsyTextInput
                   label="Labels.quantity"
                   name='quantity'
                   required={true}
-                  value={item.quantity || ''}
+                  value={item.quantity}
                   disabled={readOnly}
                 />
                 <FormsySelect
                   label="Labels.uom"
                   name='uomId'
                   required={true}
-                  value={item.uomId || ''}
+                  value={item.uomId}
                   values={this.props.unitsOfMeasure}
                   toOptionConverter={
                     (uom) => (
@@ -105,7 +106,7 @@ export default class InvoiceItemForm extends Component {
                   label="Labels.priceUnit"
                   name='priceUnit'
                   required={true}
-                  value={this.props.item.priceUnit || ''}
+                  value={this.props.item.priceUnit}
                   disabled={readOnly}
                 />
               </div>

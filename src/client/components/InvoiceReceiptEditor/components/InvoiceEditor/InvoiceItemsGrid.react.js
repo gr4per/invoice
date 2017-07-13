@@ -95,4 +95,8 @@ InvoiceItemsGrid.contextTypes = {
   i18n: PropTypes.object.isRequired
 };
 
+InvoiceItemsGrid.defaultProps = {
+  readOnly: false
+};
+
 export default InvoiceItemsGrid;

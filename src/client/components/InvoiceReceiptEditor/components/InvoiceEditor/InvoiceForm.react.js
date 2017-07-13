@@ -38,7 +38,8 @@ export default class InvoiceForm extends Component {
   static defaultProps = {
     supplierAddresses: [],
     supplierContacts: [],
-    displayMode: 'two-column'
+    displayMode: 'two-column',
+    readOnly: false
   };
 
   constructor(props) {
